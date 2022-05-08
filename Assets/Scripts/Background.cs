@@ -11,7 +11,6 @@ public class Background : MonoBehaviour
         bgMatRenderer = GetComponent<MeshRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector2 direction = Vector2.up;

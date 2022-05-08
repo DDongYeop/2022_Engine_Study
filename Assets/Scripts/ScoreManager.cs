@@ -34,9 +34,4 @@ public class ScoreManager : MonoBehaviour
         bestScore = PlayerPrefs.GetInt("Best Score", 0);
         bestScoreTxt.text = "Best Score : " + bestScore;
     }
-
-    void Update()
-    {
-        
-    }
 }

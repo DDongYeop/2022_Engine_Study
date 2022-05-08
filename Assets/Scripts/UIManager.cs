@@ -22,6 +22,4 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene("PlayScene"); //선언한거 쓰고, on click에서 정해줘도 된다.
     }
-
-    
 }
