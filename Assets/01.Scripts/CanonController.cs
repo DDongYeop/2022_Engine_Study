@@ -18,11 +18,16 @@ public class CanonController : MonoBehaviour
     [SerializeField] private float _charginSpeed = 300f; //차징 속도
     [SerializeField] private Ball _ballPrefab;
 
+    [Header("캐논 UI관련")]
+    [SerializeField] private CannonPanel _panel;
+
+    private CannonSoundPlayer _soundPlayer;
+
     private Transform _barrelTrm = null;
     private Transform _firePos = null;
 
     private float _currentRotate = 0f; //발사각
-    private float _currentFirePower = 0f; //발사힘
+    private float _currentFirePower = 0f; //발사함
 
     //현재 캐논의 상태
     [SerializeField] private State _state = State.Idle;
@@ -31,6 +36,7 @@ public class CanonController : MonoBehaviour
     {
         _barrelTrm = transform.Find("Barrel");
         _firePos = _barrelTrm.Find("FirePos");
+        _soundPlayer = transform.Find("CannonSound").GetComponent<CannonSoundPlayer>();
     }
 
     private void Update()
@@ -51,6 +57,7 @@ public class CanonController : MonoBehaviour
             _currentFirePower += _charginSpeed * Time.deltaTime;
             _currentFirePower = Mathf.Clamp(_currentFirePower, 0f, _maxFirePower);
             //여기에 이벤트 핸들링 들어간다
+            OnChangeGauge();
         }
 
         if(Input.GetButtonUp("Jump") && _state == State.Charging)
@@ -63,7 +70,12 @@ public class CanonController : MonoBehaviour
     {
         Ball ball = Instantiate(_ballPrefab, _firePos.position, Quaternion.identity) as Ball;
         ball.Fire(_firePos.right, _currentFirePower);
+
         //여기서도 이벤트 핸들링
+        _soundPlayer.PlayFireSound();
+        _state = State.Idle;
+        _currentFirePower = 0; //나중에 변경해야 합니다
+        OnChangeGauge();
     }
 
     private void MandleMove()
@@ -87,7 +99,19 @@ public class CanonController : MonoBehaviour
             }*/
             #endregion
 
+            OnChangeAngle(); //각도가 변하면 수행한다
             _state = Mathf.Abs(y) > 0 ? State.Moving : State.Idle;
         }
+    }
+
+    private void OnChangeGauge()
+    {
+        //UI 갱신 코드
+        _panel.SetPowerGauge(_currentFirePower / _maxFirePower);
+    }
+
+    private void OnChangeAngle()
+    {
+        _panel.SetTextAngle(_currentRotate);
     }
 }
