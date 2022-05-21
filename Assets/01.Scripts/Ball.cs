@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour
     {
         ParticleSystem ps = Instantiate(_explosionParticle, transform.position, Quaternion.identity) as ParticleSystem;
         ps.Play();
+        GameManager.Instance.PlayExplosionSound(); //파괴 사운드 재생
         Destroy(ps, 2f);
         Destroy(gameObject);
     }
