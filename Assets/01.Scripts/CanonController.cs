@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CanonController : MonoBehaviour
 {
+    public UnityEvent OnFire;
     public enum State : short
     {
         Idle = 0,
@@ -21,7 +23,6 @@ public class CanonController : MonoBehaviour
     [Header("캐논 UI관련")]
     [SerializeField] private CannonPanel _panel;
 
-    private CannonSoundPlayer _soundPlayer;
 
     private Transform _barrelTrm = null;
     private Transform _firePos = null;
@@ -36,7 +37,6 @@ public class CanonController : MonoBehaviour
     {
         _barrelTrm = transform.Find("Barrel");
         _firePos = _barrelTrm.Find("FirePos");
-        _soundPlayer = transform.Find("CannonSound").GetComponent<CannonSoundPlayer>();
     }
 
     private void Update()
@@ -62,20 +62,33 @@ public class CanonController : MonoBehaviour
 
         if(Input.GetButtonUp("Jump") && _state == State.Charging)
         {
-            FireCanon();
+            _state = State.Fire;
+            StartCoroutine(DelaySecond(1f));
         }
+    }
+
+    IEnumerator DelaySecond(float sec)
+    {
+        CameraManager.Instance.SetCannonCamActive();
+        yield return new WaitForSeconds(sec);
+        FireCanon();
     }
 
     private void FireCanon()
     {
+        OnFire?.Invoke(); //Null이 아닐때만 실행하라
+        CameraManager.Instance.ShakeCam(2 * _currentFirePower / 400, 0.6f);
+
         Ball ball = Instantiate(_ballPrefab, _firePos.position, Quaternion.identity) as Ball;
         ball.Fire(_firePos.right, _currentFirePower);
 
-        //여기서도 이벤트 핸들링
-        _soundPlayer.PlayFireSound();
+        OnChangeGauge();
+    }
+
+    public void SetToIdle()
+    {
         _state = State.Idle;
         _currentFirePower = 0; //나중에 변경해야 합니다
-        OnChangeGauge();
     }
 
     private void MandleMove()
