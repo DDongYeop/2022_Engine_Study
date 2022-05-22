@@ -8,6 +8,7 @@ public class ParallaxEffect : MonoBehaviour
     private Transform _mainCamTrm;
     private Vector3 _lastCamPos;
     private float _textureUnitSizeX;
+    private float _textureUnitSizeY;
 
     private void Start()
     {
@@ -19,6 +20,7 @@ public class ParallaxEffect : MonoBehaviour
         Texture2D texture = sprite.texture;
 
         _textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
+        _textureUnitSizeY = texture.height / sprite.pixelsPerUnit;
         //텍스쳐의 너비가 몇인지 유닛인지 계산하기 위해서 (유니티 단위로 계산
     }
 
@@ -34,6 +36,12 @@ public class ParallaxEffect : MonoBehaviour
         {
             float offsetPositionX = (_mainCamTrm.position.x - transform.position.x) % _textureUnitSizeX;
             transform.position = new Vector3(_mainCamTrm.position.x + offsetPositionX, transform.position.y);
+        }
+
+        if (Mathf.Abs(_mainCamTrm.position.y - transform.position.y) >= _textureUnitSizeY)
+        {
+            float offsetPositionY = (_mainCamTrm.position.y - transform.position.y) % _textureUnitSizeY;
+            transform.position = new Vector3(transform.position.x, _mainCamTrm.position.y + offsetPositionY);
         }
     }
 }
