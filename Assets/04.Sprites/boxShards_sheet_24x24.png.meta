@@ -131,7 +131,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 72
         width: 24
         height: 24
       alignment: 0
@@ -151,8 +151,8 @@ TextureImporter:
       name: boxShards_sheet_24x24_1
       rect:
         serializedVersion: 2
-        x: 24
-        y: 0
+        x: 0
+        y: 48
         width: 24
         height: 24
       alignment: 0
@@ -172,8 +172,8 @@ TextureImporter:
       name: boxShards_sheet_24x24_2
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
+        x: 0
+        y: 24
         width: 24
         height: 24
       alignment: 0
@@ -193,7 +193,7 @@ TextureImporter:
       name: boxShards_sheet_24x24_3
       rect:
         serializedVersion: 2
-        x: 72
+        x: 0
         y: 0
         width: 24
         height: 24

@@ -74,15 +74,24 @@ public class CanonController : MonoBehaviour
         FireCanon();
     }
 
+    IEnumerator DelayChageToActionCam(Transform target, float sec)
+    {
+        yield return new WaitForSeconds(sec);
+
+        CameraManager.Instance.SetActionCamActive(target);
+
+    }
+
     private void FireCanon()
     {
         OnFire?.Invoke(); //Null이 아닐때만 실행하라
-        CameraManager.Instance.ShakeCam(2 * _currentFirePower / 400, 0.6f);
-
+        CameraManager.Instance.ShakeCam(2, 0.4f);
         Ball ball = Instantiate(_ballPrefab, _firePos.position, Quaternion.identity) as Ball;
         ball.Fire(_firePos.right, _currentFirePower);
 
         OnChangeGauge();
+
+        StartCoroutine(DelayChageToActionCam(ball.transform, 0.4f));
     }
 
     public void SetToIdle()
