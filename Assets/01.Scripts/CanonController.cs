@@ -23,6 +23,7 @@ public class CanonController : MonoBehaviour
     [Header("캐논 UI관련")]
     [SerializeField] private CannonPanel _panel;
 
+    [SerializeField] private CannonSoundPlayer _cannonSound;
 
     private Transform _barrelTrm = null;
     private Transform _firePos = null;
@@ -37,6 +38,7 @@ public class CanonController : MonoBehaviour
     {
         _barrelTrm = transform.Find("Barrel");
         _firePos = _barrelTrm.Find("FirePos");
+        _cannonSound = transform.Find("CannonSound").GetComponent<CannonSoundPlayer>();
     }
 
     private void Update()
@@ -88,6 +90,10 @@ public class CanonController : MonoBehaviour
         CameraManager.Instance.ShakeCam(2, 0.4f);
         Ball ball = Instantiate(_ballPrefab, _firePos.position, Quaternion.identity) as Ball;
         ball.Fire(_firePos.right, _currentFirePower);
+        ball.OnExplosion += () =>
+        {
+            _cannonSound.PlayExplosionSound();
+        };
 
         OnChangeGauge();
 

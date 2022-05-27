@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField] CannonSoundPlayer _cannonSound;
     [SerializeField] private Transform _cannonTrm;
 
 
@@ -26,11 +25,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         _cannonController = _cannonTrm.GetComponent<CanonController>();
-    }
-
-    public void PlayExplosionSound()
-    {
-        _cannonSound.PlayExplosionSound();
     }
 
     public void BackToRigCam(float sec)

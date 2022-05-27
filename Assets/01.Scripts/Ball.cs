@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class Ball : MonoBehaviour
 
     [SerializeField] private float _expRadius = 2f;
     [SerializeField] private float _expPower = 100f;
+
+    public Action OnExplosion = null;
 
     private Rigidbody2D _rigidbody2D;
 
@@ -25,10 +28,15 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         bool isDestory = CheckDestory();
+
         ParticleSystem ps = Instantiate(_explosionParticle, transform.position, Quaternion.identity) as ParticleSystem;
         ps.Play();
-        GameManager.Instance.PlayExplosionSound(); //파괴 사운드 재생
-        GameManager.Instance.BackToRigCam(2f);
+        //GameManager.Instance.PlayExplosionSound(); //파괴 사운드 재생
+        OnExplosion?.Invoke();
+
+        CameraManager.Instance.ShakeCam(2, 0.6f);
+
+        GameManager.Instance.BackToRigCam(1.5f);
         Destroy(ps.gameObject, 2f);
         Destroy(gameObject);
     }
