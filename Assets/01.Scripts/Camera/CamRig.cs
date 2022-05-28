@@ -13,8 +13,18 @@ public class CamRig : MonoBehaviour
     private Vector3 _boundMin;
     private float _halfWidth;
 
+    public PolygonCollider2D Confiner
+    {
+        get => _confiner;
+        set
+        {
+            _confiner = value;
+            Calc();
+        }
+    }
 
-    void Start()
+
+    void Calc()
     {
         _boundMax = _confiner.bounds.max;
         _boundMin = _confiner.bounds.min;

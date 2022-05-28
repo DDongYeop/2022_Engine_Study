@@ -31,5 +31,20 @@ public class GameManager : MonoBehaviour
         GameObject timeController = new GameObject("TimeController");
         timeController.transform.parent = transform;
         TimeController.Instance = timeController.AddComponent<TimeController>();
+
+        GameObject cameraManager = new GameObject("CameraManager");
+        cameraManager.transform.parent = transform;
+        CameraManager.Instance = cameraManager.AddComponent<CameraManager>();
+        CameraManager.Instance.Init();
+
+        LoadStage(1);
+    }
+
+    public void LoadStage(int idx)
+    {
+        Stage stagePrefab = Resources.Load<Stage>($"Stage{idx}");
+        Stage stage = Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);
+        
+        CameraManager.Instance.SetConfiner(stage.CamBound);
     }
 }

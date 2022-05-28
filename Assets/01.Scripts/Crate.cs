@@ -7,9 +7,12 @@ public class Crate : MonoBehaviour, IDamageable
 {
     [SerializeField] private BrokenCrate _brokenPrefab;
 
+    public Action OnExplosion = null;
+
     public void OnDamage(int damage, GameObject damageDealer, Vector2 dir, float force)
     {
         BoxExlposion(dir, force);
+        OnExplosion?.Invoke();
     }
 
     private void BoxExlposion(Vector2 dir, float force)
