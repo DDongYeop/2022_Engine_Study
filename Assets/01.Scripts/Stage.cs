@@ -15,6 +15,11 @@ public class Stage : MonoBehaviour
         get => _camBound;
     }
 
+    public int BoxCount
+    {
+        get => _totalCrateCount;
+    }
+
     public Vector3 CannonPosition
     {
         get => _positionTrm.position;

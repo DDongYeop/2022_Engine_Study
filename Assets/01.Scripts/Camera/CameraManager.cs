@@ -23,10 +23,6 @@ public class CameraManager : MonoBehaviour
     private CinemachineBasicMultiChannelPerlin _activePerlin = null;
 
 
-    // Start is called before the first frame update
-
-
-
     public void Init()
     {
         _cmRigcam = GameObject.Find("CMVcamRig").GetComponent<CinemachineVirtualCamera>();
@@ -66,12 +62,6 @@ public class CameraManager : MonoBehaviour
         _cmActionCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = confiner;
         _cmRigcam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = confiner;
         _camRig.Confiner = confiner;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void SetCannonCamActive()

@@ -12,6 +12,7 @@ public class UIManager
     private RectTransform _canvasTrm;
     private TextMeshProUGUI _noticeMegTxt;
     private RectTransform _msgTrm;
+    private TextMeshProUGUI _boxCountText;
 
     private Vector3 _initAnchorPos; //초기 앵커 위치 가져오는 변수
 
@@ -22,6 +23,8 @@ public class UIManager
         _noticeMegTxt.SetText("");
         _msgTrm = _noticeMegTxt.GetComponent<RectTransform>();
         _initAnchorPos = _msgTrm.anchoredPosition; //초기 앵커위치 저장
+
+        _boxCountText = _canvasTrm.Find("TopPanel/BoxCountPanel/BoxCountText").GetComponent<TextMeshProUGUI>();
     }
 
     public void ShowTextMessage(string text)
@@ -47,5 +50,10 @@ public class UIManager
             _noticeMegTxt.SetText("");
             NextAction?.Invoke();
         });
+    }
+
+    public void SetBoxScore(int currentBoxCount, int totalBoxCount)
+    {
+        _boxCountText.SetText($"{currentBoxCount} / {totalBoxCount}");
     }
 }

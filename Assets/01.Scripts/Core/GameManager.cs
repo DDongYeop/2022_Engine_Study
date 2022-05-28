@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
 
     private CanonController _cannonController;
 
+    #region 박스 스코어 관련 코드 
+    private int _totalBoxCount = 0, _currentBoxCount = 0;
+    #endregion
+
     private void Awake()
     {
         if (Instance != null)
@@ -46,5 +50,14 @@ public class GameManager : MonoBehaviour
         Stage stage = Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);
         
         CameraManager.Instance.SetConfiner(stage.CamBound);
+
+        _cannonTrm.position = stage.CannonPosition;
+
+        _currentBoxCount = _totalBoxCount = stage.BoxCount;
+        stage.Init(() =>
+        {
+            _currentBoxCount--;
+            UIManager.Instance.SetBoxScore(_currentBoxCount, _totalBoxCount);
+        });
     }
 }
