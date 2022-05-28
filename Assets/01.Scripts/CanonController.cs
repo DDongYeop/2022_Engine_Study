@@ -11,7 +11,8 @@ public class CanonController : MonoBehaviour
         Idle = 0,
         Moving = 1,
         Charging = 2,
-        Fire = 3
+        Fire = 3,
+        WaitingToKey = 4
     }
 
     [Header("캐논 상태 정의")]
@@ -67,6 +68,16 @@ public class CanonController : MonoBehaviour
             _state = State.Fire;
             StartCoroutine(DelaySecond(1f));
         }
+
+        if(Input.GetButtonDown("Jump") && _state == State.WaitingToKey)
+        {
+            UIManager.Instance.HideTextMessage(() =>
+            {
+                CameraManager.Instance.SetRigCamActive();
+                _state = State.Idle;
+                _currentFirePower = 0; //나중에 변경해야 합니다
+            });
+        }
     }
 
     IEnumerator DelaySecond(float sec)
@@ -96,19 +107,17 @@ public class CanonController : MonoBehaviour
             CameraManager.Instance.ShakeCam(2, 0.6f);
 
             UIManager.Instance.ShowTextMessage("-계속 진행하시려면 Space bar-");
+            _state = State.WaitingToKey;
 
-            //GameManager.Instance.BackToRigCam(1.5f);
+            TimeController.Instance.ModifyTimeScale(0.2f, 0.1f, () =>
+            {
+                TimeController.Instance.ModifyTimeScale(1f, 0.5f);
+            });
         };
 
         OnChangeGauge();
 
         StartCoroutine(DelayChageToActionCam(ball.transform, 0.4f));
-    }
-
-    public void SetToIdle()
-    {
-        _state = State.Idle;
-        _currentFirePower = 0; //나중에 변경해야 합니다
     }
 
     private void MandleMove()

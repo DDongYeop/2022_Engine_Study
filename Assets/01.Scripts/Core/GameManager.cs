@@ -27,17 +27,9 @@ public class GameManager : MonoBehaviour
         UIManager.Instance = new UIManager();
 
         _cannonController = _cannonTrm.GetComponent<CanonController>();
-    }
 
-    public void BackToRigCam(float sec)
-    {
-        StartCoroutine(Delaysec(sec));
-    }
-
-    IEnumerator Delaysec(float sec)
-    {
-        yield return new WaitForSeconds(sec);
-        CameraManager.Instance.SetRigCamActive();
-        _cannonController.SetToIdle();
+        GameObject timeController = new GameObject("TimeController");
+        timeController.transform.parent = transform;
+        TimeController.Instance = timeController.AddComponent<TimeController>();
     }
 }

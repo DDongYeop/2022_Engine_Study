@@ -11,16 +11,22 @@ public class UIManager
 
     private RectTransform _canvasTrm;
     private TextMeshProUGUI _noticeMegTxt;
+    private RectTransform _msgTrm;
+
+    private Vector3 _initAnchorPos; //초기 앵커 위치 가져오는 변수
 
     public UIManager()
     {
         _canvasTrm = GameObject.Find("Canvas").GetComponent<RectTransform>();
         _noticeMegTxt = _canvasTrm.Find("BottomPanel/NoticeMessageText").GetComponent<TextMeshProUGUI>();
         _noticeMegTxt.SetText("");
+        _msgTrm = _noticeMegTxt.GetComponent<RectTransform>();
+        _initAnchorPos = _msgTrm.anchoredPosition; //초기 앵커위치 저장
     }
 
     public void ShowTextMessage(string text)
     {
+        _msgTrm.anchoredPosition = _initAnchorPos; //띄울때 초기 앵커위치로 복귀
         _noticeMegTxt.SetText(text);
         _noticeMegTxt.color = Color.white;
         _noticeMegTxt.DOFade(0.2f, 1f).SetLoops(-1, LoopType.Yoyo);
@@ -28,6 +34,18 @@ public class UIManager
 
     public void HideTextMessage(Action NextAction)
     {
+        _noticeMegTxt.DOKill();//기존에 재생되던 애니메이션을 전부 죽이고
 
+        Sequence seq = DOTween.Sequence();
+        Vector3 targetPos = _initAnchorPos + new Vector3(970f, 0, 0);
+        targetPos.x += 970f;
+        seq.Append(_msgTrm.DOAnchorPos(targetPos, 0.4f));
+        seq.Join(_noticeMegTxt.DOFade(0, 0.4f));
+
+        seq.OnComplete(() =>
+        {
+            _noticeMegTxt.SetText("");
+            NextAction?.Invoke();
+        });
     }
 }
