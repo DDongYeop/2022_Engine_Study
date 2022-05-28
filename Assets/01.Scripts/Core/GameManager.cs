@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     #region 박스 스코어 관련 코드 
     private int _totalBoxCount = 0, _currentBoxCount = 0;
+    private int _destroyCnt = 0;
     #endregion
 
     private void Awake()
@@ -56,8 +57,25 @@ public class GameManager : MonoBehaviour
         _currentBoxCount = _totalBoxCount = stage.BoxCount;
         stage.Init(() =>
         {
-            _currentBoxCount--;
-            UIManager.Instance.SetBoxScore(_currentBoxCount, _totalBoxCount);
+            _destroyCnt++;
+            /*_currentBoxCount--;
+            UIManager.Instance.SetBoxScore(_currentBoxCount, _totalBoxCount);*/
         });
+    }
+
+    private bool _isAnimated = false;
+
+    private void Update()
+    {
+        if (_isAnimated == false && _destroyCnt > 0)
+        {
+            _currentBoxCount--;
+            _isAnimated = true;
+            _destroyCnt--;
+            UIManager.Instance.SetBoxScore(_currentBoxCount, _totalBoxCount, () => 
+            { 
+                _isAnimated = false;
+            });
+        }
     }
 }

@@ -52,8 +52,9 @@ public class UIManager
         });
     }
 
-    public void SetBoxScore(int currentBoxCount, int totalBoxCount)
+    public void SetBoxScore(int currentBoxCount, int totalBoxCount, Action CallBack)
     {
         _boxCountText.SetText($"{currentBoxCount} / {totalBoxCount}");
+        _boxCountText.rectTransform.DOShakeAnchorPos(0.3f, 25, 25).SetUpdate(true).OnComplete(() => CallBack());
     }
 }
