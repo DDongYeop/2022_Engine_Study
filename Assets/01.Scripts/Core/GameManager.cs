@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
 
+        UIManager.Instance = new UIManager();
+
         _cannonController = _cannonTrm.GetComponent<CanonController>();
     }
 

@@ -34,9 +34,7 @@ public class Ball : MonoBehaviour
         //GameManager.Instance.PlayExplosionSound(); //파괴 사운드 재생
         OnExplosion?.Invoke();
 
-        CameraManager.Instance.ShakeCam(2, 0.6f);
-
-        GameManager.Instance.BackToRigCam(1.5f);
+        
         Destroy(ps.gameObject, 2f);
         Destroy(gameObject);
     }

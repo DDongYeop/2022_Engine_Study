@@ -93,6 +93,11 @@ public class CanonController : MonoBehaviour
         ball.OnExplosion += () =>
         {
             _cannonSound.PlayExplosionSound();
+            CameraManager.Instance.ShakeCam(2, 0.6f);
+
+            UIManager.Instance.ShowTextMessage("-계속 진행하시려면 Space bar-");
+
+            //GameManager.Instance.BackToRigCam(1.5f);
         };
 
         OnChangeGauge();
