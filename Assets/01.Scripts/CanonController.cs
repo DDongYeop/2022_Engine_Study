@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,9 @@ public class CanonController : MonoBehaviour
     [SerializeField] private float _charginSpeed = 300f; //차징 속도
     [SerializeField] private Ball _ballPrefab;
 
+    [SerializeField] private int _fireCnt;
+    private Action OnEmptyBall = null;
+
     [Header("캐논 UI관련")]
     [SerializeField] private CannonPanel _panel;
 
@@ -42,6 +46,12 @@ public class CanonController : MonoBehaviour
         _cannonSound = transform.Find("CannonSound").GetComponent<CannonSoundPlayer>();
     }
 
+    public void SetGameStart(int count, Action OnEmpty)
+    {
+        _fireCnt = count;
+        OnEmptyBall = OnEmpty;
+    }
+
     private void Update()
     {
         MandleMove();
@@ -50,7 +60,7 @@ public class CanonController : MonoBehaviour
 
     private void HandleFire()
     {
-        if(Input.GetButtonDown("Jump") && (short)_state < 2)
+        if(Input.GetButtonDown("Jump") && (short)_state < 2 && _fireCnt > 0)
         {
             _state = State.Charging;
         }
@@ -71,11 +81,20 @@ public class CanonController : MonoBehaviour
 
         if(Input.GetButtonDown("Jump") && _state == State.WaitingToKey)
         {
+            _state = State.Idle;
+            _fireCnt--; //탄환수를 하나 감소 시키고
             UIManager.Instance.HideTextMessage(() =>
             {
                 CameraManager.Instance.SetRigCamActive();
-                _state = State.Idle;
-                _currentFirePower = 0; //나중에 변경해야 합니다
+
+                if(_fireCnt <= 0)
+                {
+                    OnEmptyBall?.Invoke();
+                }
+                else
+                {
+                    _currentFirePower = 0;
+                }
             });
         }
     }

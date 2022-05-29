@@ -52,9 +52,10 @@ public class UIManager
         });
     }
 
-    public void SetBoxScore(int currentBoxCount, int totalBoxCount, Action CallBack)
+    public void SetBoxScore(int currentBoxCount, int totalBoxCount, Action CallBack = null)
     {
         _boxCountText.SetText($"{currentBoxCount} / {totalBoxCount}");
-        _boxCountText.rectTransform.DOShakeAnchorPos(0.3f, 25, 25).SetUpdate(true).OnComplete(() => CallBack());
+        if(CallBack != null)
+            _boxCountText.rectTransform.DOShakeAnchorPos(0.3f, 25, 25).SetUpdate(true).OnComplete(() => CallBack());
     }
 }

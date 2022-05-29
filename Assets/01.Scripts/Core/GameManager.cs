@@ -66,8 +66,13 @@ public class GameManager : MonoBehaviour
         stage.Init(() =>
         {
             _destroyCnt++;
-            /*_currentBoxCount--;
-            UIManager.Instance.SetBoxScore(_currentBoxCount, _totalBoxCount);*/
+        });
+        UIManager.Instance.SetBoxScore(_currentBoxCount, _totalBoxCount);
+
+        _cannonController.SetGameStart(3, () =>
+        {
+            //여기서 게임 클리어 화면 띄우기
+            Debug.Log("게임 클리어");
         });
     }
 

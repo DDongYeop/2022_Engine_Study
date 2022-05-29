@@ -947,9 +947,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _rotateSpeed: 20
-  _maxFirePower: 800
-  _charginSpeed: 300
+  _maxFirePower: 1200
+  _charginSpeed: 500
   _ballPrefab: {fileID: 4522509880395668983, guid: 50f83c02a9582c3489d6f83aee67e778, type: 3}
+  _fireCnt: 0
   _panel: {fileID: 698251595}
   _cannonSound: {fileID: 0}
   _state: 0

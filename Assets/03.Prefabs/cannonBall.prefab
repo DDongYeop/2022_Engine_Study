@@ -138,5 +138,5 @@ MonoBehaviour:
   _whatIsDamageable:
     serializedVersion: 2
     m_Bits: 64
-  _expRadius: 2
-  _expPower: 20
+  _expRadius: 3.5
+  _expPower: 15
