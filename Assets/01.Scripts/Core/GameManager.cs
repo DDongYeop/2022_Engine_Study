@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     private int _destroyCnt = 0;
     #endregion
 
+    [SerializeField] private List<PoolableMono> _poolingList;
+
     private void Awake()
     {
         if (Instance != null)
@@ -41,6 +43,12 @@ public class GameManager : MonoBehaviour
         cameraManager.transform.parent = transform;
         CameraManager.Instance = cameraManager.AddComponent<CameraManager>();
         CameraManager.Instance.Init();
+
+        PoolManager.Instance = new PoolManager(transform); // 게임매니저를 풀링 부모로 해서 풀매니저 싱글톤 생성
+        foreach(PoolableMono p in _poolingList)
+        {
+            PoolManager.Instance.CreatePool(p, 40);
+        }
 
         LoadStage(1);
     }

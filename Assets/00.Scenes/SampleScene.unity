@@ -1289,7 +1289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0ecd24e5c06b4458fd18cf8d3bb728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: -5263541284630361535, guid: f1e67f503b89e4b4a849ad425dce8f43, type: 3}
 --- !u!1 &1197580485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,6 +1364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cannonTrm: {fileID: 629379576}
+  _poolingList:
+  - {fileID: 1186291125350844627, guid: f1e67f503b89e4b4a849ad425dce8f43, type: 3}
 --- !u!4 &1257313966
 Transform:
   m_ObjectHideFlags: 0
