@@ -20,6 +20,7 @@ public class ExplosionParticle : PoolableMono
     IEnumerator DelayCo()
     {
         yield return new WaitForSeconds(_lifeTime);
-        //여기서 다시 물에 넣는 것을 작생해야함
+        
+        PoolManager.Instance.Push(this);
     }
 }

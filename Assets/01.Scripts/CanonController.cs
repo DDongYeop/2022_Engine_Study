@@ -99,7 +99,10 @@ public class CanonController : MonoBehaviour
     {
         OnFire?.Invoke(); //Null이 아닐때만 실행하라
         CameraManager.Instance.ShakeCam(2, 0.4f);
-        Ball ball = Instantiate(_ballPrefab, _firePos.position, Quaternion.identity) as Ball;
+        Ball ball = PoolManager.Instance.Pop("cannonBall") as Ball;
+        //Ball ball = Instantiate(_ballPrefab, _firePos.position, Quaternion.identity) as Ball;
+        ball.transform.position = _firePos.position;
+
         ball.Fire(_firePos.right, _currentFirePower);
         ball.OnExplosion += () =>
         {

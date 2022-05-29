@@ -1366,6 +1366,8 @@ MonoBehaviour:
   _cannonTrm: {fileID: 629379576}
   _poolingList:
   - {fileID: 1186291125350844627, guid: f1e67f503b89e4b4a849ad425dce8f43, type: 3}
+  - {fileID: 4522509880395668983, guid: 50f83c02a9582c3489d6f83aee67e778, type: 3}
+  - {fileID: 8219254706341056862, guid: 217e59b9fa3d1c346a8aa0192520921b, type: 3}
 --- !u!4 &1257313966
 Transform:
   m_ObjectHideFlags: 0

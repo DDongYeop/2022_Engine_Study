@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Crate : MonoBehaviour, IDamageable
 {
-    [SerializeField] private BrokenCrate _brokenPrefab;
+    //[SerializeField] private BrokenCrate _brokenPrefab;
 
     public Action OnExplosion = null;
 
@@ -17,9 +17,10 @@ public class Crate : MonoBehaviour, IDamageable
 
     private void BoxExlposion(Vector2 dir, float force)
     {
-        BrokenCrate bc = Instantiate(_brokenPrefab, transform.position, Quaternion.identity);
+        BrokenCrate bc = PoolManager.Instance.Pop("BrokenCrate") as BrokenCrate;
+        bc.transform.position = transform.position;
         bc.AddForce(dir, force);
-        Destroy(bc.gameObject, 2f);
+        //Destroy(bc.gameObject, 2f);
         Destroy(gameObject);
     }
 }

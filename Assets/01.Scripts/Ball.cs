@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Ball : PoolableMono
 {
     [SerializeField] ParticleSystem _explosionParticle;
     [SerializeField] private LayerMask _whatIsDamageable;
@@ -29,14 +29,11 @@ public class Ball : MonoBehaviour
     {
         bool isDestory = CheckDestory();
 
-        ParticleSystem ps = Instantiate(_explosionParticle, transform.position, Quaternion.identity) as ParticleSystem;
-        ps.Play();
-        //GameManager.Instance.PlayExplosionSound(); //파괴 사운드 재생
+        ExplosionParticle ep = PoolManager.Instance.Pop("ExoplosionParticle") as ExplosionParticle;
+        ep.SetPositionAndPlay(transform.position);
         OnExplosion?.Invoke();
 
-        
-        Destroy(ps.gameObject, 2f);
-        Destroy(gameObject);
+        PoolManager.Instance.Push(this);
     }
 
     //내가 터지는 주변에 박스들이 존재하는지를 검사해서 폭팔
@@ -59,5 +56,10 @@ public class Ball : MonoBehaviour
         }
 
         return isCol;
+    }
+
+    public override void Reset()
+    {
+
     }
 }

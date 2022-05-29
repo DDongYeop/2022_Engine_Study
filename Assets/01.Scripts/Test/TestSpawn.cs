@@ -19,6 +19,10 @@ public class TestSpawn : MonoBehaviour
                 Vector3 randPos = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
 
                 float factor = Random.Range(0.2f, 5f);
+
+                ExplosionParticle ep = PoolManager.Instance.Pop("ExoplosionParticle") as ExplosionParticle;
+
+                ep.SetPositionAndPlay(randPos * factor + worldPos);
             }
         }
     }

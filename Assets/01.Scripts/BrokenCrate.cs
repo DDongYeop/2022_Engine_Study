@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrokenCrate : MonoBehaviour
+public class BrokenCrate : PoolableMono
 {
     private Vector3[] _initPosition;
     private Rigidbody2D[] _childRigidArr;
@@ -27,10 +27,17 @@ public class BrokenCrate : MonoBehaviour
         {
             rigid.AddForce(dir * power, ForceMode2D.Impulse);
         }
+        StartCoroutine(DelayCo());
+    }
+
+    IEnumerator DelayCo()
+    {
+        yield return new WaitForSeconds(2f);
+        PoolManager.Instance.Push(this);
     }
 
     //위치 복구
-    public void Reset()
+    public override void Reset()
     {
         for(int i = 0; i < transform.childCount; i++)
         {
