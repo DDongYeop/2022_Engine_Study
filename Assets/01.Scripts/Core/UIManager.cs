@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using System;
+using UnityEngine.UI;
 
 public class UIManager  
 {
@@ -13,6 +14,9 @@ public class UIManager
     private TextMeshProUGUI _noticeMegTxt;
     private RectTransform _msgTrm;
     private TextMeshProUGUI _boxCountText;
+
+    private RectTransform _innerPopupWindow;
+    private RectTransform _outerPopupPanel;
 
     private Vector3 _initAnchorPos; //초기 앵커 위치 가져오는 변수
 
@@ -25,6 +29,9 @@ public class UIManager
         _initAnchorPos = _msgTrm.anchoredPosition; //초기 앵커위치 저장
 
         _boxCountText = _canvasTrm.Find("TopPanel/BoxCountPanel/BoxCountText").GetComponent<TextMeshProUGUI>();
+
+        _outerPopupPanel = _canvasTrm.Find("PopupPanel").GetComponent<RectTransform>();
+        _innerPopupWindow = _outerPopupPanel.Find("InnerPopupImage").GetComponent<RectTransform>();
     }
 
     public void ShowTextMessage(string text)
@@ -57,5 +64,35 @@ public class UIManager
         _boxCountText.SetText($"{currentBoxCount} / {totalBoxCount}");
         if(CallBack != null)
             _boxCountText.rectTransform.DOShakeAnchorPos(0.3f, 25, 25).SetUpdate(true).OnComplete(() => CallBack());
+    }
+
+    public void ShowResultWindow(int startCnt)
+    {
+        Image img = _outerPopupPanel.GetComponent<Image>();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(img.DOFade(0.8f, 0.3f));
+        seq.Append(_innerPopupWindow.DOAnchorPos(Vector2.zero - new Vector2(0, 70f), 0.3f));
+        seq.Append(_innerPopupWindow.DOAnchorPos(Vector2.zero + new Vector2(0, 30f), 0.2f));
+        seq.Append(_innerPopupWindow.DOAnchorPos(Vector2.zero, 0.2f));
+
+        List<RectTransform> childRect = new List<RectTransform>();
+        _innerPopupWindow.Find("GoldStarPanel").GetComponentsInChildren<RectTransform>(childRect);
+        childRect.RemoveAt(0); //맨 첫번째 애는 지워준다. 부모끼리
+
+        for(int i = 0; i < startCnt; i++)
+        {
+            Image starImage = childRect[i].GetComponent<Image>();
+            seq.Append(starImage.DOFade(1f, 0.3f));
+            seq.Join(childRect[i].DORotate(new Vector3(0, 720f, 0), 0.3f, RotateMode.FastBeyond360));
+            seq.Join(childRect[i].DOScale(Vector3.one, 0.3f) );
+        }
+    }
+
+    public void CloseResultWindow()
+    {
+        Image img = _outerPopupPanel.GetComponent<Image>();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_innerPopupWindow.DOAnchorPos(Vector2.zero + new Vector2(0, 1000f), 0.3f));
+        seq.Append(img.DOFade(0f, 0.3f));
     }
 }

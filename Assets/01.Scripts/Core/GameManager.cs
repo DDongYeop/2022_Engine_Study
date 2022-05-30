@@ -71,8 +71,8 @@ public class GameManager : MonoBehaviour
 
         _cannonController.SetGameStart(3, () =>
         {
-            //여기서 게임 클리어 화면 띄우기
             Debug.Log("게임 클리어");
+            UIManager.Instance.ShowResultWindow(3);
         });
     }
 
@@ -89,6 +89,16 @@ public class GameManager : MonoBehaviour
             { 
                 _isAnimated = false;
             });
+        }
+
+        //테스트 코드
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            UIManager.Instance.ShowResultWindow(3);
+        }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            UIManager.Instance.CloseResultWindow();
         }
     }
 }
