@@ -115,6 +115,8 @@ public class GameManager : MonoBehaviour
                 UIManager.Instance.ShowResultWindow(1);
             }
         });
+
+        UIManager.Instance.CloseBlackScreen();
     }
 
     private bool _isAnimated = false;
