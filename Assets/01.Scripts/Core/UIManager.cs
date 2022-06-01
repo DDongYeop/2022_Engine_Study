@@ -18,6 +18,12 @@ public class UIManager
     private RectTransform _innerPopupWindow;
     private RectTransform _outerPopupPanel;
 
+    private RemainBall _reamainBall;
+    public int RemainBallCnt
+    {
+        set => _reamainBall.SetSlotCount(value);
+    }
+
     private Vector3 _initAnchorPos; //초기 앵커 위치 가져오는 변수
 
     public UIManager()
@@ -32,6 +38,9 @@ public class UIManager
 
         _outerPopupPanel = _canvasTrm.Find("PopupPanel").GetComponent<RectTransform>();
         _innerPopupWindow = _outerPopupPanel.Find("InnerPopupImage").GetComponent<RectTransform>();
+        
+        //남은 탄환수 지정
+        _reamainBall = _canvasTrm.Find("BottomPanel/RemainBall").GetComponent<RemainBall>();
     }
 
     public void ShowTextMessage(string text)

@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     private int _destroyCnt = 0;
     #endregion
 
+    [SerializeField] private int _initBallCount = 3;
+
     [SerializeField] private List<PoolableMono> _poolingList;
 
     private void Awake()
@@ -69,7 +71,7 @@ public class GameManager : MonoBehaviour
         });
         UIManager.Instance.SetBoxScore(_currentBoxCount, _totalBoxCount);
 
-        _cannonController.SetGameStart(3, () =>
+        _cannonController.SetGameStart(_initBallCount, () =>
         {
             Debug.Log("게임 클리어");
             UIManager.Instance.ShowResultWindow(3);
@@ -92,13 +94,13 @@ public class GameManager : MonoBehaviour
         }
 
         //테스트 코드
-        if(Input.GetKeyDown(KeyCode.T))
+        /*if(Input.GetKeyDown(KeyCode.T))
         {
             UIManager.Instance.ShowResultWindow(3);
-        }
-        if(Input.GetKeyDown(KeyCode.Q))
+        }*/
+        /*if(Input.GetKeyDown(KeyCode.Q))
         {
             UIManager.Instance.CloseResultWindow();
-        }
+        }*/
     }
 }

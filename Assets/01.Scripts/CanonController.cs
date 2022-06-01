@@ -50,6 +50,7 @@ public class CanonController : MonoBehaviour
     {
         _fireCnt = count;
         OnEmptyBall = OnEmpty;
+        UIManager.Instance.RemainBallCnt = _fireCnt;
     }
 
     private void Update()
@@ -83,6 +84,8 @@ public class CanonController : MonoBehaviour
         {
             _state = State.Idle;
             _fireCnt--; //탄환수를 하나 감소 시키고
+            UIManager.Instance.RemainBallCnt = _fireCnt;
+
             UIManager.Instance.HideTextMessage(() =>
             {
                 CameraManager.Instance.SetRigCamActive();
@@ -111,7 +114,6 @@ public class CanonController : MonoBehaviour
         yield return new WaitForSeconds(sec);
 
         CameraManager.Instance.SetActionCamActive(target);
-
     }
 
     private void FireCanon()
