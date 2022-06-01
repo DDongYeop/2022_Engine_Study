@@ -26,16 +26,4 @@ public class RemainBall : MonoBehaviour
             slotList[i].color = new Color(1, 1, 1, 0);
         }
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            SetSlotCount(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            SetSlotCount(2);
-        }
-    }
 }

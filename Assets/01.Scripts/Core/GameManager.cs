@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<PoolableMono> _poolingList;
 
+    #region 스테이지 관련 코드
+    private int _currentStage = 1;
+    private Stage _currentStageObject = null;
+    #endregion
+
     private void Awake()
     {
         if (Instance != null)
@@ -52,20 +57,42 @@ public class GameManager : MonoBehaviour
             PoolManager.Instance.CreatePool(p, 40);
         }
 
-        LoadStage(1);
+        //이 부분은 세이브 데이터에서 불러와서 셋팅하던지, 아니면 다른 방법으로 셋팅하게 될거다. 
+        _currentStage = 1;
+    }
+
+    private void Start()
+    {
+        LoadStage(_currentStage);
+    }
+
+    public void RestartStage()
+    {
+        LoadStage(_currentStage);
+    }
+
+    public void LoadNextStage()
+    {
+        _currentStage++;
+        LoadStage(_currentStage);
     }
 
     public void LoadStage(int idx)
     {
+        if(_currentStageObject != null)
+        {
+            Destroy(_currentStageObject.gameObject); //이전 스테이지 날려주고
+        }
+
         Stage stagePrefab = Resources.Load<Stage>($"Stage{idx}");
-        Stage stage = Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);
+        _currentStageObject = Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);
         
-        CameraManager.Instance.SetConfiner(stage.CamBound);
+        CameraManager.Instance.SetConfiner(_currentStageObject.CamBound);
 
-        _cannonTrm.position = stage.CannonPosition;
+        _cannonTrm.position = _currentStageObject.CannonPosition;
 
-        _currentBoxCount = _totalBoxCount = stage.BoxCount;
-        stage.Init(() =>
+        _currentBoxCount = _totalBoxCount = _currentStageObject.BoxCount;
+        _currentStageObject.Init(() =>
         {
             _destroyCnt++;
         });
@@ -73,8 +100,20 @@ public class GameManager : MonoBehaviour
 
         _cannonController.SetGameStart(_initBallCount, () =>
         {
-            Debug.Log("게임 클리어");
-            UIManager.Instance.ShowResultWindow(3);
+            float ratio = (float) (_totalBoxCount - _currentBoxCount) / _totalBoxCount;
+
+            if(ratio > 0.9f)
+            {
+                UIManager.Instance.ShowResultWindow(3);
+            }
+            else if (ratio > 0.5f)
+            {
+                UIManager.Instance.ShowResultWindow(2);
+            }
+            else
+            {
+                UIManager.Instance.ShowResultWindow(1);
+            }
         });
     }
 
@@ -94,13 +133,17 @@ public class GameManager : MonoBehaviour
         }
 
         //테스트 코드
-        /*if(Input.GetKeyDown(KeyCode.T))
+        if(Input.GetKeyDown(KeyCode.T))
         {
             UIManager.Instance.ShowResultWindow(3);
-        }*/
-        /*if(Input.GetKeyDown(KeyCode.Q))
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            UIManager.Instance.ShowResultWindow(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             UIManager.Instance.CloseResultWindow();
-        }*/
+        }
     }
 }

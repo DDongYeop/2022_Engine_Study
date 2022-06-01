@@ -17,6 +17,10 @@ public class UIManager
 
     private RectTransform _innerPopupWindow;
     private RectTransform _outerPopupPanel;
+    private RectTransform _blackImage;
+
+    private Button _nextBtn;
+    private Button _reStartBtn;
 
     private RemainBall _reamainBall;
     public int RemainBallCnt
@@ -38,9 +42,43 @@ public class UIManager
 
         _outerPopupPanel = _canvasTrm.Find("PopupPanel").GetComponent<RectTransform>();
         _innerPopupWindow = _outerPopupPanel.Find("InnerPopupImage").GetComponent<RectTransform>();
-        
+        _blackImage = _canvasTrm.Find("BlackImage").GetComponent<RectTransform>();
+
+        _nextBtn = _innerPopupWindow.Find("GoToNextButton").GetComponent<Button>();
+        _nextBtn.onClick.AddListener(() =>
+        {
+            CloseResultWindow();
+            OpenBlackScreen(() => GameManager.Instance.LoadNextStage());
+        });
+        _reStartBtn = _innerPopupWindow.Find("RestartStage").GetComponent <Button>();
+        _reStartBtn.onClick.AddListener(() =>
+        {
+            CloseResultWindow();
+            OpenBlackScreen(() => GameManager.Instance.RestartStage());
+        });
+
         //남은 탄환수 지정
         _reamainBall = _canvasTrm.Find("BottomPanel/RemainBall").GetComponent<RemainBall>();
+    }
+
+    public void OpenBlackScreen(Action CallBack)
+    {
+        Image img = _blackImage.GetComponent<Image>();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_blackImage.DOAnchorPosY(0, 0.5f));
+        seq.Join(img.DOFade(1, 0.5f));
+        seq.AppendCallback(() =>
+        {
+            CallBack?.Invoke();
+        });
+    }
+
+    public void CloseBlackScreen()
+    {
+        Image img = _blackImage.GetComponent<Image>();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_blackImage.DOAnchorPosY(-1080f, 0.5f));
+        seq.Join(img.DOFade(0, 0.5f));
     }
 
     public void ShowTextMessage(string text)
@@ -75,8 +113,11 @@ public class UIManager
             _boxCountText.rectTransform.DOShakeAnchorPos(0.3f, 25, 25).SetUpdate(true).OnComplete(() => CallBack());
     }
 
-    public void ShowResultWindow(int startCnt)
+    public void ShowResultWindow(int starCnt)
     {
+        //starCnt가 2보다 크면 true가 들어가고 아니면 false가 들어간다. 
+        _nextBtn.interactable = starCnt >= 2;
+
         Image img = _outerPopupPanel.GetComponent<Image>();
         Sequence seq = DOTween.Sequence();
         seq.Append(img.DOFade(0.8f, 0.3f));
@@ -88,7 +129,7 @@ public class UIManager
         _innerPopupWindow.Find("GoldStarPanel").GetComponentsInChildren<RectTransform>(childRect);
         childRect.RemoveAt(0); //맨 첫번째 애는 지워준다. 부모끼리
 
-        for(int i = 0; i < startCnt; i++)
+        for(int i = 0; i < starCnt; i++)
         {
             Image starImage = childRect[i].GetComponent<Image>();
             seq.Append(starImage.DOFade(1f, 0.3f));

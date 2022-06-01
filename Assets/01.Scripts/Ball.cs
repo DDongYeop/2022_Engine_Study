@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : PoolableMono
+public class Ball : PoolableMono, IDamageable
 {
     [SerializeField] ParticleSystem _explosionParticle;
     [SerializeField] private LayerMask _whatIsDamageable;
@@ -36,6 +36,8 @@ public class Ball : PoolableMono
         PoolManager.Instance.Push(this);
     }
 
+    
+
     //내가 터지는 주변에 박스들이 존재하는지를 검사해서 폭팔
     private bool CheckDestory()
     {
@@ -61,5 +63,11 @@ public class Ball : PoolableMono
     public override void Reset()
     {
 
+    }
+
+    public void OnDamage(int damage, GameObject damageDealer, Vector2 dir, float force)
+    {
+        OnExplosion?.Invoke();
+        PoolManager.Instance.Push(this);
     }
 }
