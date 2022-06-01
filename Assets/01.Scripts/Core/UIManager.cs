@@ -115,6 +115,9 @@ public class UIManager
 
     public void ShowResultWindow(int starCnt)
     {
+        CanvasGroup cg = _outerPopupPanel.GetComponent<CanvasGroup>();
+        cg.interactable = true;
+
         //starCnt가 2보다 크면 true가 들어가고 아니면 false가 들어간다. 
         _nextBtn.interactable = starCnt >= 2;
 
@@ -140,9 +143,22 @@ public class UIManager
 
     public void CloseResultWindow()
     {
+        CanvasGroup cg = _outerPopupPanel.GetComponent<CanvasGroup>();
+        cg.interactable = false;
+
         Image img = _outerPopupPanel.GetComponent<Image>();
         Sequence seq = DOTween.Sequence();
         seq.Append(_innerPopupWindow.DOAnchorPos(Vector2.zero + new Vector2(0, 1000f), 0.3f));
         seq.Append(img.DOFade(0f, 0.3f));
+
+        List<RectTransform> childRect = new List<RectTransform>();
+        _innerPopupWindow.Find("GoldStarPanel").GetComponentsInChildren<RectTransform>(childRect);
+        childRect.RemoveAt(0); //맨 첫번째 애는 지워준다. 부모끼리
+
+        foreach(RectTransform rect in childRect)
+        {
+            Image starImage = rect.GetComponent<Image>();
+            seq.Append(starImage.DOFade(0f, 0.3f));
+        }
     }
 }
