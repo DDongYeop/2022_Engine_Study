@@ -18,12 +18,24 @@ public class RemainBall : MonoBehaviour
         int realCnt = Mathf.Min(cnt, slotList.Count);
         for(int i = 0; i < realCnt; i++)
         {
-            slotList[i].color = new Color(1, 1, 1, i);
+            slotList[i].color = new Color(1, 1, 1, 1);
         }
 
         for(int i = realCnt; i < slotList.Count; i++)
         {
             slotList[i].color = new Color(1, 1, 1, 0);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            SetSlotCount(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            SetSlotCount(2);
         }
     }
 }
