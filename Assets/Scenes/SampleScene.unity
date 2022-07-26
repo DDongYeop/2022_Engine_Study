@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 340355800}
   - component: {fileID: 340355799}
   - component: {fileID: 340355798}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Platforms Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13112,11 +13112,11 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 8
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1683383748
 CapsuleCollider2D:
@@ -13131,8 +13131,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0760116, y: -0.0665102}
-  m_Size: {x: 0.8353081, y: 1.0190029}
+  m_Offset: {x: -0.046628386, y: -0.0665102}
+  m_Size: {x: 0.8940745, y: 1.0190029}
   m_Direction: 0
 --- !u!114 &1683383749
 MonoBehaviour:
@@ -13177,3 +13177,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  jumppw: 25
