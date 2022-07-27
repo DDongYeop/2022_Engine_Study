@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     private void FlipSprite()
     {
         bool playerHasHorizontalSpeed = Mathf.Abs(_rb.velocity.x) > Mathf.Epsilon;  //Epsilon은 0에 가장 가까운 숫자
+        _animator.SetBool("IsCliming", false);
 
         if (playerHasHorizontalSpeed)
             transform.localScale = new Vector2(Mathf.Sign(_rb.velocity.x), 1f); //Sign함수가 0이거나 양수이면 1로 반환
@@ -55,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         if (!_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
             _rb.gravityScale = gravityScaleAtStart;
-            _animator.SetBool("isCliming", false);
+            _animator.SetBool("IsCliming", false);
             return;
         }
 
@@ -70,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnMove(InputValue value)
     {
         _moveInput = value.Get<Vector2>();
+        _animator.SetBool("IsCliming", false);
     }
 
     private void OnJump(InputValue value)
@@ -77,6 +79,8 @@ public class PlayerMovement : MonoBehaviour
         if (!_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
             return;
 
+        _animator.SetBool("IsCliming", false);
+        
         if (value.isPressed)
             _rb.velocity += new Vector2(0f, jumppw);
     }
