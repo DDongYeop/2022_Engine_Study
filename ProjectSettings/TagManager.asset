@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - Ground
-  - 
+  - Ladder
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 656935023
+    locked: 0
+  - name: Ladder
+    uniqueID: 2033909057
     locked: 0
   - name: Water
     uniqueID: 2640517055

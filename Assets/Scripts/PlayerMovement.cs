@@ -7,22 +7,30 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float speed = 5f;
     [SerializeField] float jumppw = 10f;
+    [SerializeField] float climbSpeed = 5f;
+
 
     private Vector2 _moveInput;
     private Rigidbody2D _rb;
     private Animator _animator;
+    private CapsuleCollider2D _capsuleCollider;
 
+    private float gravityScaleAtStart;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _capsuleCollider = GetComponent<CapsuleCollider2D>();
+
+        gravityScaleAtStart = _rb.gravityScale;
     }
 
     private void Update()
     {
         Run();
         FlipSprite();
+        ClimbLadder();
     }
 
     private void Run()
@@ -42,6 +50,23 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(Mathf.Sign(_rb.velocity.x), 1f); //Sign함수가 0이거나 양수이면 1로 반환
     }
 
+    private void ClimbLadder()
+    {
+        if (!_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        {
+            _rb.gravityScale = gravityScaleAtStart;
+            _animator.SetBool("isCliming", false);
+            return;
+        }
+
+        Vector2 _climbVelocity = new Vector2(_rb.velocity.x, _moveInput.y * climbSpeed);
+        _rb.velocity = _climbVelocity;
+        _rb.gravityScale = 0f;
+
+        bool playerVerticalSpeed = Mathf.Abs(_rb.velocity.y) > Mathf.Epsilon;
+        _animator.SetBool("IsCliming", playerVerticalSpeed);
+    }
+
     private void OnMove(InputValue value)
     {
         _moveInput = value.Get<Vector2>();
@@ -49,9 +74,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
+        if (!_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+            return;
+
         if (value.isPressed)
-        {
             _rb.velocity += new Vector2(0f, jumppw);
-        }
     }
 }
