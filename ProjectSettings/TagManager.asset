@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - Ground
   - Ladder
-  - 
-  - 
+  - BackGround
+  - Bouncing
   - 
   - 
   - 
@@ -47,11 +47,17 @@ TagManager:
   - name: Ladder
     uniqueID: 2033909057
     locked: 0
+  - name: Bouncing
+    uniqueID: 2187835377
+    locked: 0
   - name: Water
     uniqueID: 2640517055
     locked: 0
   - name: Platforms
     uniqueID: 3635718377
+    locked: 0
+  - name: Enemy
+    uniqueID: 1325729581
     locked: 0
   - name: Player
     uniqueID: 895456717

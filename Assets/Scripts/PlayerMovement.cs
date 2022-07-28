@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _animator;
     private CapsuleCollider2D _capsuleCollider;
+    private CircleCollider2D _circleCollider;
 
     private float gravityScaleAtStart;
 
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _capsuleCollider = GetComponent<CapsuleCollider2D>();
+        _circleCollider = GetComponent<CircleCollider2D>();
 
         gravityScaleAtStart = _rb.gravityScale;
     }
@@ -44,10 +46,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipSprite()
     {
-        bool playerHasHorizontalSpeed = Mathf.Abs(_rb.velocity.x) > Mathf.Epsilon;  //Epsilon은 0에 가장 가까운 숫자
+        bool playerHasVerticalSpeed = Mathf.Abs(_rb.velocity.x) > Mathf.Epsilon;  //Epsilon은 0에 가장 가까운 숫자
         _animator.SetBool("IsCliming", false);
 
-        if (playerHasHorizontalSpeed)
+        if (playerHasVerticalSpeed)
             transform.localScale = new Vector2(Mathf.Sign(_rb.velocity.x), 1f); //Sign함수가 0이거나 양수이면 1로 반환
     }
 
@@ -76,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if (!_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        if (!_circleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
             return;
 
         _animator.SetBool("IsCliming", false);
