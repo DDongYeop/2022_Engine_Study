@@ -6,10 +6,12 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] float speed = 2f;
     
+    private CapsuleCollider2D _capsuleCollider;
     private Rigidbody2D _rb;
 
     private void Awake()
     {
+        _capsuleCollider = GetComponent<CapsuleCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
     }
 
@@ -17,6 +19,7 @@ public class EnemyMovement : MonoBehaviour
     {
         EnemyMove();
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         speed = -speed;
