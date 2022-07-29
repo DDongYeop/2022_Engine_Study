@@ -17,7 +17,7 @@ TagManager:
   - BackGround
   - Bouncing
   - Enemy
-  - 
+  - Spikes
   - 
   - 
   - 
@@ -44,14 +44,17 @@ TagManager:
   - name: Background
     uniqueID: 656935023
     locked: 0
+  - name: Water
+    uniqueID: 2640517055
+    locked: 0
   - name: Ladder
     uniqueID: 2033909057
     locked: 0
   - name: Bouncing
     uniqueID: 2187835377
     locked: 0
-  - name: Water
-    uniqueID: 2640517055
+  - name: Spikes
+    uniqueID: 1029813159
     locked: 0
   - name: Platforms
     uniqueID: 3635718377

@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 5f;
     [SerializeField] float jumppw = 10f;
     [SerializeField] float climbSpeed = 5f;
-
+    [SerializeField] Vector2 deathKick = new Vector2(20f, 20f);
 
     private Vector2 _moveInput;
     private Rigidbody2D _rb;
@@ -32,13 +32,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_isDie == false)
-        {
-            Run();
-            FlipSprite();
-            ClimbLadder();
-            PlayerDie();
-        }
+        if (_isDie == true) return;
+
+        Run();
+        FlipSprite();
+        ClimbLadder();
+        PlayerDie();
     }
 
     private void Run()
@@ -78,31 +77,32 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerDie()
     {
-        if (_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        if (_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Spikes")))
         {
-            print(1);
             _animator.SetTrigger("IsDie");
             _isDie = true;
+            _rb.velocity = deathKick;
         }
     }
 
     private void OnMove(InputValue value)
     {
+        if (_isDie == true) return;
+
         _moveInput = value.Get<Vector2>();
         _animator.SetBool("IsCliming", false);
     }
 
     private void OnJump(InputValue value)
     {
-        if (_isDie == false)
-        {
-            if (!_circleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
-                return;
+        if (_isDie == true) return;
+        
+        if (!_circleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+            return;
 
-            _animator.SetBool("IsCliming", false);
-
-            if (value.isPressed)
-                _rb.velocity += new Vector2(0f, jumppw);
-        }
+        _animator.SetBool("IsCliming", false);
+        
+        if (value.isPressed)
+            _rb.velocity += new Vector2(0f, jumppw);
     }
 }
