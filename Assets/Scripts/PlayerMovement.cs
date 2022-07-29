@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float gravityScaleAtStart;
 
+    private bool _isDie = false;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -30,9 +32,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Run();
-        FlipSprite();
-        ClimbLadder();
+        if (_isDie == false)
+        {
+            Run();
+            FlipSprite();
+            ClimbLadder();
+            PlayerDie();
+        }
     }
 
     private void Run()
@@ -70,6 +76,16 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetBool("IsCliming", playerVerticalSpeed);
     }
 
+    private void PlayerDie()
+    {
+        if (_capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        {
+            print(1);
+            _animator.SetTrigger("IsDie");
+            _isDie = true;
+        }
+    }
+
     private void OnMove(InputValue value)
     {
         _moveInput = value.Get<Vector2>();
@@ -78,12 +94,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if (!_circleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
-            return;
+        if (_isDie == false)
+        {
+            if (!_circleCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+                return;
 
-        _animator.SetBool("IsCliming", false);
-        
-        if (value.isPressed)
-            _rb.velocity += new Vector2(0f, jumppw);
+            _animator.SetBool("IsCliming", false);
+
+            if (value.isPressed)
+                _rb.velocity += new Vector2(0f, jumppw);
+        }
     }
 }

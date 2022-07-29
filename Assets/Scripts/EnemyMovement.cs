@@ -8,7 +8,6 @@ public class EnemyMovement : MonoBehaviour
     
     private Rigidbody2D _rb;
 
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -18,17 +17,17 @@ public class EnemyMovement : MonoBehaviour
     {
         EnemyMove();
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        speed = -speed;
+        FlipSprite();
+    }
 
     private void EnemyMove()
     {
         _rb.velocity = new Vector2(speed, 0f);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        speed = -speed;
-        FlipSprite();
-    }
 
     private void FlipSprite()
     {
