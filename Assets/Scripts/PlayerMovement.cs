@@ -85,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetTrigger("IsDie");
             _isDie = true;
             _rb.velocity = deathKick;
+
+            FindObjectOfType<GameSession>().PrecessPlayerDeath();
         }
     }
 
