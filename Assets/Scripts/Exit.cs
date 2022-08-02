@@ -11,6 +11,7 @@ public class Exit : MonoBehaviour
 
     private BoxCollider2D _boxCollider2D;
 
+
     private void Awake()
     {
         currentSceneNum = SceneManager.GetActiveScene().buildIndex;
@@ -31,6 +32,9 @@ public class Exit : MonoBehaviour
     private IEnumerator WaitAndExit()
     {
         yield return new WaitForSeconds (1);
+
+        FindObjectOfType<ScenePersist>().ResetScenePersist();
+
         SceneManager.LoadScene(nextSceneNum);
     }
 }

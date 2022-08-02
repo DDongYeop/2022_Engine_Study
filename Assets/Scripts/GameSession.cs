@@ -13,6 +13,8 @@ public class GameSession : MonoBehaviour
 
     private int currentSceneNum;
 
+    private ScenePersist  _scenePersist;
+
     private void Awake()
     {
         int numGameSeession = FindObjectsOfType<GameSession>().Length;
@@ -21,6 +23,8 @@ public class GameSession : MonoBehaviour
             Destroy(gameObject);
         else
             DontDestroyOnLoad(gameObject);
+
+        _scenePersist = GameObject.Find("ScenePersist").GetComponent<ScenePersist>();
 
     }
 
@@ -52,6 +56,7 @@ public class GameSession : MonoBehaviour
 
     private void ResetGameSession()
     {
+        FindObjectOfType<ScenePersist>().ResetScenePersist();
         SceneManager.LoadScene(0);
         Destroy(gameObject);
     }
