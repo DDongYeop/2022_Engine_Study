@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7e4c1f7637de142b381fa5ab886eee, type: 3}
   m_Name: new Question 3
   m_EditorClassIdentifier: 
-  question: "\uACBD\uB3D9\uC5FD\uC740 \uC9C0\uAE08 \uC5BC\uB9CC \uD53C\uACE4\uD55C\uAC00?"
+  question: "\uACBD\uB3D9\uC5FD\uC740 \uC9C0\uAE08 \uC5B4\uB290\uC815\uB3C4 \uD53C\uACE4\uD55C\uAC00?"
   answers:
   - "\uC8FD\uC744\uAC70 \uAC19\uC74C"
   - "\uC57D\uAC04\uC740"
