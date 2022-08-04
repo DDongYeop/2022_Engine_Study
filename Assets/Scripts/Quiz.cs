@@ -8,11 +8,12 @@ public class Quiz : MonoBehaviour
 {
     [Header ("Question")]
     [SerializeField] TextMeshProUGUI questionTxt;
-    [SerializeField] QuestionSO question;
+    [SerializeField] List<QuestionSO> questionList = new List<QuestionSO>();
+    QuestionSO currentQuestion;
 
     [Header ("ANswer")]
     [SerializeField] GameObject[] answerButton;
-    private bool _hasAnsweredEarly;
+    private bool _hasAnsweredEarly = true;
 
     [Header("Button Image")]
     [SerializeField] Sprite defaultAnswerSprite;
@@ -22,11 +23,10 @@ public class Quiz : MonoBehaviour
     [SerializeField] Image timerImage;
     private Timer _timer;
 
+
     private void Start()
     {
         _timer = FindObjectOfType<Timer>();
-
-        GetNextQuestion();
     }
 
     private void Update()
@@ -48,20 +48,35 @@ public class Quiz : MonoBehaviour
 
     private void DisplayQuestion()
     {
-        questionTxt.text = question.Question;
+        questionTxt.text = currentQuestion.Question;
 
         for (int i = 0; i < 4; i++)
         {
             TextMeshProUGUI button = answerButton[i].GetComponentInChildren<TextMeshProUGUI>();
-            button.text = question.GetAnswer(i);
+            button.text = currentQuestion.GetAnswer(i);
         }
     }
 
     private void GetNextQuestion()
     {
+        if (questionList.Count == 0)
+            return;
+
         SetButtonState(true);
         SetDefaultButtonSprte();
+        GetRandomQuestion();
         DisplayQuestion();
+    }
+
+    private void GetRandomQuestion()
+    {
+        int rand = Random.Range(0, questionList.Count);
+        currentQuestion = questionList[rand];
+        
+        //questionList.RemoveAt(rand);
+        if (questionList.Contains(currentQuestion))
+            questionList.Remove(currentQuestion);
+        
     }
 
     private void SetDefaultButtonSprte()
@@ -83,13 +98,13 @@ public class Quiz : MonoBehaviour
 
     private void DisplayAnswer(int index)
     {
-        Image thisImage = answerButton[question.CorrectAnswerIndex].GetComponent<Image>();
+        Image thisImage = answerButton[currentQuestion.CorrectAnswerIndex].GetComponent<Image>();
         
-        if (index == question.CorrectAnswerIndex)
+        if (index == currentQuestion.CorrectAnswerIndex)
             questionTxt.text = "맞습니다 ! ";
         else
         {
-            string correctAnswer = question.GetAnswer(question.CorrectAnswerIndex);
+            string correctAnswer = currentQuestion.GetAnswer(currentQuestion.CorrectAnswerIndex);
             questionTxt.text = "틀렸습니다 ! \n 답은 \"" + correctAnswer + "\" 입니다!";
         }
         thisImage.sprite = correctAnswerSprite;
@@ -103,6 +118,4 @@ public class Quiz : MonoBehaviour
             button.interactable = state;
         }
     }
-
-
 }

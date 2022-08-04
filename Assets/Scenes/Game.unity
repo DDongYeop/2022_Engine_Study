@@ -316,7 +316,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionTxt: {fileID: 2033468722}
-  question: {fileID: 11400000, guid: f1d22f7b5719fd5479ae1ae70e79247b, type: 2}
+  questionList:
+  - {fileID: 11400000, guid: f1d22f7b5719fd5479ae1ae70e79247b, type: 2}
+  - {fileID: 11400000, guid: d67db7ba5a213b545bef578e6eea19f3, type: 2}
+  - {fileID: 11400000, guid: 739a22cd0cbfc7b438fd6a489718568a, type: 2}
+  - {fileID: 11400000, guid: 7382213bd84bacd489d21a4d9322522b, type: 2}
+  - {fileID: 11400000, guid: a313222002a94414e852626ba57f8928, type: 2}
+  - {fileID: 11400000, guid: e3952b623a3aa674e83a65b11b9a19ba, type: 2}
+  - {fileID: 11400000, guid: 242875029c412db4fb31d1a4655dc400, type: 2}
   answerButton:
   - {fileID: 7285627427885952605}
   - {fileID: 1769350591}
@@ -496,6 +503,7 @@ MonoBehaviour:
   timeToCompleteQuestion: 10
   timeToShowCorrectAnswer: 5
   fillFraction: 0
+  isAnsweringQuestion: 0
   loadNextQuestion: 0
 --- !u!4 &519417364
 Transform:
