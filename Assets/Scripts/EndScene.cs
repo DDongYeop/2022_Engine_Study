@@ -8,7 +8,7 @@ public class EndScene : MonoBehaviour
     [SerializeField] TextMeshProUGUI finalscoreTxt;
     private ScoreKeeper _scoreKeeper;
 
-    private void Start()
+    private void Awake()
     {
         _scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }

@@ -34,7 +34,7 @@ public class Quiz : MonoBehaviour
     public bool isComplete;
 
 
-    private void Start()
+    private void Awake()
     {
         _timer = FindObjectOfType<Timer>();
         _scoreKeeper = FindObjectOfType<ScoreKeeper>();
