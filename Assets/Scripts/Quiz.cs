@@ -23,10 +23,24 @@ public class Quiz : MonoBehaviour
     [SerializeField] Image timerImage;
     private Timer _timer;
 
+    [Header ("Socre")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    private ScoreKeeper _scoreKeeper;
+
+    [Header ("ProcessBar")]
+    [SerializeField] Slider progressBar;
+
+    [Header ("Other")]
+    public bool isComplete;
+
 
     private void Start()
     {
         _timer = FindObjectOfType<Timer>();
+        _scoreKeeper = FindObjectOfType<ScoreKeeper>();
+
+        progressBar.maxValue = questionList.Count;
+        progressBar.value = 0;
     }
 
     private void Update()
@@ -60,12 +74,17 @@ public class Quiz : MonoBehaviour
     private void GetNextQuestion()
     {
         if (questionList.Count == 0)
+        {
+            isComplete = true;
             return;
+        }
 
         SetButtonState(true);
         SetDefaultButtonSprte();
         GetRandomQuestion();
         DisplayQuestion();
+
+       _scoreKeeper.IncrementQuestionSeen();
     }
 
     private void GetRandomQuestion()
@@ -94,14 +113,21 @@ public class Quiz : MonoBehaviour
         DisplayAnswer(index);
         SetButtonState(false);
         _timer.CancelTimer();
+
+        scoreText.text = "Score : " + (int)_scoreKeeper.CalculateScore() + "%";
     }
 
     private void DisplayAnswer(int index)
     {
         Image thisImage = answerButton[currentQuestion.CorrectAnswerIndex].GetComponent<Image>();
-        
+
+        progressBar.value++;
+
         if (index == currentQuestion.CorrectAnswerIndex)
+        {
             questionTxt.text = "맞습니다 ! ";
+            _scoreKeeper.InxrementCorrectAnswers();
+        }
         else
         {
             string correctAnswer = currentQuestion.GetAnswer(currentQuestion.CorrectAnswerIndex);
