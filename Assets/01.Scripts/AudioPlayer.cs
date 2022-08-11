@@ -25,6 +25,7 @@ public class AudioPlayer : MonoBehaviour
     {
         float randomPitch = Random.Range(-_pitchRandomness, +_pitchRandomness);
         _audioSource.pitch = _basePitch + randomPitch;
+        PlayClip(clip);
     }
 
     protected void PlayClip(AudioClip clip)
