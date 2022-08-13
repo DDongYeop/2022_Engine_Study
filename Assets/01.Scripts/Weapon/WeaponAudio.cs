@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponAudio : MonoBehaviour
+public class WeaponAudio : AudioPlayer
 {
     private AudioClip _shootBulletClip = null;
     private AudioClip _outOfBulletClip = null;
@@ -13,5 +13,18 @@ public class WeaponAudio : MonoBehaviour
         _shootBulletClip = shoot;
         _outOfBulletClip = outof;
         _reloadClip = reload;
+    }
+
+    public void PlayShootSound()
+    {
+        PlayClip(_shootBulletClip);
+    }
+    public void PlayNoBulletSound()
+    {
+        PlayClip(_outOfBulletClip);
+    }
+    public void PlayReloadSound()
+    {
+        PlayClip(_reloadClip);
     }
 }

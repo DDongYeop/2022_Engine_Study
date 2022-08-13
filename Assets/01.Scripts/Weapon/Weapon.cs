@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Weapon : MonoBehaviour
 {
     #region 발사 관련 로직
-    public UnityEvent OnSho0t;
+    public UnityEvent OnShoot;
     public UnityEvent OnShootNoAmmo;
     public UnityEvent OnStopShooting;
     protected bool _isShooting = false;
@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponDataSO _weaponData;
     [SerializeField] protected GameObject _muzzle; //총구위치
     [SerializeField] protected TrackedReference _shellEjectPos; //탄피 생성 지점
-
+    
     public WeaponDataSO WeaponData { get => _weaponData; }
 
     #region AMMO관련 코드
@@ -40,6 +40,8 @@ public class Weapon : MonoBehaviour
     {
         //나중에 변경
         Ammo = _weaponData.ammoCapacity;
+        WeaponAudio wa= transform.Find("WeaponAudio").GetComponent<WeaponAudio>();
+        wa.SetAudioClip(_weaponData.shootClip, _weaponData.outOfAudioClip, _weaponData.reloadClip);
     }
 
     private void Update()
@@ -56,7 +58,7 @@ public class Weapon : MonoBehaviour
             {
                 Ammo -= _weaponData.GetBulletCountToSpawn();
 
-                OnSho0t?.Invoke();
+                OnShoot?.Invoke();
                 for (int i = 0; i < _weaponData.GetBulletCountToSpawn(); i++)
                 {
                     ShootBullet();
