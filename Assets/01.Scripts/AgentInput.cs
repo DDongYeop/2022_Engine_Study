@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using static Define;
@@ -7,10 +8,32 @@ public class AgentInput : MonoBehaviour
     public UnityEvent<Vector2> OnMovementKeyPress;
     public UnityEvent<Vector2> OnPointerPostionChanged;
 
+    public UnityEvent OnFireButtonPress;
+    public UnityEvent OnFireButtonRelease;
+    private bool _fireButtonDown = false;
+
     private void Update()
     {
         GetMovementInput();
         GetPointerInput();
+        GetFireInput();
+    }
+
+    private void GetFireInput()
+    {
+        if (Input.GetAxisRaw("Fire1") > 0)
+        {
+            _fireButtonDown = true;
+            OnFireButtonPress?.Invoke();
+        }
+        else
+        {
+            if (_fireButtonDown == false)
+            {
+                _fireButtonDown = true;
+                OnFireButtonRelease?.Invoke();
+            }
+        }
     }
 
     private void GetPointerInput()

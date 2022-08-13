@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AgentWeapon : MonoBehaviour
 {
+    protected Weapon _weapon; //자기가 들고있는 weapon
     protected WeaponRenderer _weaponRenderer;
     protected float _desireAngel; //무기가 바라보고자하는 방향
 
@@ -15,6 +16,7 @@ public class AgentWeapon : MonoBehaviour
     public virtual void AssignWeapon()
     {
         _weaponRenderer = GetComponentInChildren<WeaponRenderer>();
+        _weapon = GetComponentInChildren<Weapon>();
     }
 
     public virtual void AimWeapon(Vector2 pointerPos)
@@ -31,5 +33,15 @@ public class AgentWeapon : MonoBehaviour
     {
         _weaponRenderer.FlipSprite(_desireAngel > 90f || _desireAngel < -90f);
         _weaponRenderer.RenderBehindHead(_desireAngel > 0 && _desireAngel < 180f);
+    }
+
+    public virtual void Shoot()
+    {
+        _weapon.TryShooting();
+    }
+
+    public virtual void StopShooting()
+    {
+        _weapon.StopShooting();
     }
 }
