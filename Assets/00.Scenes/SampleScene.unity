@@ -469,7 +469,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &298131629
 MonoBehaviour:
@@ -9070,6 +9070,7 @@ GameObject:
   - component: {fileID: 1943699076}
   - component: {fileID: 1943699078}
   - component: {fileID: 1943699077}
+  - component: {fileID: 1943699079}
   m_Layer: 0
   m_Name: Assault_rifle
   m_TagString: Untagged
@@ -9155,6 +9156,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1943699079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943699075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fae0dfddf4eda14ea146fba39d61c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnShot:
+    m_PersistentCalls:
+      m_Calls: []
+  OnShootNoAmmo:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStopShooting:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAmmoChange:
+    m_PersistentCalls:
+      m_Calls: []
+  _ammo: 0
 --- !u!1 &1957547917
 GameObject:
   m_ObjectHideFlags: 0

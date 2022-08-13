@@ -22,8 +22,14 @@ public class AgentWeapon : MonoBehaviour
         Vector3 aimDirection = (Vector3)pointerPos - transform.position;
         _desireAngel = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
 
-        //여기에 렌더링 해주는거 들어가야 함
+        AdjustWeaponRendering(); //무기를 렌더링
 
         transform.rotation = Quaternion.AngleAxis(_desireAngel, Vector3.forward);
+    }
+
+    private void AdjustWeaponRendering()
+    {
+        _weaponRenderer.FlipSprite(_desireAngel > 90f || _desireAngel < -90f);
+        _weaponRenderer.RenderBehindHead(_desireAngel > 0 && _desireAngel < 180f);
     }
 }
