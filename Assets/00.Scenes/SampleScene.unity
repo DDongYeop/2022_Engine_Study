@@ -330,6 +330,8 @@ GameObject:
   - component: {fileID: 77405062}
   - component: {fileID: 77405063}
   - component: {fileID: 77405064}
+  - component: {fileID: 77405065}
+  - component: {fileID: 77405066}
   m_Layer: 0
   m_Name: FeedbackShoot
   m_TagString: Untagged
@@ -365,6 +367,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _feedbackToPlay:
   - {fileID: 77405064}
+  - {fileID: 77405065}
+  - {fileID: 77405066}
 --- !u!114 &77405064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +385,41 @@ MonoBehaviour:
   _lightOnDelay: 0.01
   _lightOffDelay: 0.01
   _defaultState: 0
+--- !u!114 &77405065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77405061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5215996f7510b45943061f8847726f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cmVcam: {fileID: 0}
+  _amplitude: 2
+  _frequency: 1
+  _duration: 0.1
+--- !u!114 &77405066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77405061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f7beb4ea16a5446a6709113dd8d842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectToShake: {fileID: 1943699076}
+  _duration: 0.05
+  _strength: 0.2
+  _randomness: 90
+  _vibrato: 10
+  _snepping: 0
+  _fadeOut: 1
 --- !u!4 &116530486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6304645242021760489, guid: 720561c241f4f364aa96e64f05c20e1f, type: 3}
@@ -680,6 +719,21 @@ MonoBehaviour:
       - m_Target: {fileID: 1772802587}
         m_TargetAssemblyTypeName: AgentWeapon, Assembly-CSharp
         m_MethodName: StopShooting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnreloadButtonPress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1772802587}
+        m_TargetAssemblyTypeName: AgentWeapon, Assembly-CSharp
+        m_MethodName: ReloadGun
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9101,6 +9155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d1ca650677c8949b836e552d3ddae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxTotalAmmo: 2000
+  _totalAmmo: 200
 --- !u!4 &1782031685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6304645242021760489, guid: 720561c241f4f364aa96e64f05c20e1f, type: 3}
@@ -9216,7 +9272,7 @@ MonoBehaviour:
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
-  m_FrequencyGain: 3
+  m_FrequencyGain: 1
   mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1943699075
 GameObject:
@@ -9381,6 +9437,36 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _ammo: 100
+  OnPlayNOAmmoSound:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 449366764}
+        m_TargetAssemblyTypeName: WeaponAudio, Assembly-CSharp
+        m_MethodName: PlayNoBulletSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayReloadSound:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 449366764}
+        m_TargetAssemblyTypeName: WeaponAudio, Assembly-CSharp
+        m_MethodName: PlayReloadSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1957547917
 GameObject:
   m_ObjectHideFlags: 0

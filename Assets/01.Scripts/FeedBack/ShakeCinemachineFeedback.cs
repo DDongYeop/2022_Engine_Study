@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using static Define;
 
 public class ShakeCinemachineFeedback : Feedback
 {
@@ -13,16 +14,34 @@ public class ShakeCinemachineFeedback : Feedback
 
     private void OnEnable()
     {
-        
+        _cmVcam = VCam;
+        _noise = _cmVcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
     public override void CompletePrevFeedback()
     {
-
+        StopAllCoroutines();
+        _noise.m_AmplitudeGain = 0;
     }
 
     public override void CreateFeedback()
     {
+        _noise.m_AmplitudeGain = _amplitude;
+        _noise.m_FrequencyGain = _frequency;
+        StartCoroutine(ShakeCoroutine());
+    }
 
+    IEnumerator ShakeCoroutine()
+    {
+        float time = _duration;
+        while (time > 0)
+        {
+            _noise.m_AmplitudeGain = Mathf.Lerp(0, _amplitude, time / _duration);
+            // lerp(0, 2, 1) => 2
+            // lerp(0, 10, 0.5(0 ~ 1) => 5
+            yield return null;
+            time -= Time.deltaTime;
+        }
+        _noise.m_AmplitudeGain = 0;
     }
 }

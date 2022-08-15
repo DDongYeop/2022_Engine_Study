@@ -34,8 +34,11 @@ public class Weapon : MonoBehaviour
         }
     }
     public bool AmmoFull { get => Ammo == _weaponData.ammoCapacity; }
-    public int EmptyBulletCNt { get => _weaponData.ammoCapacity - _ammo; }
+    public int EmptyBulletCnt { get => _weaponData.ammoCapacity - _ammo; }
     #endregion
+
+    public UnityEvent OnPlayNOAmmoSound;
+    public UnityEvent OnPlayReloadSound;
 
     private void Start()
     {
@@ -119,5 +122,15 @@ public class Weapon : MonoBehaviour
     {
         _isShooting = false;
         OnStopShooting?.Invoke();
+    }
+
+    public void PlayReloadSound()
+    {
+        OnPlayReloadSound?.Invoke();
+    }
+
+    public void PlayCannotSound()
+    {
+        OnPlayNOAmmoSound?.Invoke();
     }
 }
