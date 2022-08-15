@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
@@ -92,7 +93,22 @@ public class Weapon : MonoBehaviour
 
     private void ShootBullet()
     {
-        Debug.Log("총알 발사 !");
+        SpawnBullet(_muzzle.transform.position, CalculateAngle(), false); //나중에 false부분은 변경 
+    }
+
+    private Quaternion CalculateAngle()
+    {
+        float spread = Random.Range(-_weaponData.spreadAngle, +_weaponData.spreadAngle);
+        Quaternion spreadRot =  Quaternion.Euler(new Vector3(0, 0, spread));
+        return _muzzle.transform.rotation * spreadRot;
+    }
+
+    private void SpawnBullet(Vector3 position, Quaternion rot, bool isEnemyBullet)
+    {
+        Bullet bullet = Instantiate(_weaponData.bulletData.bulletPrefab).GetComponent<Bullet>();
+        bullet.SetPosionAndRotation(position, rot);
+        bullet.IsEnemy = isEnemyBullet;
+        bullet.BulletData = _weaponData.bulletData;
     }
 
     public void TryShooting()

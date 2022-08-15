@@ -13,6 +13,11 @@ public class Bullet : MonoBehaviour
     protected bool _isDead = false; //총알 한개가 여러명한테 동시에 맞았을때 한명에게만 적용되도혹 하는거
 
     [SerializeField] protected BulletDataSO _bulletData;
+    public BulletDataSO BulletData
+    {
+        get => _bulletData;
+        set => _bulletData = value;
+    }
     protected bool _isEnemy;
     public bool IsEnemy
     {
