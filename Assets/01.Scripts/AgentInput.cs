@@ -23,14 +23,17 @@ public class AgentInput : MonoBehaviour
     {
         if (Input.GetAxisRaw("Fire1") > 0)
         {
-            _fireButtonDown = true;
-            OnFireButtonPress?.Invoke();
-        }
-        else
-        {
             if (_fireButtonDown == false)
             {
                 _fireButtonDown = true;
+                OnFireButtonPress?.Invoke();
+            }
+        }
+        else
+        {
+            if (_fireButtonDown == true)
+            {
+                _fireButtonDown = false;
                 OnFireButtonRelease?.Invoke();
             }
         }

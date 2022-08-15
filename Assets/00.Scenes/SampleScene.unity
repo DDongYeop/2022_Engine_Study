@@ -199,6 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 56387442}
+  - component: {fileID: 56387443}
   m_Layer: 0
   m_Name: Muzzle
   m_TagString: Untagged
@@ -220,6 +221,47 @@ Transform:
   m_Father: {fileID: 1943699076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &56387443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56387441}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.65
+  m_Color: {r: 0.9764706, g: 1, b: 0.015686275, a: 1}
+  m_Intensity: 3
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 000000006d621fd1c50f922021534fa8
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0.65
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0.4
+  m_PointLightOuterRadius: 1.8
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1001 &72053362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -287,6 +329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 77405062}
   - component: {fileID: 77405063}
+  - component: {fileID: 77405064}
   m_Layer: 0
   m_Name: FeedbackShoot
   m_TagString: Untagged
@@ -320,7 +363,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce99b93a8352324c8dce5fdf3eb3299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _feedbackToPlay: []
+  _feedbackToPlay:
+  - {fileID: 77405064}
+--- !u!114 &77405064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77405061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69374df3addad248823efcf99d8f5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lightTarget: {fileID: 56387443}
+  _lightOnDelay: 0.01
+  _lightOffDelay: 0.01
+  _defaultState: 0
 --- !u!4 &116530486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6304645242021760489, guid: 720561c241f4f364aa96e64f05c20e1f, type: 3}
@@ -9058,6 +9118,7 @@ GameObject:
   - component: {fileID: 1910234432}
   - component: {fileID: 1910234431}
   - component: {fileID: 1910234430}
+  - component: {fileID: 1910234433}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -9140,6 +9201,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1910234433
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910234428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 3
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1943699075
 GameObject:
   m_ObjectHideFlags: 0
@@ -9267,6 +9345,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 77405063}
+        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnShootNoAmmo:
     m_PersistentCalls:
       m_Calls:
@@ -9284,19 +9374,7 @@ MonoBehaviour:
         m_CallState: 2
   OnStopShooting:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 449366764}
-        m_TargetAssemblyTypeName: WeaponAudio, Assembly-CSharp
-        m_MethodName: PlayReloadSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _weaponData: {fileID: 11400000, guid: d7e639335c33e7a45abfb251b1e09609, type: 2}
   _muzzle: {fileID: 56387441}
   OnAmmoChange:
