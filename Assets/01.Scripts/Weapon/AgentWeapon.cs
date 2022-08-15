@@ -12,9 +12,11 @@ public class AgentWeapon : MonoBehaviour
     [SerializeField] private int _maxTotalAmmo = 2000, _totalAmmo = 200; //200 / 2000발 보유중
     protected bool _isReloading = false;
     public bool IsReloading { get => _isReloading; }
+    private ReloadGaugueUI _reloadUI = null;
 
     protected virtual void Awake()
     {
+        _reloadUI = transform.parent.Find("RelaodBar").GetComponent<ReloadGaugueUI>();
         AssignWeapon();
     }
 
@@ -71,8 +73,17 @@ public class AgentWeapon : MonoBehaviour
 
     IEnumerator ReladCorutine()
     {
-        yield return new WaitForSeconds(_weapon.WeaponData.reloadTime);
+        _reloadUI.gameObject.SetActive(true);
+        //yield return new WaitForSeconds(_weapon.WeaponData.reloadTime);
+        float time = 0;
+        while (time <= _weapon.WeaponData.reloadTime)
+        {
+            _reloadUI.ReloadGaugueNormal(time / _weapon.WeaponData.reloadTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
 
+        _reloadUI.gameObject.SetActive(false);
         _weapon.PlayReloadSound();
 
         int reloadedAmmo = Mathf.Min(_totalAmmo, _weapon.EmptyBulletCnt);
