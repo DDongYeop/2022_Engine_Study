@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c0d206453771f45a0497d971e818c4, type: 3}
   m_Name: GrowlerMovement
   m_EditorClassIdentifier: 
-  maxSpeed: 4.5
+  maxSpeed: 3.5
   acceleration: 40
   deAcceleration: 20
