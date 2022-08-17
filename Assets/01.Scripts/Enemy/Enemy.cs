@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,12 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
 
     public Vector3 HitPoint { get; private set; }
 
-    public int Heath { get; private set; }
+    public int Health { get; private set; }
 
     [field: SerializeField] public UnityEvent OnDie { get; set; }
     [field: SerializeField] public UnityEvent OnGetHit { get; set; }
+
+    protected bool _isDead = false;
 
     protected bool _isActive = false; //등장 후 액티브 시켜주면 그제야 동작할거다.
     protected EnemyAIBrain _brain;
@@ -25,6 +28,12 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
     {
         _brain = GetComponent<EnemyAIBrain>();
         _attack = GetComponent<EnemyAttack>();
+
+        SetEnemyData();
+    }
+
+    private void SetEnemyData()
+    {
         _attack.AttackDelay = _enemyData.attackDelay; //공격딜레이를 셋팅
 
         transform.Find("AI/IdleState/TranChase").GetComponent<DecisionInner>().Distance = _enemyData.chaseRange;
@@ -32,10 +41,38 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
 
         transform.Find("AI/ChaseState/TranAttack").GetComponent<DecisionInner>().Distance = _enemyData.attackRange;
         transform.Find("AI/AttackState/TranChase").GetComponent<DecisionOuter>().Distance = _enemyData.attackRange;
+
+        Health = _enemyData.maxHealth;
+    }
+
+    public virtual void PerformAttack()
+    {
+        if (_isDead == false && _isActive == true)
+        {
+            _attack.Attack(_enemyData.damage);
+        }
     }
 
     public void GetHit(int damage, GameObject damageDealer)
     {
-        throw new System.NotImplementedException();
+        if (_isDead == true) return;
+
+        Health -= damage;
+        HitPoint = damageDealer.transform.position; //나를 쏜 녀석
+
+        if (Health <= 0)
+            DeadProcess();
+    }
+
+    private void DeadProcess()
+    {
+        Health = 0;
+        _isDead = true;
+        OnDie?.Invoke();
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }
