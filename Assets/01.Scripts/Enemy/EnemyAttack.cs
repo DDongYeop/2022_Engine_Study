@@ -9,7 +9,7 @@ public abstract class EnemyAttack : MonoBehaviour
 
     public UnityEvent AttackFeedback;
 
-    protected float _attackDelay;
+    [SerializeField] protected float _attackDelay;
     protected bool _waitBeforeNextAttack;
     public bool WaitBeforeNextAttack { get => _waitBeforeNextAttack; }
 
