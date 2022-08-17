@@ -5,6 +5,7 @@ using UnityEngine;
 public class DecisionInner : AIDecision
 {
     [SerializeField][Range(0.1f, 30f)] private float _distance = 5f;
+    public float Distance { get => _distance; set => Mathf.Clamp(value, 0.1f, 30f); }
 
     public override bool MakeADecision()
     {

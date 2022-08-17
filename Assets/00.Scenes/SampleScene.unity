@@ -5842,6 +5842,7 @@ GameObject:
   - component: {fileID: 1519574297}
   - component: {fileID: 1519574300}
   - component: {fileID: 1519574301}
+  - component: {fileID: 1519574302}
   m_Layer: 7
   m_Name: EnemyGrowler
   m_TagString: Untagged
@@ -5885,7 +5886,19 @@ MonoBehaviour:
   _movementSO: {fileID: 11400000, guid: d3253de0f366d7747be3d804242bcea7, type: 2}
   OnVelocityChange:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2075526926}
+        m_TargetAssemblyTypeName: AgentAnimation, Assembly-CSharp
+        m_MethodName: AnimatePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!70 &1519574298
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -6025,6 +6038,25 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _attackDelay: 1
+--- !u!114 &1519574302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519574295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a12832a136f7054b99a46101ab2d7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <OnDie>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnGetHit>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  _enemyData: {fileID: 11400000, guid: 0247165794e66c840a1ce2fdca8f0fb4, type: 2}
 --- !u!1 &1522245669
 GameObject:
   m_ObjectHideFlags: 0
