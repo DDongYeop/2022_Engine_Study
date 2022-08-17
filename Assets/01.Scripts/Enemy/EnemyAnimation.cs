@@ -17,6 +17,7 @@ public class EnemyAnimation : AgentAnimation
     public void SetEndOfAttackAnimation()
     {
         //여기서 브레인을 통해서 공격 상태 해지 해야함
+        _brain.AIActionData.isAttack = false;
     }
 
     public void PlayAttackAnimation()
