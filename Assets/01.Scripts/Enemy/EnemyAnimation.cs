@@ -24,4 +24,15 @@ public class EnemyAnimation : AgentAnimation
     {
         _animator.SetTrigger(_attackHash);
     }
+
+    public void PlayDeadAnimation()
+    {
+        _animator.SetBool(_DeadBoolHash, true);
+        _animator.SetTrigger(_deadHash);
+    }
+
+    public void EndOfDeadAnimation()
+    {
+        _brain.Enemy.Die(); //애니메이션 재생 끝났으면 실제로 죽여라
+    }
 }

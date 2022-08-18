@@ -8,16 +8,15 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
 {
     public bool IsEnemy => true;
 
-    public Vector3 HitPoint { get; private set; }
-
-    public int Health { get; private set; }
+    [field: SerializeField] public Vector3 HitPoint { get; private set; }
+    [field: SerializeField] public int Health { get; private set; }
 
     [field: SerializeField] public UnityEvent OnDie { get; set; }
     [field: SerializeField] public UnityEvent OnGetHit { get; set; }
 
     protected bool _isDead = false;
 
-    protected bool _isActive = false; //등장 후 액티브 시켜주면 그제야 동작할거다.
+    [field: SerializeField] protected bool _isActive = false; //등장 후 액티브 시켜주면 그제야 동작할거다.
     protected EnemyAIBrain _brain;
     protected EnemyAttack _attack;
 

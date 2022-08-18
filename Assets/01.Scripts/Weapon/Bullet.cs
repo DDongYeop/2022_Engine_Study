@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         _obstacleLayer = LayerMask.NameToLayer("Obstacle"); //장애물 레이어의 번호를 알아오고
+        _enemyLayer = LayerMask.NameToLayer("Enemy");
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -52,6 +53,15 @@ public class Bullet : MonoBehaviour
     {
         if (_isDead == true) return;
         
+        IHittable hittable = collision.GetComponent<IHittable>();
+
+        if (hittable != null && hittable.IsEnemy == IsEnemy)
+        {
+            return;
+        }
+
+        hittable?.GetHit(_bulletData.damage, gameObject);
+
         if (collision.gameObject.layer == _obstacleLayer)
             HitObstacle(collision);
         if (collision.gameObject.layer == _enemyLayer)
