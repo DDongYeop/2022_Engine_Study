@@ -73,7 +73,11 @@ public class Bullet : MonoBehaviour
 
     private void HitEnemy(Collider2D col)
     {
-        //do nothing
+        Vector2 randomOffset = Random.insideUnitCircle * 0.5f;
+        Impact impact = Instantiate(_bulletData.impactEnemtPrefab).GetComponent<Impact>();
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360f)));
+        impact.SetPostionAndRotation(col.transform.position + (Vector3)randomOffset, rot);
+        impact.SetScaleAndTime(Vector3.one * 0.7f, 0.2f);
     }
 
     private void HitObstacle(Collider2D col)
