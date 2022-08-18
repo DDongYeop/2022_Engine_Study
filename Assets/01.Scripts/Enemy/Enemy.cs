@@ -23,12 +23,27 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
     [SerializeField] protected EnemyDataSO _enemyData;
     public EnemyDataSO EnemyData { get => _enemyData; }
 
+    protected CapsuleCollider2D _bodyCollider;
+
     protected virtual void Awake()
     {
         _brain = GetComponent<EnemyAIBrain>();
         _attack = GetComponent<EnemyAttack>();
+        _bodyCollider = GetComponent<CapsuleCollider2D>();
 
         SetEnemyData();
+
+        _brain.enabled = false;
+        _isActive = false;
+        _bodyCollider.enabled = false;
+    }
+
+    public void ResetObject()
+    {
+        _brain.enabled = true;
+        _isActive = true;
+        _bodyCollider.enabled = true;
+        Health = _enemyData.maxHealth;
     }
 
     private void SetEnemyData()
