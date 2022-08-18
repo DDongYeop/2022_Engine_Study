@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,21 +25,45 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
     public EnemyDataSO EnemyData { get => _enemyData; }
 
     protected CapsuleCollider2D _bodyCollider;
+    protected SpriteRenderer _spriteRenderer = null;
 
     protected virtual void Awake()
     {
         _brain = GetComponent<EnemyAIBrain>();
         _attack = GetComponent<EnemyAttack>();
         _bodyCollider = GetComponent<CapsuleCollider2D>();
+        _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
 
         SetEnemyData();
 
         _brain.enabled = false;
         _isActive = false;
         _bodyCollider.enabled = false;
+
+        if (_spriteRenderer.material.HasProperty("_Dissolve"))
+        {
+            _spriteRenderer.material.SetFloat("_Dissolve", 0);
+        }
     }
 
-    public void ResetObject()
+    private void Start()
+    {
+        Spawn();
+    }
+
+    public void Spawn()
+    {
+        Sequence seq = DOTween.Sequence();
+        Tween disssolve = DOTween.To(
+            () => _spriteRenderer.material.GetFloat("_Dissolve"),
+            x  => _spriteRenderer.material.SetFloat("_Dissolve", x),
+            1f, 1f );
+
+        seq.Append(disssolve);
+        seq.AppendCallback(() => ActiveObject());
+    }
+
+    public void ActiveObject()
     {
         _brain.enabled = true;
         _isActive = true;

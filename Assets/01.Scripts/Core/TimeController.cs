@@ -17,6 +17,11 @@ public class TimeController : MonoBehaviour
         Instance = this; // 이건 나중에 코드 변경 할거다.
     }
 
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
+
     public void ResetTimeScale()
     {
         StopAllCoroutines();

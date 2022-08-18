@@ -5,8 +5,6 @@ using DG.Tweening;
 
 public class TestTween : MonoBehaviour
 {
-    private string a = "Hello world";
-
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
