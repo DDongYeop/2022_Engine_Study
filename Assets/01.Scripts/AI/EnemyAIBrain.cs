@@ -12,7 +12,7 @@ public class EnemyAIBrain : MonoBehaviour
 
     [SerializeField] private AIState _currentState;
 
-    [SerializeField] private Transform _target; //이건 나중에 게임매니저를 통해서 가져올건데, 지금은 드래그앤 드롭
+    [SerializeField] private Transform _target; 
     public Transform Target
     {
         get => _target;
@@ -35,6 +35,11 @@ public class EnemyAIBrain : MonoBehaviour
         _aiMovementData = transform.Find("AI").GetComponent<AIMovementData>();
         _basePosition = transform.Find("BasePosition");
         _enemy = GetComponent<Enemy>();
+    }
+
+    protected virtual void Start()
+    {
+        _target = GameManager.Instance.player;
     }
 
     protected void Update()

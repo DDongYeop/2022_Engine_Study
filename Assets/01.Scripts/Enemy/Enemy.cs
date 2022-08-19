@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour, IHittable, IAgent
+public class Enemy : PoolAbleMono, IHittable, IAgent
 {
     public bool IsEnemy => true;
 
@@ -35,7 +35,11 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
         _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
 
         SetEnemyData();
+        Init();
+    }
 
+    public override void Init()
+    {
         _brain.enabled = false;
         _isActive = false;
         _bodyCollider.enabled = false;
@@ -44,11 +48,6 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
         {
             _spriteRenderer.material.SetFloat("_Dissolve", 0);
         }
-    }
-
-    private void Start()
-    {
-        Spawn();
     }
 
     public void Spawn()
@@ -68,6 +67,7 @@ public class Enemy : MonoBehaviour, IHittable, IAgent
         _brain.enabled = true;
         _isActive = true;
         _bodyCollider.enabled = true;
+        
         Health = _enemyData.maxHealth;
     }
 

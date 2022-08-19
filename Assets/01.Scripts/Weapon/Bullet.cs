@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : PoolAbleMono
 {
     protected Rigidbody2D _rigidbody;
     protected float _timeToLive;
@@ -92,5 +92,11 @@ public class Bullet : MonoBehaviour
             impact.SetPostionAndRotation(hit.point + (Vector2)transform.right * 0.5f, rot);
             impact.SetScaleAndTime(Vector3.one, 0.2f);
         }
+    }
+
+    public override void Init()
+    {
+        _isDead = false;
+        _timeToLive = 0;
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Growler
   m_EditorClassIdentifier: 
   enemyname: Glowler
-  prefab: {fileID: 0}
+  prefab: {fileID: 4620232697202728385, guid: 18a801e5d20b7f740b6073716c13bb9f, type: 3}
   maxHealth: 10
   knockbackRegist: 1
   damage: 1
