@@ -17,6 +17,30 @@ public class Pool<T> where T : PoolAbleMono
         {
             T obj = GameObject.Instantiate(prefab, parent);
             obj.gameObject.name = obj.gameObject.name.Replace("(Clone)", ""); // Clone이름을 공백으로 재거
+            obj.gameObject.SetActive(false);
+            _pool.Push(obj);
         }
+    }
+
+    public void Push(T obj)
+    {
+        obj.gameObject.SetActive(false);
+        _pool.Push(obj);
+    }
+
+    public T Pop()
+    {
+        T obj = null;
+        if (_pool.Count <= 0)
+        {
+            obj = GameObject.Instantiate(_prefab, _parnet);
+            obj.gameObject.name = obj.gameObject.name.Replace("(Clone)", ""); 
+        }
+        else
+        {
+            obj = _pool.Pop();
+            obj.gameObject.SetActive(true);
+        }
+        return obj;
     }
 }

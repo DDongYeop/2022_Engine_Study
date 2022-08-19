@@ -26,12 +26,14 @@ public class Enemy : PoolAbleMono, IHittable, IAgent
 
     protected CapsuleCollider2D _bodyCollider;
     protected SpriteRenderer _spriteRenderer = null;
+    protected AgentMovement _agentMovement = null;
 
     protected virtual void Awake()
     {
         _brain = GetComponent<EnemyAIBrain>();
         _attack = GetComponent<EnemyAttack>();
         _bodyCollider = GetComponent<CapsuleCollider2D>();
+        _agentMovement = GetComponent<AgentMovement>();
         _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
 
         SetEnemyData();
@@ -43,6 +45,8 @@ public class Enemy : PoolAbleMono, IHittable, IAgent
         _brain.enabled = false;
         _isActive = false;
         _bodyCollider.enabled = false;
+        _agentMovement.enabled = false;
+        _isDead = false;
 
         if (_spriteRenderer.material.HasProperty("_Dissolve"))
         {
@@ -67,6 +71,7 @@ public class Enemy : PoolAbleMono, IHittable, IAgent
         _brain.enabled = true;
         _isActive = true;
         _bodyCollider.enabled = true;
+        _agentMovement.enabled= true;
         
         Health = _enemyData.maxHealth;
     }
@@ -114,6 +119,7 @@ public class Enemy : PoolAbleMono, IHittable, IAgent
 
     public void Die()
     {
-        Destroy(gameObject);
+        PoolManager.Instance.Push(this);
+        //Destroy(gameObject);
     }
 }
