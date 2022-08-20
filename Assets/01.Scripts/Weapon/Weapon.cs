@@ -108,8 +108,9 @@ public class Weapon : MonoBehaviour
 
     private void SpawnBullet(Vector3 position, Quaternion rot, bool isEnemyBullet)
     {
-        Bullet bullet = Instantiate(_weaponData.bulletData.bulletPrefab).GetComponent<Bullet>();
-        bullet.SetPosionAndRotation(position, rot);
+        Bullet bullet = PoolManager.Instance.Pop(_weaponData.bulletData.bulletPrefab.name) as Bullet;
+        //Bullet bullet = Instantiate(_weaponData.bulletData.bulletPrefab).GetComponent<Bullet>();
+        bullet.SetPositionAndRotation(position, rot);
         bullet.IsEnemy = isEnemyBullet;
         bullet.BulletData = _weaponData.bulletData;
     }

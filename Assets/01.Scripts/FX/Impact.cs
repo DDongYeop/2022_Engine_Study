@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class Impact : MonoBehaviour
+public class Impact : PoolAbleMono
 {
     private AudioSource _audioSource;
 
@@ -14,10 +14,11 @@ public class Impact : MonoBehaviour
 
     public void DestroyAfterAnimation()
     {
-        Destroy(gameObject); //나중에 풀메니징으로 변경해야한다
+        PoolManager.Instance.Push(this);
+        //Destroy(gameObject); //나중에 풀메니징으로 변경해야한다
     }
 
-    public void SetPostionAndRotation(Vector3 pos, Quaternion rot)
+    public void SetPositionAndRotation(Vector3 pos, Quaternion rot)
     {
         transform.SetPositionAndRotation(pos, rot);
         _audioSource.Play();
@@ -27,5 +28,10 @@ public class Impact : MonoBehaviour
     {
         transform.localScale = scale;
         Invoke("DestroyAfterAnimation", time);
+    }
+
+    public override void Init()
+    {
+        //throw new System.NotImplementedException();
     }
 }

@@ -27,12 +27,14 @@ public class Bullet : PoolAbleMono
 
     private void Awake()
     {
-        _obstacleLayer = LayerMask.NameToLayer("Obstacle"); //장애물 레이어의 번호를 알아오고
+        _obstacleLayer = LayerMask.NameToLayer("Obstacle"); // 장애물 레이어의 번호를 알아오고
         _enemyLayer = LayerMask.NameToLayer("Enemy");
         _rigidbody = GetComponent<Rigidbody2D>();
+
+        Init();
     }
 
-    public void SetPosionAndRotation(Vector3 pos, Quaternion rot)
+    public void SetPositionAndRotation(Vector3 pos, Quaternion rot)
     {
         transform.SetPositionAndRotation(pos, rot);
     }
@@ -45,51 +47,52 @@ public class Bullet : PoolAbleMono
         if (_timeToLive >= _bulletData.lifeTime)
         {
             _isDead = true;
-            Destroy(gameObject); //나중엔 풀링으로 변경
+            PoolManager.Instance.Push(this); // 풀매니징으로 변경
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_isDead == true) return;
-        
-        IHittable hittable = collision.GetComponent<IHittable>();
 
-        if (hittable != null && hittable.IsEnemy == IsEnemy)
+        IHitable hitable = collision.GetComponent<IHitable>();
+
+        if (hitable != null && hitable.IsEnemy == IsEnemy)
         {
             return;
         }
 
-        hittable?.GetHit(_bulletData.damage, gameObject);
+        hitable?.GetHit(_bulletData.damage, gameObject);
 
         if (collision.gameObject.layer == _obstacleLayer)
             HitObstacle(collision);
         if (collision.gameObject.layer == _enemyLayer)
             HitEnemy(collision);
-        
+
         _isDead = true;
-        Destroy(gameObject);
+        PoolManager.Instance.Push(this); // 풀매니징으로 변경
     }
 
     private void HitEnemy(Collider2D col)
     {
         Vector2 randomOffset = Random.insideUnitCircle * 0.5f;
-        Impact impact = Instantiate(_bulletData.impactEnemtPrefab).GetComponent<Impact>();
+        Impact impact = PoolManager.Instance.Pop(_bulletData.impactEnemyPrefab.name) as Impact;
+        //Impact impact = Instantiate(_bulletData.impactEnemyPrefab).GetComponent<Impact>();
         Quaternion rot = Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360f)));
-        impact.SetPostionAndRotation(col.transform.position + (Vector3)randomOffset, rot);
+        impact.SetPositionAndRotation(col.transform.position + (Vector3)randomOffset, rot);
         impact.SetScaleAndTime(Vector3.one * 0.7f, 0.2f);
     }
 
     private void HitObstacle(Collider2D col)
     {
+        // 실질적인 데미치 처리는 여기서 이루어짐 (아직 안 함)
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 10f);
-        //실질적인 데미지 처리는 여기에서 이뤄져야한다. (아직 안함)
 
         if (hit.collider != null)
         {
-            Impact impact = Instantiate(_bulletData.impactObstaclePrefab).GetComponent<Impact>();
+            Impact impact = PoolManager.Instance.Pop(_bulletData.impactObstaclePrefab.name) as Impact;
             Quaternion rot = Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360f)));
-            impact.SetPostionAndRotation(hit.point + (Vector2)transform.right * 0.5f, rot);
+            impact.SetPositionAndRotation(hit.point + (Vector2)transform.right * 0.5f, rot);
             impact.SetScaleAndTime(Vector3.one, 0.2f);
         }
     }
@@ -100,3 +103,10 @@ public class Bullet : PoolAbleMono
         _timeToLive = 0;
     }
 }
+
+
+/*
+ * https://kldp.org/
+ * 개쩌는 개발 관련 커뮤였는데 
+ * 망함
+ */

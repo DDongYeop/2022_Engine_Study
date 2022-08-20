@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : PoolAbleMono, IHittable, IAgent
+public class Enemy : PoolAbleMono, IHitable, IAgent
 {
     public bool IsEnemy => true;
 
