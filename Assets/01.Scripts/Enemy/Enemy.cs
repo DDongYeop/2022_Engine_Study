@@ -106,6 +106,11 @@ public class Enemy : PoolAbleMono, IHitable, IAgent
 
         OnGetHit?.Invoke(); //피격시 피드백을 위해 이벤트 트리거
 
+        bool isCriitical = false;
+
+        PopupText popupText = PoolManager.Instance.Pop("PopUpText") as PopupText;
+        popupText?.Setup(damage, transform.position + new Vector3(0, 0.3f), isCriitical,  Color.white);
+
         if (Health <= 0)
             DeadProcess();
     }
