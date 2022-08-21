@@ -5295,6 +5295,9 @@ MonoBehaviour:
   _player: {fileID: 298131627}
   _poolingList: {fileID: 11400000, guid: 462bb74c2519f924095344d36a54c634, type: 2}
   _cursorTexture: {fileID: 2800000, guid: 1ecf1e2d993ccd042bdf9b2277eb727c, type: 3}
+  _criticalRate: 0.7
+  _criticalMinDmg: 1.5
+  _criticalMaxDmg: 2.5
 --- !u!1 &1522245669
 GameObject:
   m_ObjectHideFlags: 0
