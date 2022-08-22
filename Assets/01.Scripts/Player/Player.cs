@@ -38,6 +38,7 @@ public class Player : MonoBehaviour, IHitable, IAgent
         if (_isDead) return;
         Health -= damage;
         OnUpdateHealthUI?.Invoke(Health);
+        OnGetHit?.Invoke();
         if (Health <= 0)
         {
             OnDie?.Invoke();

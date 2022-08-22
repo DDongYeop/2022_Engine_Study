@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using DG.Tweening;
 
-public class Spawner : MonoBehaviour
+public class Spawner : PoolAbleMono
 {
     [SerializeField] private List<EnemyDataSO> _spawnEnemies = null;
 
@@ -62,7 +62,11 @@ public class Spawner : MonoBehaviour
         DOTween.To(
             () => _spawnLight.intensity,
             X => _spawnLight.intensity = X,
-            0, 2f);
+            0, 2f)
+        .OnComplete(() => 
+        {
+            PoolManager.Instance.Push(this);
+        });
     }
 
 #if UNITY_EDITOR
@@ -74,6 +78,11 @@ public class Spawner : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, _radius);
             Gizmos.color = Color.white;
         }
+    }
+
+    public override void Init()
+    {
+        //Do nothing
     }
 #endif
 }
