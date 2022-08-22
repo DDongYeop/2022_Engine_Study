@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AmmoPack
   m_EditorClassIdentifier: 
   rate: 0.3
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 1765208250008764220, guid: af03cb1be189927459f186f92520140e, type: 3}
   resourcetype: 2
   minAmount: 20
   maxAmount: 40

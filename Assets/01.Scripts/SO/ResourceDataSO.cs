@@ -13,7 +13,7 @@ public enum ResourceType
 public class ResourceDataSO : ScriptableObject
 {
     public float rate; //아이템이 드랍될 확률
-    public GameManager itemPrefab;
+    public GameObject itemPrefab;
 
     public ResourceType resourcetype;
     public int minAmount = 1, maxAmount = 5;
