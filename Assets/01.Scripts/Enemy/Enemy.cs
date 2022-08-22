@@ -101,12 +101,16 @@ public class Enemy : PoolAbleMono, IHitable, IAgent
     {
         if (_isDead == true) return;
 
+        bool isCriitical = GameManager.Instance.IsCritical;
+        if (isCriitical)
+        {
+            damage = GameManager.Instance.GetCirticalDamage(damage);
+        }
+
         Health -= damage;
         HitPoint = damageDealer.transform.position; //나를 쏜 녀석
 
         OnGetHit?.Invoke(); //피격시 피드백을 위해 이벤트 트리거
-
-        bool isCriitical = false;
 
         PopupText popupText = PoolManager.Instance.Pop("PopUpText") as PopupText;
         popupText?.Setup(damage, transform.position + new Vector3(0, 0.3f), isCriitical,  Color.white);
