@@ -3,22 +3,58 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] private float _LevelLoadDelay = 1f;
+    [SerializeField] private AudioClip _success;
+    [SerializeField] private AudioClip _crash;
+
+    private AudioSource _audioSource;
+
+    private bool _isTransitioning = false;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
+        if (_isTransitioning)
+            return;
+
         switch (collision.gameObject.tag)
         {
             case "Friendly":
                 break;
             case "Finish":
-                LoadNextLevel();
+                StartSuccessSequence();
                 break;
             case "Fuel":
                 break;
 
             default:
-                ReloadLevel();
+                StartCrashSequence();
                 break;
         }
+    }
+
+    private void StartSuccessSequence()
+    {
+        _isTransitioning = true;
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(_success);
+
+        GetComponent<Movement>().enabled = false;
+        Invoke("LoadNextLevel", _LevelLoadDelay);
+    }
+
+    private void StartCrashSequence()
+    {
+        _isTransitioning = true;
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(_crash);
+
+        GetComponent<Movement>().enabled = false;
+        Invoke("ReloadLevel", _LevelLoadDelay);
     }
 
     private void LoadNextLevel()
