@@ -12,8 +12,9 @@ public class Voxel : MonoBehaviour
     public float destoryTime = 3.0f; // 복셀을 제거할 시간
     float currentTime; // 경과시간
 
-    private void Start()
+    private void OnEnable()
     {
+        currentTime = 0;
         Vector3 direction = Random.insideUnitSphere; // 2. 랜덤한 방향을 찾는다
         Rigidbody rb = gameObject.GetComponent<Rigidbody>(); // 3. 랜덤한 방향으로 날아가는 속도를 준다
         rb.velocity = direction * speed;
@@ -27,8 +28,8 @@ public class Voxel : MonoBehaviour
         // 제거시간 됐으니까
         if (currentTime > destoryTime) // 만약 경과시간이 제거 시간을 초과했다면
         {
-            // 복셀을 제거하고 싶다
-            Destroy(gameObject);
+            gameObject.SetActive(false); // 3. 복셀을 비활성화 시킨다
+            VoxelMaker.voxelPool.Add(gameObject); // 오브젝트 풀에 다시 넣어준다
         }
     }
 }

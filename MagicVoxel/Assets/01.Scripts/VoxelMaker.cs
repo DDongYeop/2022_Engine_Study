@@ -9,6 +9,8 @@ public class VoxelMaker : MonoBehaviour
     public GameObject voxelFactory; // 복셀 공장
     public int voxelPoolSize = 20; // 오프젝트 풀의 크기
     public static List<GameObject> voxelPool = new List<GameObject>();
+    public float createTime = 0.1f; // 생성 시간
+    float currentTime = 0; // 경과 시간
 
     private void Start()
     {
@@ -22,8 +24,10 @@ public class VoxelMaker : MonoBehaviour
 
     private void Update()
     {
-        // 사용자가 마우스를 클릭한 지점에 복셀을 1개 만들고 싶다
-        if (Input.GetButtonDown("Fire1")) // 1. 사용자가 마우스를 클릭했다면 
+        // 일정 시간마다 복셀을 만들고 싶다
+        currentTime += Time.deltaTime; // 1. 경과시간이 흐른다
+
+        if (currentTime > createTime) // 2. 경과시간이 생성 시간을 초과하면
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 2. 마우스가 바닥 위에 위치해있다몀
             RaycastHit hitInfo = new RaycastHit();
@@ -33,6 +37,7 @@ public class VoxelMaker : MonoBehaviour
                 // 복셀 오브젝트 풀 이용하기
                 if (voxelPool.Count > 0) // 1. 만약 오브젝트 풀에 복셀이 있다면
                 {
+                    currentTime = 0; // 복셀을 생성했을 때만 경과 시간을 초가화한다
                     GameObject voxel = voxelPool[0]; // 2. 오브젝트 풀에서 복셀을 하나 가져온다
                     voxel.SetActive(true); // 3. 복셀을 활성화한다
                     voxel.transform.position = hitInfo.point; // 4. 복셀을 배치하고 싶다
