@@ -8,12 +8,15 @@ public class BuildingManager : MonoBehaviour
     private BuildingTypeListSO _buildingTypeList;
     private BuildingTypeSO _buildingType;
 
+    private void Awake()
+    {
+        _buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
+        _buildingType = _buildingTypeList.list[0];
+    }
+
     private void Start()
     {
         _mainCamera = Camera.main;
-
-        _buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
-        _buildingType = _buildingTypeList.list[0];
     }
 
     private void Update()
@@ -27,7 +30,6 @@ public class BuildingManager : MonoBehaviour
         {
             _buildingType = _buildingTypeList.list[0];
         }
-
         if (Input.GetKeyDown(KeyCode.Y))
         {
             _buildingType = _buildingTypeList.list[1];
