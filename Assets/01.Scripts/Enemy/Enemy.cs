@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public static Action OnEndReached;
+
     [SerializeField] private float _moveSpeed = 3.0f;
     [SerializeField] private WayPoint _wayPoint;
 
@@ -18,13 +21,13 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (_wayPoint.points.Length == _currentWaypointIndex)
-            return;
+        /*if (_currentWaypointIndex == _wayPoint.points.Length)
+            return;*/
 
         Move();
         
         if (CurrentPointPositionReached())
-            _currentWaypointIndex++;
+            UpdateCurrentPointIndex();
     }
 
     private void Move()
@@ -43,5 +46,21 @@ public class Enemy : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    private void UpdateCurrentPointIndex()
+    {
+        int lastWaypointIndex = _wayPoint.points.Length - 1;
+        if (_currentWaypointIndex < lastWaypointIndex)
+            _currentWaypointIndex++;
+        else
+            ReturnEnemyToPool();
+    }
+
+    private void ReturnEnemyToPool()
+    {
+        OnEndReached?.Invoke(); // if (OndEndReached != null) OnEndReached.Invoke(); << 이거랑 똑같음
+        
+        ObjectPooler.ReturnToPool(gameObject);
     }
 }
