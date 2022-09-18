@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class BuildingTypeSelectUI : MonoBehaviour
 {
+    [SerializeField] private Sprite _arrowSprite;
+
     private Dictionary<BuildingTypeSO, Transform> btnTransformDictionary;
+    private Transform _arrowBtn;
 
     private void Awake()
     {
@@ -17,12 +20,29 @@ public class BuildingTypeSelectUI : MonoBehaviour
         btnTransformDictionary = new Dictionary<BuildingTypeSO, Transform>();
 
         int index = 0;
+
+        _arrowBtn = Instantiate(btnTemplate, transform);
+        _arrowBtn.gameObject.SetActive(true);
+
+        float offsetAmount = 130f;
+        _arrowBtn.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0);
+
+        _arrowBtn.Find("Image").GetComponent<Image>().sprite = _arrowSprite;
+        _arrowBtn.Find("Image").GetComponent<RectTransform>().sizeDelta = new Vector2(0, -30);
+
+        _arrowBtn.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            BuildingManager.Instance.SetActiveBuildingType(null);
+        });
+
+        index++;
+
         foreach (BuildingTypeSO buildingType in buildingTypeList.list)
         {
             Transform btnTransform = Instantiate(btnTemplate, transform);
             btnTransform.gameObject.SetActive(true);
 
-            float offsetAmount = 130f;
+            offsetAmount = 130f;
             btnTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0);
 
             btnTransform.Find("Image").GetComponent<Image>().sprite = buildingType.sprite;
@@ -45,6 +65,8 @@ public class BuildingTypeSelectUI : MonoBehaviour
 
     private void UpdateActiveBuildingTypeButton()
     {
+        _arrowBtn.Find("Selected").gameObject.SetActive(false);
+
         foreach (BuildingTypeSO buildingType in btnTransformDictionary.Keys)
         {
             Transform btnTransform = btnTransformDictionary[buildingType];
@@ -52,6 +74,9 @@ public class BuildingTypeSelectUI : MonoBehaviour
         }
 
         BuildingTypeSO activeBuildingType = BuildingManager.Instance.GetActiveBuildingType();
-        btnTransformDictionary[activeBuildingType].Find("Selected").gameObject.SetActive(true);
+        if (activeBuildingType == null)
+            _arrowBtn.Find("Selected").gameObject.SetActive(true);
+        else
+            btnTransformDictionary[activeBuildingType].Find("Selected").gameObject.SetActive(true);
     }
 }

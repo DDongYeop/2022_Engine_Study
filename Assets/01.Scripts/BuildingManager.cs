@@ -16,7 +16,6 @@ public class BuildingManager : MonoBehaviour
         Instance = this;
 
         _buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
-        _activeBuildingType = _buildingTypeList.list[0];
     }
 
     private void Start()
@@ -27,9 +26,8 @@ public class BuildingManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            Instantiate(_activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
-        }
+            if (_activeBuildingType != null)
+                Instantiate(_activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
     }
 
     private Vector3 GetMouseWorldPosition()
