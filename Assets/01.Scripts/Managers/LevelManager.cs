@@ -5,10 +5,20 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int _lives = 10;
+    
+    public int totalLives { get; set; }
+
+    private void Start()
+    {
+        totalLives = _lives;
+
+        if (totalLives <= 0)
+            totalLives = 0;
+    }
 
     private void ReduceLives()
     {
-        _lives--;
+        totalLives--;
     }
 
     private void OnEnable() //게임오브젝트가 활성화 될떄마다

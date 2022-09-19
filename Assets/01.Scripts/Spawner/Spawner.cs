@@ -15,7 +15,6 @@ public class Spawner : MonoBehaviour
 
     [Header ("Test")]
     [SerializeField] private int _enemyCnt = 10;
-    [SerializeField] private GameObject _test;
 
     [Header ("SpawnDelay")]
     [SerializeField] private float _delayBtwSpawn;
@@ -24,6 +23,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float _spawnTimeInt = 2;
 
     private ObjectPooler _pooler;
+    private WayPoint _waypoint;
 
     private float _spawnTime;
     private float _enemiesSpawned;
@@ -31,6 +31,7 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         _pooler = GetComponent<ObjectPooler>();
+        _waypoint = GetComponent<WayPoint>();
     }
 
     private void Update()
@@ -48,8 +49,12 @@ public class Spawner : MonoBehaviour
     private void SpawnEnemy()
     {
         GameObject newInstance = _pooler.GetInstanceFromPool();
+
+        Enemy enemy = newInstance.GetComponent<Enemy>();
+        enemy.waypoint = _waypoint;
+        enemy.transform.localPosition = transform.position;
+
         newInstance.SetActive(true);
-        newInstance.transform.position = transform.position;
     }
 
     private float GetSpawnDelay()
