@@ -12,12 +12,11 @@ public class Spawner : MonoBehaviour
 {
     [Header ("SpawnMode")]
     [SerializeField] private SpawnModes _spawnMode = SpawnModes.Fixed;
-
-    [Header ("Test")]
     [SerializeField] private int _enemyCnt = 10;
 
+    [SerializeField] private float _delayBtnWaves = 1f;
+    
     [Header ("SpawnDelay")]
-    [SerializeField] private float _delayBtwSpawn;
     [SerializeField] private float _minRandomDelay;
     [SerializeField] private float _maxRandomDelay;
     [SerializeField] private float _spawnTimeInt = 2;
@@ -27,11 +26,17 @@ public class Spawner : MonoBehaviour
 
     private float _spawnTime;
     private float _enemiesSpawned;
+    private int _enemiesRemaining;
 
     private void Awake()
     {
         _pooler = GetComponent<ObjectPooler>();
         _waypoint = GetComponent<WayPoint>();
+    }
+
+    private void Start()
+    {
+        _enemiesRemaining = _enemyCnt;
     }
 
     private void Update()
@@ -52,6 +57,9 @@ public class Spawner : MonoBehaviour
 
         Enemy enemy = newInstance.GetComponent<Enemy>();
         enemy.waypoint = _waypoint;
+
+        enemy.ResetEnemy();
+
         enemy.transform.localPosition = transform.position;
 
         newInstance.SetActive(true);
@@ -73,5 +81,33 @@ public class Spawner : MonoBehaviour
             Debug.LogError("Spawner의 SpawnMode이 설정 되지 않은 값입니다");
             return 999;
         }
+    }
+
+    private IEnumerator NextWave()
+    {
+        yield return new WaitForSeconds(_delayBtnWaves);
+        _enemiesRemaining = _enemyCnt;
+        _spawnTime = 0f;
+        _enemiesSpawned = 0;
+    }
+
+    private void RecordEnemyEndReadched()
+    {
+        _enemiesRemaining--;
+
+        if (_enemiesRemaining <= 0)
+        {
+            StartCoroutine(NextWave());
+        }
+    }
+
+    private void OnEnable()
+    {
+        Enemy.OnEndReached += RecordEnemyEndReadched;
+    }
+
+    private void OnDisable()
+    {
+        Enemy.OnEndReached -= RecordEnemyEndReadched;
     }
 }

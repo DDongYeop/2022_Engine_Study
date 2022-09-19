@@ -42,6 +42,7 @@ public class ObjectPooler : MonoBehaviour
         {
             if (!_pool[i].activeInHierarchy)
             {
+                print(1);
                 return _pool[i];
             }
         }
