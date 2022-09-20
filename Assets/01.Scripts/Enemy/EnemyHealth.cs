@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public static Action onEnemyKilled;
+
     [SerializeField] private GameObject _healthBarPrefab;
     [SerializeField] private Transform _barPosition;
 
@@ -50,10 +52,18 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void ResetHealth()
     {
         currentHealth = _initiaHealth;
-        _healthBar.fillAmount = 1f;
+        _healthBar.fillAmount = 1;
+    }
+
+    private void Die()
+    {
+        ResetHealth();
+
+        onEnemyKilled?.Invoke();
+
         ObjectPooler.ReturnToPool(gameObject);
     }
 }

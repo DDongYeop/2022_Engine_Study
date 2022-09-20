@@ -15,6 +15,12 @@ public class Enemy : MonoBehaviour
 
     private int _currentWaypointIndex;
 
+    private EnemyHealth _enemyHealth;
+
+    private void Awake()
+    {
+        _enemyHealth = GetComponent<EnemyHealth>();
+    }
 
     private void Start()
     {
@@ -56,13 +62,14 @@ public class Enemy : MonoBehaviour
         if (_currentWaypointIndex < lastWaypointIndex)
             _currentWaypointIndex++;
         else
-            ReturnEnemyToPool();
+            EndPointReached();
     }
 
-    private void ReturnEnemyToPool()
+    private void EndPointReached()
     {
         OnEndReached?.Invoke(); // if (OndEndReached != null) OnEndReached.Invoke(); << 이거랑 똑같음
         
+        _enemyHealth.ResetHealth();
         ObjectPooler.ReturnToPool(gameObject);
     }
 
