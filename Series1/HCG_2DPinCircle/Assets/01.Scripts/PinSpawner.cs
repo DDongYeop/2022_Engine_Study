@@ -5,7 +5,10 @@ using UnityEngine;
 public class PinSpawner : MonoBehaviour
 {
     [Header("Commons")]
+    [SerializeField] private StageController _stageController;
     [SerializeField] private GameObject _pinPrefab;
+    [SerializeField] private GameObject _textPinIndexPrefab;
+    [SerializeField] private Transform _textParent;
 
     [Header("Stuck Pin")]
     [SerializeField] private Transform _targetTransform;
@@ -13,15 +16,40 @@ public class PinSpawner : MonoBehaviour
     [SerializeField] private float _targetRadius = 0.8f;
     [SerializeField] private float _pinLegth = 1.5f;
 
-    public void SpawnThrowbblePin(Vector3 position)
+    [Header("Throwble Pin")]
+    [SerializeField] private float _bottomAngle = 270;
+    private List<Pin> _throwablePins;
+
+    public void Setup()
     {
-        Instantiate(_pinPrefab, position, Quaternion.identity);
+        _throwablePins = new List<Pin>();
     }
 
-    public void SpawnStuckPin(float angle)
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && _throwablePins.Count > 0)
+        {
+            SetInPinStruckToTarget(_throwablePins[0].transform, _bottomAngle);
+            _throwablePins.RemoveAt(0);
+
+            for (int i = 0; i < _throwablePins.Count; ++i)
+                _throwablePins[i].MoveOneStep(_stageController.TPinDistance);
+        }
+    }
+
+    public void SpawnThrowbblePin(Vector3 position, int index)
+    {
+        GameObject clone = Instantiate(_pinPrefab, position, Quaternion.identity);
+        Pin pin = clone.GetComponent<Pin>();
+        _throwablePins.Add(pin);
+        SpawnTextUI(clone.transform, index);
+    }
+
+    public void SpawnStuckPin(float angle, int index)
     {
         GameObject clone = Instantiate(_pinPrefab);
         SetInPinStruckToTarget(clone.transform, angle);
+        SpawnTextUI(clone.transform, index);
     }
 
     private void SetInPinStruckToTarget(Transform pin, float angle)
@@ -30,5 +58,14 @@ public class PinSpawner : MonoBehaviour
         pin.rotation = Quaternion.Euler(0, 0, angle);
         pin.SetParent(_targetTransform);
         pin.GetComponent<Pin>().SetInPinStuckToTarget();
+    }
+
+    private void SpawnTextUI(Transform target, int index)
+    {
+        GameObject textClone = Instantiate(_textPinIndexPrefab);
+        textClone.transform.SetParent(_textParent);
+        textClone.transform.localScale = Vector3.one;
+        textClone.GetComponent<WorldToScrennPosition>().Setup(target);
+        textClone.GetComponent<TMPro.TextMeshProUGUI>().text = index.ToString();
     }
 }
