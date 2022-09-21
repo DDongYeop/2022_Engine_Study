@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 570713406}
   - component: {fileID: 570713408}
   - component: {fileID: 570713407}
+  - component: {fileID: 570713409}
   m_Layer: 5
   m_Name: PanelNumbering
   m_TagString: Untagged
@@ -381,6 +382,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570713405}
   m_CullTransparentMesh: 1
+--- !u!114 &570713409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570713405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add1aa5d7797f2344a5cf1c7587e6aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotateSpeed: 0
+  _maxRotateSpeed: 500
+  _rotateAngle: {x: 0, y: 0, z: 1}
 --- !u!1 &856158208
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotateSpeed: 50
+  _maxRotateSpeed: 500
   _rotateAngle: {x: 0, y: 0, z: 1}
 --- !u!212 &1402991966
 SpriteRenderer:
@@ -626,6 +643,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pinSpawner: {fileID: 1580088450}
+  _mainCamera: {fileID: 519420031}
+  _rotatorTarget: {fileID: 1402991965}
+  _rotatorIndexPanel: {fileID: 570713409}
   _throwablePinCount: 5
   _stuckPinCount: 5
 --- !u!4 &1783858615

@@ -27,6 +27,9 @@ public class PinSpawner : MonoBehaviour
 
     private void Update()
     {
+        if (_stageController.isGameOver == true)
+            return;
+
         if (Input.GetMouseButtonDown(0) && _throwablePins.Count > 0)
         {
             SetInPinStruckToTarget(_throwablePins[0].transform, _bottomAngle);
@@ -34,21 +37,32 @@ public class PinSpawner : MonoBehaviour
 
             for (int i = 0; i < _throwablePins.Count; ++i)
                 _throwablePins[i].MoveOneStep(_stageController.TPinDistance);
+
+            _stageController.DecreaseThrowablePin();
         }
     }
 
     public void SpawnThrowbblePin(Vector3 position, int index)
     {
         GameObject clone = Instantiate(_pinPrefab, position, Quaternion.identity);
+        
         Pin pin = clone.GetComponent<Pin>();
+        pin.Setup(_stageController);
+
         _throwablePins.Add(pin);
+
         SpawnTextUI(clone.transform, index);
     }
 
     public void SpawnStuckPin(float angle, int index)
     {
         GameObject clone = Instantiate(_pinPrefab);
+
+        Pin pin = clone.GetComponent<Pin>();
+        pin.Setup(_stageController);
+
         SetInPinStruckToTarget(clone.transform, angle);
+        
         SpawnTextUI(clone.transform, index);
     }
 

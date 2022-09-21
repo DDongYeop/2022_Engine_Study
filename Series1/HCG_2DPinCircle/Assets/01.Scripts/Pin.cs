@@ -7,6 +7,13 @@ public class Pin : MonoBehaviour
     [SerializeField] private GameObject _square;
     [SerializeField] private float _moveTime = .2f;
 
+    private StageController _stageController;
+
+    public void Setup(StageController stageController)
+    {
+        this._stageController = stageController;
+    }
+
     public void SetInPinStuckToTarget()
     {
         StopCoroutine("MoveTo");
@@ -36,5 +43,11 @@ public class Pin : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("Pin"))
+            _stageController.GameOver();
     }
 }

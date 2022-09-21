@@ -5,11 +5,19 @@ using UnityEngine;
 public class StageController : MonoBehaviour
 {
     [SerializeField] private PinSpawner _pinSpawner;
+    [SerializeField] private Camera _mainCamera;
+    [SerializeField] private Rotator _rotatorTarget;
+    [SerializeField] private Rotator _rotatorIndexPanel;
     [SerializeField] private int _throwablePinCount;
     [SerializeField] private int _stuckPinCount;
 
     private Vector3 _firstTPinPosition = Vector3.down * 2;
     public float TPinDistance { private set; get; } = 1;
+
+    private Color _failBackgroundColor = new Color(.4f, .1f, .1f);
+    private Color _clearBackgroundColor = new Color(0, .5f, .25f);
+
+    public bool isGameOver { set; get; } = false;
 
     private void Awake()
     {
@@ -23,5 +31,33 @@ public class StageController : MonoBehaviour
             float angle = (360 / _stuckPinCount) * i;
             _pinSpawner.SpawnStuckPin(angle, _stuckPinCount + 1 + i);
         }
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        _mainCamera.backgroundColor = _failBackgroundColor;
+        _rotatorTarget.Stop();
+    }
+
+    public void DecreaseThrowablePin()
+    {
+        _throwablePinCount--;
+
+        if (_throwablePinCount == 0)
+            StartCoroutine("GameClear");
+    }
+
+    private IEnumerator GameClear()
+    {
+        yield return new WaitForSeconds(.1f);
+
+        if (isGameOver == true)
+            yield break;
+
+        _mainCamera.backgroundColor = _clearBackgroundColor;
+
+        _rotatorTarget.RotateFast();
+        _rotatorIndexPanel.RotateFast();
     }
 }
