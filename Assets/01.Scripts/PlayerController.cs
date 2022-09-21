@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
                 _startJump = false;
                 _moveDirection.y = jumpSpeed;
                 isJumping = true;
+                _charactorController.DisableGroundCheck(0.1f);
             }
         }
         else
@@ -61,9 +62,15 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
+        {
             _startJump = true;
+            _realeaseJump = false;
+        }
 
         else if (context.canceled)
+        {
+            _startJump = false;
             _realeaseJump = true;
+        }
     }
 }

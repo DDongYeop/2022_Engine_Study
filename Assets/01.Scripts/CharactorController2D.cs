@@ -1,3 +1,4 @@
+using Globlatype;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class CharactorController2D : MonoBehaviour
 
     //flags
     public bool below;
+    public GroundType groundType; 
 
     private Vector2 _moveAmount;
     private Vector2 _currentPosition;
@@ -19,6 +21,8 @@ public class CharactorController2D : MonoBehaviour
 
     private Vector2[] _raycastPosition = new Vector2[3];
     private RaycastHit2D[] _raycastHits = new RaycastHit2D[3];
+
+    private bool _dissbleGroundCheck;
 
     private void Awake()
     {
@@ -35,7 +39,8 @@ public class CharactorController2D : MonoBehaviour
 
         _moveAmount = Vector2.zero;
 
-        CheckGrounded();
+        if (!_dissbleGroundCheck)
+            CheckGrounded();
     }
 
     public void Move(Vector2 movement)
@@ -68,12 +73,26 @@ public class CharactorController2D : MonoBehaviour
 
         if (numberofGroundHits > 0)
         {
+            if (_raycastHits[1].collider)
+                groundType = DetermineGroundType(_raycastHits[1].collider);
             below = true;
         }
         else
         {
             below = false;
+            groundType = GroundType.none;
         }
+    }
+
+    private GroundType DetermineGroundType(Collider2D collider)
+    {
+        if (collider.GetComponent<GroundEffector>())
+        {
+            GroundEffector groundEffector = collider.GetComponent<GroundEffector>();
+            return groundEffector.groundType;
+        }
+        else
+            return GroundType.LevelGeom;
     }
 
     private void DrawDebugRays(Vector2 direction, Color color)
@@ -82,5 +101,18 @@ public class CharactorController2D : MonoBehaviour
         {
             Debug.DrawRay(_raycastPosition[i], direction * raycastDistance, color);
         }
+    }
+
+    public void DisableGroundCheck(float delayTime)
+    {
+        below = false;
+        _dissbleGroundCheck = true;
+        StartCoroutine(EnableGroundCheck(delayTime));
+    }
+
+    private IEnumerator EnableGroundCheck(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        _dissbleGroundCheck = false;
     }
 }
