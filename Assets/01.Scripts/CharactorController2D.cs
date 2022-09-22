@@ -7,10 +7,15 @@ public class CharactorController2D : MonoBehaviour
 {
     public float raycastDistance = 0.2f;
     public LayerMask layerMask;
+    public float slopAngleLimit = 45f;
 
     //flags
     public bool below;
-    public GroundType groundType; 
+    public GroundType groundType;
+
+    // 나중에 private로 변경에정
+    private Vector2 _slopNormal;
+    private float _slopAngle;
 
     private Vector2 _moveAmount;
     private Vector2 _currentPosition;
@@ -33,6 +38,15 @@ public class CharactorController2D : MonoBehaviour
     private void FixedUpdate()
     {
         _lastPosition = _rigidbody.position;
+
+        if (_slopAngle != 0 && below)
+        {
+            if ((_moveAmount.x > 0f && _slopAngle > 0f) || (_moveAmount.x < 0f && _slopAngle < 0f))
+            {
+                _moveAmount.y = -Mathf.Abs(Mathf.Tan(_slopAngle * Mathf.Deg2Rad) * _moveAmount.x);
+            }
+        }
+
         _currentPosition = _lastPosition + _moveAmount;
         
         _rigidbody.MovePosition(_currentPosition);
@@ -50,6 +64,26 @@ public class CharactorController2D : MonoBehaviour
 
     private void CheckGrounded()
     {
+        RaycastHit2D hit = Physics2D.CapsuleCast(_capsuleCollider.bounds.center, _capsuleCollider.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, raycastDistance, layerMask);
+
+        if (hit.collider)
+        {
+            groundType = DetermineGroundType(hit.collider);
+            _slopNormal = hit.normal;
+            _slopAngle = Vector2.SignedAngle(_slopNormal, Vector2.up);
+
+            if (_slopAngle > slopAngleLimit || _slopAngle < -slopAngleLimit)
+                below = false;
+            else
+                below = true;
+        }
+        else
+        {
+            below = false;
+            groundType = GroundType.none;
+        }
+
+        /*
         Vector2 raycastOrigin = _rigidbody.position - new Vector2(0, _capsuleCollider.size.y * 0.5f);
 
         _raycastPosition[0] = raycastOrigin + (Vector2.left * _capsuleCollider.size.x * 0.25f + Vector2.up * 0.1f);
@@ -68,20 +102,29 @@ public class CharactorController2D : MonoBehaviour
             {
                 _raycastHits[i] = hit;
                 numberofGroundHits++;
+                groundType = DetermineGroundType(hit.collider);
+                _slopNormal = hit.normal;
+                _slopAngle = Vector2.SignedAngle(_slopNormal, Vector2.up);
+
             }
         }
+        */
 
-        if (numberofGroundHits > 0)
+        // 경사면이 45도 이상이면 below = false
+        /*if (numberofGroundHits > 0)
         {
-            if (_raycastHits[1].collider)
-                groundType = DetermineGroundType(_raycastHits[1].collider);
-            below = true;
+            if (_slopAngle > slopAngleLimit || _slopAngle < -slopAngleLimit)
+                below = false;
+            else
+                below = true;
         }
         else
         {
             below = false;
             groundType = GroundType.none;
-        }
+        }*/
+
+        //System.Array.Clear(_raycastHits, 0, _raycastHits.Length);
     }
 
     private GroundType DetermineGroundType(Collider2D collider)

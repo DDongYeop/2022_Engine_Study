@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
         if (_charactorController.below) //ont the ground
         {
+            _moveDirection.y = 0;
+
             if (_startJump)
             {
                 _startJump = false;
