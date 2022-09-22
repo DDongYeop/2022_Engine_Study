@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
+    [SerializeField] private StageController _stageController;
     [SerializeField] private float _rotateSpeed = 50f;
     [SerializeField] private float _maxRotateSpeed = 500;
     [SerializeField] private Vector3 _rotateAngle = Vector3.forward;
@@ -20,6 +21,8 @@ public class Rotator : MonoBehaviour
 
     private void Update()
     {
+        if (_stageController.isGameStart == false) return;
+
         transform.Rotate(_rotateAngle * _rotateSpeed * Time.deltaTime);
     }
 }
