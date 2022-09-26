@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private float _moveSpeed = 3.0f;
+
     public static Action OnEndReached;
 
-    [SerializeField] private float _moveSpeed = 3.0f;
+    public float moveSpeed { get; set; }
 
     public WayPoint waypoint { get; set; }
 
-    public Vector3 CurrentPointPosition => waypoint.GetWayPointPosition(_currentWaypointIndex);
+    public Vector3 currentPointPosition => waypoint.GetWayPointPosition(_currentWaypointIndex);
 
     private int _currentWaypointIndex;
 
@@ -25,6 +27,8 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _currentWaypointIndex = 0;
+        
+        moveSpeed = _moveSpeed;
     }
 
     private void Update()
@@ -40,16 +44,25 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
+        transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, moveSpeed * Time.deltaTime);
 
-        transform.position = Vector3.MoveTowards(transform.position, CurrentPointPosition, _moveSpeed * Time.deltaTime);
-
-        if (CurrentPointPosition == transform.position && transform.position != transform.position)
+        if (currentPointPosition == transform.position && transform.position != transform.position)
             _currentWaypointIndex++;
+    }
+
+    public void StopMovement()
+    {
+        moveSpeed = 0;
+    }
+
+    public void ResumeMovement()
+    {
+        moveSpeed = _moveSpeed;
     }
 
     private bool CurrentPointPositionReached()
     {
-        float distanceToNextPointPotion = (transform.position - CurrentPointPosition).magnitude;
+        float distanceToNextPointPotion = (transform.position - currentPointPosition).magnitude;
         if (distanceToNextPointPotion < 0.1f)
             return true;
         else
@@ -76,5 +89,10 @@ public class Enemy : MonoBehaviour
     public void ResetEnemy()
     {
         _currentWaypointIndex = 0;
+    }
+
+    public void EnemyDie()
+    {
+        _enemyHealth.Die();
     }
 }
