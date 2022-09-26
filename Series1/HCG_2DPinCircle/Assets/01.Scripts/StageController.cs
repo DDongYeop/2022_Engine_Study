@@ -73,6 +73,9 @@ public class StageController : MonoBehaviour
         _rotatorTarget.RotateFast();
         _rotatorIndexPanel.RotateFast();
 
+        int index = PlayerPrefs.GetInt("StageLevel");
+        PlayerPrefs.SetInt("StageLevel", index++);
+
         _audioSource.clip = _audioGameClear;
         _audioSource.Play();
 
