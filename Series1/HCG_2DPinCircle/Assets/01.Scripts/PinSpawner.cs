@@ -20,6 +20,13 @@ public class PinSpawner : MonoBehaviour
     [SerializeField] private float _bottomAngle = 270;
     private List<Pin> _throwablePins;
 
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     public void Setup()
     {
         _throwablePins = new List<Pin>();
@@ -39,6 +46,8 @@ public class PinSpawner : MonoBehaviour
                 _throwablePins[i].MoveOneStep(_stageController.TPinDistance);
 
             _stageController.DecreaseThrowablePin();
+
+            _audioSource.Play();
         }
     }
 

@@ -12,6 +12,10 @@ public class StageController : MonoBehaviour
     [SerializeField] private int _throwablePinCount;
     [SerializeField] private int _stuckPinCount;
 
+    [SerializeField] private AudioClip _audioGameOver;
+    [SerializeField] private AudioClip _audioGameClear;
+    private AudioSource _audioSource;
+
     private Vector3 _firstTPinPosition = Vector3.down * 2;
     public float TPinDistance { private set; get; } = 1;
 
@@ -23,6 +27,8 @@ public class StageController : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
+
         _pinSpawner.Setup();
 
         for (int i = 0; i < _throwablePinCount; ++i)
@@ -40,6 +46,9 @@ public class StageController : MonoBehaviour
         isGameOver = true;
         _mainCamera.backgroundColor = _failBackgroundColor;
         _rotatorTarget.Stop();
+
+        _audioSource.clip = _audioGameOver;
+        _audioSource.Play();
 
         StartCoroutine(StageExit(.5f));
     }
@@ -63,6 +72,9 @@ public class StageController : MonoBehaviour
 
         _rotatorTarget.RotateFast();
         _rotatorIndexPanel.RotateFast();
+
+        _audioSource.clip = _audioGameClear;
+        _audioSource.Play();
 
         StartCoroutine(StageExit(1));
     }
