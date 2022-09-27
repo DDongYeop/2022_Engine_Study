@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private StageController _stageController;
     private Movement2D _movement;
 
     private void Awake()
@@ -13,6 +14,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_stageController.isGameOver == true)
+            return;
+
         _movement.MoveToX();
 
         if (Input.GetMouseButton(0))
@@ -22,8 +26,15 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Equals("Item"))
+        {
+            _stageController.IncreaseScore(1);
             Destroy(collision.gameObject);
+        }
+
         else if (collision.tag.Equals("Obstacle"))
-            print("Game over");
+        {
+            Destroy(GetComponent<Rigidbody2D>());
+            _stageController.GameOver();
+        }
     }
 }
