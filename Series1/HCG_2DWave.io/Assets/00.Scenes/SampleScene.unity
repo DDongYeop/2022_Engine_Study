@@ -355,3 +355,58 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1448873559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1448873561}
+  - component: {fileID: 1448873560}
+  m_Layer: 0
+  m_Name: SpawnArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1448873560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448873559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f99c85b5a4fac3f4390465bf7d0bb994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _areaPrefabs:
+  - {fileID: 6484333837854300184, guid: 46ccf8e067fd95a4ab1d299529f95ccb, type: 3}
+  - {fileID: 9004800128936429378, guid: a52341b2ec9e1794391c0660abd287a7, type: 3}
+  - {fileID: 5035307127465233724, guid: 1dc9d7b3f4154fd4194c7e27b8238f8f, type: 3}
+  - {fileID: 5188468073852491658, guid: fe1a0ea557674e547b42b8195483fc62, type: 3}
+  - {fileID: 5056986503273177324, guid: 15f18749f8f78f54c9ab5f8180641c9a, type: 3}
+  - {fileID: 1630392705832815404, guid: b9aa987c186718147aa10d26aab9e140, type: 3}
+  - {fileID: 6977941392700401523, guid: 22ed6c9f7e5591e428ee7454498e8759, type: 3}
+  - {fileID: 2520175984477757916, guid: 8199bf9165919f544b4ae864352e8ed0, type: 3}
+  _player: {fileID: 1130385780}
+  _spawnAreaAtAtStart: 2
+  _distanceToNext: 30
+--- !u!4 &1448873561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448873559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
