@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag.Equals("Item"))
         {
             _stageController.IncreaseScore(1);
-            Destroy(collision.gameObject);
+            collision.GetComponent<Item>().Exit();
         }
 
         else if (collision.tag.Equals("Obstacle"))
