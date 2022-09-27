@@ -48,14 +48,23 @@ public class StageController : MonoBehaviour
 
     public void GameOver()
     {
+        ShakeCamera.Instance.OnShakeCamera(.5f, .1f);
+
         isGameOver = true;
+
+        StartCoroutine(OnGameOver());
+    }
+
+    private IEnumerator OnGameOver()
+    {
+        yield return new WaitForSeconds(1);
 
         int bestScore = PlayerPrefs.GetInt("BestScore");
         if (_currentScore > bestScore)
         {
             PlayerPrefs.SetInt("BestScore", _currentScore);
         }
-        
+
         _buttonContinue.SetActive(true);
         _textScoreText.SetActive(true);
     }

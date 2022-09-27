@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private StageController _stageController;
+    [SerializeField] private GameObject _playerDieEffect;
     private Movement2D _movement;
 
     private void Awake()
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
         else if (collision.tag.Equals("Obstacle"))
         {
+            Instantiate(_playerDieEffect, transform.position, Quaternion.identity);
             Destroy(GetComponent<Rigidbody2D>());
             _stageController.GameOver();
         }
