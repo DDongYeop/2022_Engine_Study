@@ -922,6 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84efeec578e40e0459d9e939994fdad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraController: {fileID: 519420030}
   _textTitle: {fileID: 537255550}
   _textTapToPlay: {fileID: 1484011079}
   _textCurrentScore: {fileID: 302699234}

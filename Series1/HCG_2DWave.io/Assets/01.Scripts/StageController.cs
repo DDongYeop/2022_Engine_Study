@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class StageController : MonoBehaviour
 {
+    [SerializeField] private CameraController _cameraController;
     [SerializeField] private GameObject _textTitle;
     [SerializeField] private GameObject _textTapToPlay;
 
@@ -70,6 +71,8 @@ public class StageController : MonoBehaviour
             _bestScore = _currentScore;
             _textBestScore.text = $"<size=50>BEST</size>\n<size=100>{_bestScore}</size>";
         }
+
+        _cameraController.ChageBackGroundColor();
     }
 
     public void ContinueGame()
