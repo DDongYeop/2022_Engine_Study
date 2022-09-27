@@ -18,4 +18,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(0))
             _movement.MoveToY();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("Item"))
+            Destroy(collision.gameObject);
+        else if (collision.tag.Equals("Obstacle"))
+            print("Game over");
+    }
 }
