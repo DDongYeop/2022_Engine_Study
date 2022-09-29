@@ -8,9 +8,15 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 10;
     public float gravity = 20f;
     public float jumpSpeed = 15f;
+    public float doubleJumpSpeed = 10f;
+
+    public bool canDoubleJump;
+    public bool canTripleJump;
 
     //player state
     public bool isJumping;
+    public bool isDoubleJumping;
+    public bool isTripleJumping;
 
     private bool _startJump;
     private bool _realeaseJump;
@@ -72,9 +78,12 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if (_charactorController.below) //ont the ground
+        if (_charactorController.below) //on the ground
         {
             _moveDirection.y = 0;
+            isJumping = false;
+            isDoubleJumping = false;
+            isTripleJumping = false;
 
             if (_startJump)
             {
@@ -94,6 +103,32 @@ public class PlayerController : MonoBehaviour
                     _moveDirection.y *= 0.5f;
                 }
             }
+
+
+            if (_startJump) //더블점프
+            {
+                if (canTripleJump && (!_charactorController.left && !_charactorController.right))
+                {
+                    if (isDoubleJumping && !isTripleJumping)
+                    {
+                        _moveDirection.y = doubleJumpSpeed;
+                        isTripleJumping = true;
+                    }
+                }
+
+
+                if (canDoubleJump && (!_charactorController.left && !_charactorController.right))
+                {
+                    if (!isDoubleJumping)
+                    {
+                        _moveDirection.y = doubleJumpSpeed;
+                        isDoubleJumping = true;
+                    }
+                }
+                _startJump = false;
+            }
+            
+
             GravityCalculation();
         }
 
