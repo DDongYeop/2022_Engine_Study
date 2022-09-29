@@ -26,8 +26,52 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        _moveDirection.x = _input.x * walkSpeed;
+        PlayerMove();
+        SpriteFlip();
+        PlayerJump();
+    }
+    
+    private void GravityCalculation()
+    {
+        if (_moveDirection.y > 0f && _charactorController.above)
+        {
+            _moveDirection.y = 0f;
+        }
+        _moveDirection.y -= gravity * Time.deltaTime;
+    }
 
+    public void OnMovement(InputAction.CallbackContext context)
+    {
+        _input = context.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _startJump = true;
+            _realeaseJump = false;
+        }
+
+        else if (context.canceled)
+        {
+            _startJump = false;
+            _realeaseJump = true;
+        }
+    }
+
+    private void SpriteFlip()
+    {
+        if (_input.x > 0)
+            transform.localScale = Vector3.one;
+        else if (_input.x < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+        else
+            transform.localScale = transform.localScale;
+    }
+
+    private void PlayerJump()
+    {
         if (_charactorController.below) //ont the ground
         {
             _moveDirection.y = 0;
@@ -58,33 +102,9 @@ public class PlayerController : MonoBehaviour
         /*if (_charactorController.above)
             _realeaseJump = true;*/
     }
-    
-    private void GravityCalculation()
-    {
-        if (_moveDirection.y > 0f && _charactorController.above)
-        {
-            _moveDirection.y = 0f;
-        }
-        _moveDirection.y -= gravity * Time.deltaTime;
-    }
 
-    public void OnMovement(InputAction.CallbackContext context)
+    private void PlayerMove()
     {
-        _input = context.ReadValue<Vector2>();
-    }
-
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            _startJump = true;
-            _realeaseJump = false;
-        }
-
-        else if (context.canceled)
-        {
-            _startJump = false;
-            _realeaseJump = true;
-        }
+        _moveDirection.x = _input.x * walkSpeed;
     }
 }
