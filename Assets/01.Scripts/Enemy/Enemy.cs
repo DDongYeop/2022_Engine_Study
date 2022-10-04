@@ -21,10 +21,13 @@ public class Enemy : MonoBehaviour
     private EnemyHealth _enemyHealth;
     private SpriteRenderer _spriteRenderer;
 
+    public EnemyHealth enemyHealth { get; set; }
+
     private void Awake()
     {
         _enemyHealth = GetComponent<EnemyHealth>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     private void Start()
