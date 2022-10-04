@@ -10,6 +10,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float _damage = 2;
     [SerializeField] private float _minDisToDealDamage = 0.1f;
 
+    public TurretProjectile turretOwner { get; set; }
+
     private void Update()
     {
         if (_enemyTarget != null)
@@ -28,6 +30,8 @@ public class Projectile : MonoBehaviour
         if (disToTarget < _minDisToDealDamage)
         {
             _enemyTarget.enemyHealth.DealDamage(_damage);
+
+            turretOwner.ResetTurretProjectile();
             ObjectPooler.ReturnToPool(gameObject);
         }
     }

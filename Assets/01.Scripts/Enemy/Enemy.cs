@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 3.0f;
 
-    public static Action OnEndReached;
+    public static Action<Enemy> OnEndReached;
 
     public float moveSpeed { get; set; }
 
@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour
 
     private void EndPointReached()
     {
-        OnEndReached?.Invoke(); // if (OndEndReached != null) OnEndReached.Invoke(); << 이거랑 똑같음
+        OnEndReached?.Invoke(this); // if (OndEndReached != null) OnEndReached.Invoke(); << 이거랑 똑같음
         
         _enemyHealth.ResetHealth();
         ObjectPooler.ReturnToPool(gameObject);

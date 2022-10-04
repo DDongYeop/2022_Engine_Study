@@ -6,6 +6,7 @@ public class EnemyAnimation : MonoBehaviour
 {
     private Animator _animator;
     private Enemy _enemy;
+    private EnemyHealth _enemyHealth;
 
     private int _hurtAnimation = Animator.StringToHash("Hurt");
     private int _dieAnimation = Animator.StringToHash("Die");
@@ -14,6 +15,7 @@ public class EnemyAnimation : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _enemy = GetComponent<Enemy>();
+        _enemyHealth = GetComponent<EnemyHealth>();
     }
 
     private void PlayHurtAnimation()
@@ -48,11 +50,13 @@ public class EnemyAnimation : MonoBehaviour
 
     private IEnumerator PlayerDie()
     {
-        PlayDieAnimation();
         _enemy.StopMovement();
+        PlayDieAnimation();
         yield return new WaitForSeconds(GetCurrentANimationLength());
         _enemy.ResumeMovement();
-        _enemy.EnemyDie();
+
+        _enemyHealth.ResetHealth();
+        ObjectPooler.ReturnToPool(_enemy.gameObject);
     }
 
     public void EnemyDead(Enemy enemy)
@@ -64,10 +68,12 @@ public class EnemyAnimation : MonoBehaviour
     private void OnEnable()
     {
         EnemyHealth.onEnemyHit += EnemyHit;
+        EnemyHealth.onEnemyKilled += EnemyDead;
     }
 
     private void OnDisable()
     {
         EnemyHealth.onEnemyHit -= EnemyHit;
+        EnemyHealth.onEnemyKilled -= EnemyDead;
     }
 }
