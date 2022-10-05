@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileSpawner : MonoBehaviour
 {
+    [SerializeField] private GameController _gameController;
     [SerializeField] private GameObject _tilePrefab;
     [SerializeField] private Transform _currentTile;
 
@@ -22,6 +23,7 @@ public class TileSpawner : MonoBehaviour
         GameObject clone = Instantiate(_tilePrefab);
         clone.transform.SetParent(transform);
         clone.GetComponent<Tile>().Setup(this);
+        clone.transform.GetChild(1).GetComponent<Item>().Setup(_gameController);
 
         SpawnTile(clone.transform);
     }
@@ -35,5 +37,9 @@ public class TileSpawner : MonoBehaviour
         tile.position = _currentTile.position + addPosition;
 
         _currentTile = tile;
+
+        int spawnItem = Random.Range(0, 100);
+        if (spawnItem < 20)
+            tile.GetChild(1).gameObject.SetActive(true);
     }
 }

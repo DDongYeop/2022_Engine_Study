@@ -542,6 +542,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 3
+  _increaseAmount: 0.15
+  _increaseCycleTime: 10
 --- !u!114 &206681608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2901,6 +2903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea09be79a2f89a4d8f0021928f9ebcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameController: {fileID: 1041689394}
   _tilePrefab: {fileID: 4905713639973672490, guid: c9d4f48d1149b734dbff6b261df3b120, type: 3}
   _currentTile: {fileID: 2135056723}
   _spawnTileCountAtStart: 100
