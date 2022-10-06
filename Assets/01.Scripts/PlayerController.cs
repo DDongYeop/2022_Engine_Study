@@ -12,17 +12,20 @@ public class PlayerController : MonoBehaviour
     public float doubleJumpSpeed = 10f;
     public float xWallJumpSpeed = 15f;
     public float yWallJumpSpeed = 15f;
+    public float wallRunSpeed = 8f;
 
     [Header("Player Abilities")]
     public bool canDoubleJump;
     public bool canTripleJump;
     public bool canWallJump;
+    public bool canWallRun;
 
     [Header("Player States")]
     public bool isJumping;
     public bool isDoubleJumping;
     public bool isTripleJumping;
     public bool isWallJumping;
+    public bool isWallRunning;
 
     private bool _startJump;
     private bool _realeaseJump;
@@ -30,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _input;
     private Vector2 _moveDirection;
     private CharactorController2D _charactorController;
+
+    private bool _ableToWallRun;
 
     private void Awake()
     {
@@ -44,6 +49,7 @@ public class PlayerController : MonoBehaviour
             SpriteFlip();
         }
         PlayerJump();
+        WallRun();
     }
     
     private void GravityCalculation()
@@ -100,12 +106,13 @@ public class PlayerController : MonoBehaviour
                 _startJump = false;
                 _moveDirection.y = jumpSpeed;
                 isJumping = true;
+                _ableToWallRun = true;
                 _charactorController.DisableGroundCheck(0.1f);
             }
         }
-        else
+        else //공중에.... 
         {
-            if (_realeaseJump) //공중에.... 
+            if (_realeaseJump) 
             {
                 _realeaseJump = false;
                 if (_moveDirection.y > 0)
@@ -168,6 +175,25 @@ public class PlayerController : MonoBehaviour
             _realeaseJump = true;*/
     }
 
+    private void WallRun()
+    {
+        if (_charactorController.below)
+        {
+            isWallRunning = false;
+            return;
+        }
+
+        if (canWallRun && (_charactorController.left || _charactorController.right))
+        {
+            if (_input.y > 0f && _ableToWallRun)
+            {
+                _moveDirection.y = wallRunSpeed;
+            }
+
+            StartCoroutine(WallRunWaiter());
+        }
+    }
+
     private void PlayerMove()
     {
         _moveDirection.x = _input.x * walkSpeed;
@@ -178,5 +204,14 @@ public class PlayerController : MonoBehaviour
         isWallJumping = true;
         yield return new WaitForSeconds(0.4f);
         isWallJumping = false;
+    }
+
+    private IEnumerator WallRunWaiter()
+    {
+        isWallRunning = true;
+        yield return new WaitForSeconds(0.5f);
+        isWallRunning = false;
+        if (!isWallRunning)
+            _ableToWallRun = false;
     }
 }

@@ -3183,8 +3183,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.28, y: 2.56}
+  m_Offset: {x: 0, y: 0.0087246895}
+  m_Size: {x: 1.28, y: 2.5425506}
   m_Direction: 0
 --- !u!212 &1767920204
 SpriteRenderer:
@@ -3270,13 +3270,16 @@ MonoBehaviour:
   doubleJumpSpeed: 10
   xWallJumpSpeed: 15
   yWallJumpSpeed: 15
+  wallRunSpeed: 8
   canDoubleJump: 1
   canTripleJump: 1
   canWallJump: 1
+  canWallRun: 1
   isJumping: 0
   isDoubleJumping: 0
   isTripleJumping: 0
   isWallJumping: 0
+  isWallRunning: 0
 --- !u!114 &1767920207
 MonoBehaviour:
   m_ObjectHideFlags: 0
