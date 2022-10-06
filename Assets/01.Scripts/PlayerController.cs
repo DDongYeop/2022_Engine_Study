@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour
     public float xWallJumpSpeed = 15f;
     public float yWallJumpSpeed = 15f;
     public float wallRunSpeed = 8f;
+    public float wallSlideAmount = 0.1f;
 
     [Header("Player Abilities")]
     public bool canDoubleJump;
     public bool canTripleJump;
     public bool canWallJump;
     public bool canWallRun;
+    public bool canWallSlide;
 
     [Header("Player States")]
     public bool isJumping;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public bool isTripleJumping;
     public bool isWallJumping;
     public bool isWallRunning;
+    public bool isWallSliding;
 
     private bool _startJump;
     private bool _realeaseJump;
@@ -50,15 +53,6 @@ public class PlayerController : MonoBehaviour
         }
         PlayerJump();
         WallRun();
-    }
-    
-    private void GravityCalculation()
-    {
-        if (_moveDirection.y > 0f && _charactorController.above)
-        {
-            _moveDirection.y = 0f;
-        }
-        _moveDirection.y -= gravity * Time.deltaTime;
     }
 
     public void OnMovement(InputAction.CallbackContext context)
@@ -100,6 +94,7 @@ public class PlayerController : MonoBehaviour
             isDoubleJumping = false;
             isTripleJumping = false;
             isWallJumping = false;
+            isWallSliding = false;
 
             if (_startJump)
             {
@@ -192,6 +187,29 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(WallRunWaiter());
         }
+    }
+
+    private void GravityCalculation()
+    {
+        if (_moveDirection.y > 0f && _charactorController.above)
+        {
+            _moveDirection.y = 0f;
+        }
+
+        if (canWallSlide && (_charactorController.left || _charactorController.right))
+        {
+            if (_charactorController.hitWallThisFrame)
+                _moveDirection.y = 0f;
+
+            if (_moveDirection.y <= 0)
+                _moveDirection.y -= gravity * wallSlideAmount * Time.deltaTime;
+            else
+                _moveDirection.y -= gravity * Time.deltaTime;
+
+            isWallSliding = true;
+        }
+        else
+            _moveDirection.y -= gravity * Time.deltaTime;
     }
 
     private void PlayerMove()

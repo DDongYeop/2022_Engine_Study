@@ -3271,15 +3271,18 @@ MonoBehaviour:
   xWallJumpSpeed: 15
   yWallJumpSpeed: 15
   wallRunSpeed: 8
+  wallSlideAmount: 0.5
   canDoubleJump: 1
   canTripleJump: 1
   canWallJump: 1
   canWallRun: 1
+  canWallSlide: 1
   isJumping: 0
   isDoubleJumping: 0
   isTripleJumping: 0
   isWallJumping: 0
   isWallRunning: 0
+  isWallSliding: 0
 --- !u!114 &1767920207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3302,6 +3305,7 @@ MonoBehaviour:
   right: 0
   left: 0
   groundType: 0
+  hitWallThisFrame: 0
 --- !u!1 &1817545768
 GameObject:
   m_ObjectHideFlags: 0
