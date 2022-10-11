@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class TurretProjectile : MonoBehaviour
 {
-    [SerializeField] private Transform _projectileSpawnPos;
-    private ObjectPooler _pooler;
+    [SerializeField] private Transform projectileSpawnPos;
+    private objectPooler _pooler;
 
     private Projectile _currentProjectileLoaded;
     private Turret _turret;
 
     private void Start()
     {
-        _pooler = GetComponent<ObjectPooler>();
+        _pooler = GetComponent<objectPooler>();
         _turret = GetComponent<Turret>();
 
         LoadProjectile();
@@ -21,23 +21,27 @@ public class TurretProjectile : MonoBehaviour
     private void Update()
     {
         if (IsTurretEmpty())
+        {
             LoadProjectile();
+        }
 
-        if (_turret.currentEnemyTarget != null && _currentProjectileLoaded != null && _turret.currentEnemyTarget.enemyHealth.currentHealth > 0f)
+        if(_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null
+            &&_turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth >0f)
         {
             _currentProjectileLoaded.transform.parent = null;
-            _currentProjectileLoaded.SetEnemy(_turret.currentEnemyTarget);
+            _currentProjectileLoaded.SetEnemy(_turret.CurrentEnemyTarget);
         }
     }
+
 
     private void LoadProjectile()
     {
         GameObject newInstance = _pooler.GetInstanceFromPool();
-        newInstance.transform.localPosition = _projectileSpawnPos.position;
-        newInstance.transform.SetParent(_projectileSpawnPos);
+        newInstance.transform.localPosition = projectileSpawnPos.position;
+        newInstance.transform.SetParent(projectileSpawnPos);
 
         _currentProjectileLoaded = newInstance.GetComponent<Projectile>();
-        _currentProjectileLoaded.turretOwner = this;
+        _currentProjectileLoaded.TurretOwner = this; //총알 만든 타워를 저장
 
         newInstance.SetActive(true);
     }
