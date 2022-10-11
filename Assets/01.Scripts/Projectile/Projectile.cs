@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public static Action<Enemy, float> OnEnemyHit;
+
     [SerializeField] private float moveSpeed = 10f;
     private Enemy _enenyTarget;
 
@@ -28,6 +31,8 @@ public class Projectile : MonoBehaviour
         float disToTarget = (_enenyTarget.transform.position - transform.position).magnitude;
         if(disToTarget < minDisToDealDamage) //적과 총알 거리 충분히 가까움. 총알 맞음
         {
+            OnEnemyHit?.Invoke(_enenyTarget, damage);
+
             _enenyTarget.EnemyHealth.DealDamage(damage);
 
             TurretOwner.ResetTurretProjectile();
