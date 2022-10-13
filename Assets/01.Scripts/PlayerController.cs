@@ -146,6 +146,9 @@ public class PlayerController : MonoBehaviour
         }
         else //°øÁß¿¡.... 
         {
+            if ((isCreeping || isDucking) && _moveDirection.y > 0)
+                StartCoroutine(ClearDuckingState());
+
             if (_realeaseJump) 
             {
                 _realeaseJump = false;
@@ -270,5 +273,19 @@ public class PlayerController : MonoBehaviour
         isWallRunning = false;
         if (!isWallRunning)
             _ableToWallRun = false;
+    }
+
+    private IEnumerator ClearDuckingState()
+    {
+        yield return new WaitForSeconds(.05f);
+
+        RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider.bounds.center, transform.localScale, CapsuleDirection2D.Vertical, 0f, Vector2.up, _originColliderSize.y / 2f, _charactorController.layerMask);
+        if (!hitCeiling.collider)
+        {
+            isDucking = false;
+            isCreeping = false;
+            _capsuleCollider.size = _originColliderSize;
+            _spriteRenderer.sprite = Resources.Load<Sprite>("directionSpriteUp");
+        }
     }
 }
