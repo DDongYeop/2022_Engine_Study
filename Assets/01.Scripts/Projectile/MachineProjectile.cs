@@ -8,8 +8,7 @@ public class MachineProjectile : Projectile
 
     protected override void Update()
     {
-        if (_enenyTarget != null)
-            MoveProjectile();
+        MoveProjectile();
     }
 
     protected override void MoveProjectile()
@@ -28,5 +27,10 @@ public class MachineProjectile : Projectile
 
             objectPooler.ReturnToPool(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(objectPooler.ReturnToPoolDelay(gameObject, 5));
     }
 }

@@ -56,4 +56,10 @@ public class objectPooler : MonoBehaviour
     {
         instance.SetActive(false);
     }
+
+    public static IEnumerator ReturnToPoolDelay(GameObject instance, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        instance.SetActive(false);
+    }
 }
