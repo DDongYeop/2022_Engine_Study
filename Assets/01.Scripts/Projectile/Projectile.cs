@@ -7,15 +7,15 @@ public class Projectile : MonoBehaviour
 {
     public static Action<Enemy, float> OnEnemyHit;
 
-    [SerializeField] private float moveSpeed = 10f;
-    private Enemy _enenyTarget;
+    [SerializeField] protected float moveSpeed = 10f;
+    protected Enemy _enenyTarget;
 
-    [SerializeField] private float damage = 2f;
+    [SerializeField] protected float damage = 2f;
     [SerializeField] private float minDisToDealDamage = 0.1f;
 
     public TurretProjectile TurretOwner { get; set; }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(_enenyTarget != null)
         {
@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void MoveProjectile()
+    protected virtual void MoveProjectile()
     {
         transform.position = Vector2.MoveTowards(transform.position, _enenyTarget.transform.position, moveSpeed * Time.deltaTime);
 
