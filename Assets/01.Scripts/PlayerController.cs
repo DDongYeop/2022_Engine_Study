@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public float yWallJumpSpeed = 15f;
     public float wallRunSpeed = 8f;
     public float wallSlideAmount = 0.1f;
+    public float dashSpeed = 40f;
+    public float dashTime = .2f;
+    public float dashCooldownTime = 1f;
 
     [Header("Player Abilities")]
     public bool canDoubleJump;
@@ -22,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public bool canWallJump;
     public bool canWallRun;
     public bool canWallSlide;
+    public bool canAirDash;
+    public bool canGroundDash;
 
     [Header("Player States")]
     public bool isJumping;
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public bool isWallSliding;
     public bool isDucking;
     public bool isCreeping;
+    public bool isDashing;
 
     private bool _startJump;
     private bool _realeaseJump;
@@ -59,10 +65,13 @@ public class PlayerController : MonoBehaviour
         if (!isWallJumping)
         {
             PlayerMove();
+            PlayerDash();
             SpriteFlip();
         }
         PlayerJump();
         WallRun();
+
+        dashCooldownTime -= Time.deltaTime;
     }
 
     public void OnMovement(InputAction.CallbackContext context)
@@ -82,6 +91,19 @@ public class PlayerController : MonoBehaviour
         {
             _startJump = false;
             _realeaseJump = true;
+        }
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (dashCooldownTime > 0)
+            return;
+
+        dashCooldownTime = 1f;
+        if (context.started)
+        {
+            if ((canAirDash && !_charactorController) || (canAirDash && _charactorController))
+                StartCoroutine(Dash());
         }
     }
 
@@ -233,6 +255,9 @@ public class PlayerController : MonoBehaviour
 
     private void GravityCalculation()
     {
+        if (isDashing)
+            return;
+
         if (_moveDirection.y > 0f && _charactorController.above)
         {
             _moveDirection.y = 0f;
@@ -257,6 +282,14 @@ public class PlayerController : MonoBehaviour
     private void PlayerMove()
     {
         _moveDirection.x = _input.x * walkSpeed;
+    }
+
+    private void PlayerDash()
+    {
+        if (!isDashing)
+            return;
+
+        _moveDirection.x = _input.x * dashSpeed;
     }
 
     private IEnumerator WallJumpWaiter()
@@ -287,5 +320,12 @@ public class PlayerController : MonoBehaviour
             _capsuleCollider.size = _originColliderSize;
             _spriteRenderer.sprite = Resources.Load<Sprite>("directionSpriteUp");
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        isDashing = true;
+        yield return new WaitForSeconds(dashTime);
+        isDashing = false;
     }
 }
