@@ -16,8 +16,9 @@ public class MachineTurretProjectile : TurretProjectile
                 Vector3 dirToTarget = _turret.CurrentEnemyTarget.transform.position - transform.position;
                 FireProojectile(dirToTarget);
                 
-                _nextAttackTime = Time.time + delayBtwAttacks;
             }
+            
+            _nextAttackTime = Time.time + delayBtwAttacks;
         }
     }
 

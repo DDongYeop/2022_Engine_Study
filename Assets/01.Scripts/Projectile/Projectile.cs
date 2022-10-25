@@ -10,10 +10,10 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float moveSpeed = 10f;
     protected Enemy _enenyTarget;
 
-    [SerializeField] protected float damage = 2f;
     [SerializeField] private float minDisToDealDamage = 0.1f;
 
     public TurretProjectile TurretOwner { get; set; }
+    public float Damage { get; set; }
 
     protected virtual void Update()
     {
@@ -31,9 +31,9 @@ public class Projectile : MonoBehaviour
         float disToTarget = (_enenyTarget.transform.position - transform.position).magnitude;
         if(disToTarget < minDisToDealDamage) //적과 총알 거리 충분히 가까움. 총알 맞음
         {
-            OnEnemyHit?.Invoke(_enenyTarget, damage);
+            OnEnemyHit?.Invoke(_enenyTarget, Damage);
 
-            _enenyTarget.EnemyHealth.DealDamage(damage);
+            _enenyTarget.EnemyHealth.DealDamage(Damage);
 
             TurretOwner.ResetTurretProjectile();
             objectPooler.ReturnToPool(gameObject); //총알 맞으면 오브젝트 풀러로 되돌림

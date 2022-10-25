@@ -6,18 +6,23 @@ public class TurretProjectile : MonoBehaviour
 {
     [SerializeField] protected Transform projectileSpawnPos;
     [SerializeField] protected float delayBtwAttacks = 2f;
+    [SerializeField] protected float damage = 2f;
+
+    public float Damage { get; set; }
 
     protected float _nextAttackTime;
 
     protected objectPooler _pooler;
 
-    private Projectile _currentProjectileLoaded;
+    protected Projectile _currentProjectileLoaded;
     protected Turret _turret;
 
     private void Start()
     {
         _pooler = GetComponent<objectPooler>();
         _turret = GetComponent<Turret>();
+
+        Damage = damage;
 
         LoadProjectile();
     }
@@ -51,6 +56,8 @@ public class TurretProjectile : MonoBehaviour
         _currentProjectileLoaded = newInstance.GetComponent<Projectile>();
         _currentProjectileLoaded.TurretOwner = this; //총알 만든 타워를 저장
         _currentProjectileLoaded.ResetProjectile();
+
+        _currentProjectileLoaded.Damage = Damage;
 
         newInstance.SetActive(true);
     }
