@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    #region public properties
     [Header("Player Properties")]
     public float walkSpeed = 10;
     public float creepSpeed = 5f;
@@ -39,6 +40,9 @@ public class PlayerController : MonoBehaviour
     public bool isCreeping;
     public bool isDashing;
 
+    #endregion
+
+    #region private properties
     private bool _startJump;
     private bool _realeaseJump;
 
@@ -50,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _originColliderSize;
     private bool _ableToWallRun;
+    #endregion
 
     private void Awake()
     {
@@ -71,8 +76,14 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
         WallRun();
 
+
         dashCooldownTime -= Time.deltaTime;
+
+
     }
+
+
+    #region Input Methods
 
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -96,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (dashCooldownTime > 0)
+        if (dashCooldownTime >= 0)
             return;
 
         dashCooldownTime = 1f;
@@ -106,6 +117,9 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Dash());
         }
     }
+
+    #endregion
+
 
     private void SpriteFlip()
     {
@@ -119,113 +133,11 @@ public class PlayerController : MonoBehaviour
     {
         if (_charactorController.below) //on the ground
         {
-            _moveDirection.y = 0;
-            isJumping = false;
-            isDoubleJumping = false;
-            isTripleJumping = false;
-            isWallJumping = false;
-            isWallSliding = false;
-
-            if (_startJump)
-            {
-                _startJump = false;
-                _moveDirection.y = jumpSpeed;
-                isJumping = true;
-                _ableToWallRun = true;
-                _charactorController.DisableGroundCheck(0.1f);
-            }
-
-            //ducking, creeping
-            if (_input.y < 0f)
-            {
-                if (!isDucking && !isCreeping)
-                {
-                    isDucking = true;
-                    _capsuleCollider.size = new Vector2(_capsuleCollider.size.x, _capsuleCollider.size.y / 2);
-                    transform.position = new Vector2(transform.position.x, transform.position.y - (_originColliderSize.y/4));
-                    _spriteRenderer.sprite = Resources.Load<Sprite>("directionSpriteUp_crouching");
-                }
-            }
-            else
-            {
-                if (isCreeping || isDucking)
-                {
-                    RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider.bounds.center, transform.localScale, CapsuleDirection2D.Vertical, 0f, Vector2.up, _originColliderSize.y / 2f, _charactorController.layerMask);
-                    if (!hitCeiling.collider)
-                    {
-                        isDucking = false;
-                        isCreeping = false;
-                        _capsuleCollider.size = _originColliderSize;
-                        _spriteRenderer.sprite = Resources.Load<Sprite>("directionSpriteUp");
-                    }
-                }
-            }
-
-            if (isDucking && _moveDirection.x != 0)
-                isCreeping = true;
-            else
-                isCreeping = false;
+            OnGround();
         }
         else //공중에.... 
         {
-            if ((isCreeping || isDucking) && _moveDirection.y > 0)
-                StartCoroutine(ClearDuckingState());
-
-            if (_realeaseJump) 
-            {
-                _realeaseJump = false;
-                if (_moveDirection.y > 0)
-                {
-                    _moveDirection.y *= 0.5f;
-                }
-            }
-
-
-            if (_startJump) //더블점프
-            {
-                if (canTripleJump && (!_charactorController.left && !_charactorController.right))
-                {
-                    if (isDoubleJumping && !isTripleJumping)
-                    {
-                        _moveDirection.y = doubleJumpSpeed;
-                        isTripleJumping = true;
-                    }
-                }
-
-
-                if (canDoubleJump && (!_charactorController.left && !_charactorController.right))
-                {
-                    if (!isDoubleJumping)
-                    {
-                        _moveDirection.y = doubleJumpSpeed;
-                        isDoubleJumping = true;
-                    }
-                }
-
-                if (canWallJump && (_charactorController.left || _charactorController.right))
-                {
-                    if (_charactorController.right && _moveDirection.x <= 0)
-                    {
-                        _moveDirection.x = -xWallJumpSpeed;
-                        _moveDirection.y = yWallJumpSpeed;
-                        transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                    }
-                    else if (_charactorController.left && _moveDirection.x >= 0)
-                    {
-                        _moveDirection.x = xWallJumpSpeed;
-                        _moveDirection.y = yWallJumpSpeed;
-                        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                    }
-                    isWallJumping = true;
-
-                    StartCoroutine(WallJumpWaiter());
-                }
-
-                _startJump = false;
-            }
-            
-
-            GravityCalculation();
+            InAir();
         }
 
         _charactorController.Move(_moveDirection * Time.deltaTime);
@@ -234,22 +146,142 @@ public class PlayerController : MonoBehaviour
             _realeaseJump = true;*/
     }
 
-    private void WallRun()
+
+    #region OnGround
+
+    private void OnGround()
     {
-        if (_charactorController.below)
+        _moveDirection.y = 0;
+        ClearAirAbillityFlags();
+
+        Jump();
+
+        //ducking, creeping
+        DuckingAndCreeping();
+    }
+
+    private void ClearAirAbillityFlags()
+    {
+        isJumping = false;
+        isDoubleJumping = false;
+        isTripleJumping = false;
+        isWallJumping = false;
+        isWallSliding = false;
+    }
+
+
+    private void Jump()
+    {
+        if (_startJump)
         {
-            isWallRunning = false;
-            return;
+            _startJump = false;
+            _moveDirection.y = jumpSpeed;
+            isJumping = true;
+            _ableToWallRun = true;
+            _charactorController.DisableGroundCheck(0.1f);
+        }
+    }
+
+    private void DuckingAndCreeping()
+    {
+        if (_input.y < 0f)
+        {
+            if (!isDucking && !isCreeping)
+            {
+                isDucking = true;
+                _capsuleCollider.size = new Vector2(_capsuleCollider.size.x, _capsuleCollider.size.y / 2);
+                transform.position = new Vector2(transform.position.x, transform.position.y - (_originColliderSize.y / 4));
+                _spriteRenderer.sprite = Resources.Load<Sprite>("directionSpriteUp_crouching");
+            }
+        }
+        else
+        {
+            if (isCreeping || isDucking)
+            {
+                RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider.bounds.center, transform.localScale, CapsuleDirection2D.Vertical, 0f, Vector2.up, _originColliderSize.y / 2f, _charactorController.layerMask);
+                if (!hitCeiling.collider)
+                {
+                    isDucking = false;
+                    isCreeping = false;
+                    _capsuleCollider.size = _originColliderSize;
+                    _spriteRenderer.sprite = Resources.Load<Sprite>("directionSpriteUp");
+                }
+            }
         }
 
-        if (canWallRun && (_charactorController.left || _charactorController.right))
+        if (isDucking && _moveDirection.x != 0)
+            isCreeping = true;
+        else
+            isCreeping = false;
+    }
+
+    #endregion
+
+
+    #region InAir
+
+    private void InAir()
+    {
+        if ((isCreeping || isDucking) && _moveDirection.y > 0)
+            StartCoroutine(ClearDuckingState());
+
+        if (_realeaseJump)
         {
-            if (_input.y > 0f && _ableToWallRun)
+            _realeaseJump = false;
+            if (_moveDirection.y > 0)
             {
-                _moveDirection.y = wallRunSpeed;
+                _moveDirection.y *= 0.5f;
+            }
+        }
+
+        AirJump();
+
+        GravityCalculation();
+    }
+
+    private void AirJump()
+    {
+        if (_startJump) //더블점프
+        {
+            if (canTripleJump && (!_charactorController.left && !_charactorController.right))
+            {
+                if (isDoubleJumping && !isTripleJumping)
+                {
+                    _moveDirection.y = doubleJumpSpeed;
+                    isTripleJumping = true;
+                }
             }
 
-            StartCoroutine(WallRunWaiter());
+
+            if (canDoubleJump && (!_charactorController.left && !_charactorController.right))
+            {
+                if (!isDoubleJumping)
+                {
+                    _moveDirection.y = doubleJumpSpeed;
+                    isDoubleJumping = true;
+                }
+            }
+
+            if (canWallJump && (_charactorController.left || _charactorController.right))
+            {
+                if (_charactorController.right && _moveDirection.x <= 0)
+                {
+                    _moveDirection.x = -xWallJumpSpeed;
+                    _moveDirection.y = yWallJumpSpeed;
+                    transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                }
+                else if (_charactorController.left && _moveDirection.x >= 0)
+                {
+                    _moveDirection.x = xWallJumpSpeed;
+                    _moveDirection.y = yWallJumpSpeed;
+                    transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+                isWallJumping = true;
+
+                StartCoroutine(WallJumpWaiter());
+            }
+
+            _startJump = false;
         }
     }
 
@@ -279,6 +311,28 @@ public class PlayerController : MonoBehaviour
             _moveDirection.y -= gravity * Time.deltaTime;
     }
 
+    #endregion
+
+
+    private void WallRun()
+    {
+        if (_charactorController.below)
+        {
+            isWallRunning = false;
+            return;
+        }
+
+        if (canWallRun && (_charactorController.left || _charactorController.right))
+        {
+            if (_input.y > 0f && _ableToWallRun)
+            {
+                _moveDirection.y = wallRunSpeed;
+            }
+
+            StartCoroutine(WallRunWaiter());
+        }
+    }
+
     private void PlayerMove()
     {
         _moveDirection.x = _input.x * walkSpeed;
@@ -291,6 +345,24 @@ public class PlayerController : MonoBehaviour
 
         _moveDirection.x = _input.x * dashSpeed;
     }
+
+    private void HorizontalMovement()
+    {
+        if (!isWallJumping)
+        {
+            if (!isDashing)
+            {
+                if (isCreeping)
+                    _moveDirection.x *= creepSpeed;
+                else
+                    _moveDirection.x *= walkSpeed;
+
+            }
+        }
+    }
+
+
+    #region Corutines
 
     private IEnumerator WallJumpWaiter()
     {
@@ -328,4 +400,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
     }
+
+    #endregion
+
+
 }
