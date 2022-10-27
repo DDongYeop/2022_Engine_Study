@@ -1,4 +1,4 @@
-using Globlatype;
+using Globaltype;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -201,7 +201,7 @@ public class CharactorController2D : MonoBehaviour
 
     private WallType DetermineWallType(Collider2D collider)
     {
-        if (collider.GetComponent<GroundEffector>())
+        if (collider.GetComponent<WallEffector>())
         {
             WallEffector wallEffector = collider.GetComponent<WallEffector>();
             return wallEffector.wallType;

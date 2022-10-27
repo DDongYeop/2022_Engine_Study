@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Globaltype;
 
 public class PlayerController : MonoBehaviour
 {
@@ -135,7 +136,7 @@ public class PlayerController : MonoBehaviour
         {
             OnGround();
         }
-        else //°øÁß¿¡.... 
+        else //ï¿½ï¿½ï¿½ß¿ï¿½.... 
         {
             InAir();
         }
@@ -175,10 +176,20 @@ public class PlayerController : MonoBehaviour
         if (_startJump)
         {
             _startJump = false;
-            _moveDirection.y = jumpSpeed;
+
+            if (isDucking && _charactorController.groundType == GroundType.OneWayPlatform)
+            {
+                StartCoroutine(DisableOneWayPlatform(true));
+
+            }
+            else
+            {
+                _moveDirection.y = jumpSpeed;
+            }
             isJumping = true;
             _ableToWallRun = true;
             _charactorController.DisableGroundCheck(0.1f);
+
         }
     }
 
@@ -241,7 +252,7 @@ public class PlayerController : MonoBehaviour
 
     private void AirJump()
     {
-        if (_startJump) //´õºíÁ¡ÇÁ
+        if (_startJump) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             if (canTripleJump && (!_charactorController.left && !_charactorController.right))
             {
@@ -292,7 +303,12 @@ public class PlayerController : MonoBehaviour
 
         if (_moveDirection.y > 0f && _charactorController.above)
         {
-            _moveDirection.y = 0f;
+            if (_charactorController.cellingType == GroundType.OneWayPlatform)
+            {
+                StartCoroutine(DisableOneWayPlatform(false));
+            }
+            else
+                _moveDirection.y = 0f;
         }
 
         if (canWallSlide && (_charactorController.left || _charactorController.right))
@@ -399,6 +415,38 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
+    }
+
+    private IEnumerator DisableOneWayPlatform(bool checkBelow)
+    {
+        GameObject tempOnWayPlatform = null;
+        
+        if (checkBelow)
+        {
+            Vector2 raycastBelow = transform.position - new Vector3(0, _capsuleCollider.size.y * 0.5f, 0);
+
+            RaycastHit2D hit = Physics2D.Raycast(raycastBelow, Vector2.down, .2f, _charactorController.layerMask);
+
+            if (hit.collider)
+                tempOnWayPlatform = hit.collider.gameObject;
+        }
+        else
+        {
+            Vector2 raycastAbove = transform.position + new Vector3(0, _capsuleCollider.size.y * 0.5f, 0);
+            
+            RaycastHit2D hit = Physics2D.Raycast(raycastAbove, Vector2.up, .4f, _charactorController.layerMask);
+
+            if (hit.collider)
+                tempOnWayPlatform = hit.collider.gameObject;
+        }
+
+        if (tempOnWayPlatform)
+            tempOnWayPlatform.GetComponent<EdgeCollider2D>().enabled = false;
+
+        yield return new WaitForSeconds(.5f);
+
+        if (tempOnWayPlatform)
+            tempOnWayPlatform.GetComponent<EdgeCollider2D>().enabled = true;
     }
 
     #endregion

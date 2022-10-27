@@ -2267,8 +2267,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1202660385}
   - component: {fileID: 1202660384}
-  - component: {fileID: 1202660383}
   - component: {fileID: 1202660386}
+  - component: {fileID: 1202660383}
   m_Layer: 7
   m_Name: OnWayPlatform
   m_TagString: Untagged
@@ -2276,8 +2276,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1202660383
-BoxCollider2D:
+--- !u!68 &1202660383
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2290,18 +2290,14 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.4971525, y: 0.48813945}
+  - {x: 0.5142373, y: 0.48813954}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!212 &1202660384
 SpriteRenderer:
   m_ObjectHideFlags: 0

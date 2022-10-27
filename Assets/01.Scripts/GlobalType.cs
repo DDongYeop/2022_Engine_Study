@@ -1,4 +1,4 @@
-namespace Globlatype
+namespace Globaltype
 {
     public enum GroundType
     {

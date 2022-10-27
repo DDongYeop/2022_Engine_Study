@@ -1,4 +1,4 @@
-using Globlatype;
+using Globaltype;
 using UnityEngine;
 
 public class GroundEffector : MonoBehaviour
