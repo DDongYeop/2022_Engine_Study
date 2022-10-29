@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class AITransition : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<AIDecision> decisions; // 결정 사항들을 가지고 있는거
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public AIState positiveResult; //모든 디시전이 true라면 갈곳
+
+    public AIState negativeResult;
 }
