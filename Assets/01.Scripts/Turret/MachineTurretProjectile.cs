@@ -6,7 +6,7 @@ public class MachineTurretProjectile : TurretProjectile
 {
     [SerializeField] private bool isDualMachine;
     [SerializeField] private float spreadRange;
-
+    
     protected override void Update()
     {
         if (Time.time > _nextAttackTime)
@@ -34,6 +34,8 @@ public class MachineTurretProjectile : TurretProjectile
 
         MachineProjectile projectile = instance.GetComponent<MachineProjectile>();
         projectile.Direction = dirtection;
+
+        projectile.Damage = damage;
 
         if (isDualMachine)
         {

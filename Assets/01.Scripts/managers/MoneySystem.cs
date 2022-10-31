@@ -11,6 +11,7 @@ public class MoneySystem : Singleton<MoneySystem>
 
     private void Start()
     {
+        PlayerPrefs.DeleteKey(MONEY_SAVE_KEY);
         LoadCoins();
     }
 
@@ -25,7 +26,22 @@ public class MoneySystem : Singleton<MoneySystem>
         PlayerPrefs.SetInt(MONEY_SAVE_KEY, TotalCoins);
         PlayerPrefs.Save();
     }
+
+    private void RewardsCoins(Enemy enemy)
+    {
+        AddCoins(1);
+    }
     
+    private void OnEnable() 
+    {
+        EnemyHealth.OnEnemyKilled += RewardsCoins;
+    }
+    
+    private void OnDisable() 
+    {
+        EnemyHealth.OnEnemyKilled -= RewardsCoins;
+    }
+
     public void RemoveCoins(int amount)
     {
         if (TotalCoins >= amount)
