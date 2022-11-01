@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7760a4c815564e949a71f2252ff60b66
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _hitClip: {instanceID: 0}
+  - _deathClip: {instanceID: 0}
+  - _attackClip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
