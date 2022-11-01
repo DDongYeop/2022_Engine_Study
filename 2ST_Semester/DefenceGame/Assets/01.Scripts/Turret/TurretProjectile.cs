@@ -5,11 +5,12 @@ using UnityEngine;
 public class TurretProjectile : MonoBehaviour
 {
     [SerializeField] protected Transform projectileSpawnPos;
-    [SerializeField] protected float delayBtwAttacks = 2f;
+    [SerializeField] protected float delayBtwAttacks = 2.0f;
     [SerializeField] protected float damage = 2f;
-
+   
     public float Damage { get; set; }
     public float DelayPerShot { get; set; }
+
 
     protected float _nextAttackTime;
 
@@ -36,14 +37,14 @@ public class TurretProjectile : MonoBehaviour
             LoadProjectile();
         }
 
-        if (Time.time > _nextAttackTime)
+        if(Time.time > _nextAttackTime)
         {
-            if (_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null && _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0f)
+            if (_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null
+            && _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0f)
             {
                 _currentProjectileLoaded.transform.parent = null;
                 _currentProjectileLoaded.SetEnemy(_turret.CurrentEnemyTarget);
             }
-
             _nextAttackTime = Time.time + DelayPerShot;
         }
     }

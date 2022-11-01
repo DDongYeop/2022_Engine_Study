@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MoneySystem : Singleton<MoneySystem>
 {
-    [SerializeField] private int coinTest; 
-
+    [SerializeField] private int coinTest;
     public int TotalCoins { get; set; }
     private string MONEY_SAVE_KEY = "MYGAME_MONEY";
 
     private void Start()
     {
         PlayerPrefs.DeleteKey(MONEY_SAVE_KEY);
+
         LoadCoins();
     }
 
@@ -31,24 +31,25 @@ public class MoneySystem : Singleton<MoneySystem>
     {
         AddCoins(1);
     }
-    
-    private void OnEnable() 
+
+    private void OnEnable()
     {
         EnemyHealth.OnEnemyKilled += RewardsCoins;
     }
-    
-    private void OnDisable() 
+
+    private void OnDisable()
     {
         EnemyHealth.OnEnemyKilled -= RewardsCoins;
     }
 
     public void RemoveCoins(int amount)
     {
-        if (TotalCoins >= amount)
+        if(TotalCoins >= amount)
         {
             TotalCoins -= amount;
             PlayerPrefs.SetInt(MONEY_SAVE_KEY, TotalCoins);
             PlayerPrefs.Save();
         }
+        
     }
 }

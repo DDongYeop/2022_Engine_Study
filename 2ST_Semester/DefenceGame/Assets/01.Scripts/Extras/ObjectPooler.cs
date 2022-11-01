@@ -23,7 +23,7 @@ public class objectPooler : MonoBehaviour
 
     private void CreatePooler()
     {
-        for(int i=0; i<poolSize; i++)
+        for (int i = 0; i < poolSize; i++)
         {
             _pool.Add(item: CreateInstance());
         }
@@ -41,7 +41,7 @@ public class objectPooler : MonoBehaviour
 
     public GameObject GetInstanceFromPool()
     {
-        for (int i=0; i<_pool.Count; i++)
+        for (int i = 0; i < _pool.Count; i++)
         {
             if (!_pool[i].activeInHierarchy)
             {
@@ -57,9 +57,12 @@ public class objectPooler : MonoBehaviour
         instance.SetActive(false);
     }
 
-    public static IEnumerator ReturnToPoolDelay(GameObject instance, float delay)
+    public static IEnumerator ReturnToPoolwthDelay(GameObject instance, float delay)
     {
         yield return new WaitForSeconds(delay);
         instance.SetActive(false);
     }
+
+
 }
+

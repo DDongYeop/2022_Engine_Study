@@ -8,14 +8,21 @@ public class EnemyFX : MonoBehaviour
     [SerializeField] private Transform textDamageSpawnPos;
     private Enemy _enemy;
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         _enemy = GetComponent<Enemy>();
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     private void EnemyHit(Enemy enemy, float damage)
     {
-        if (_enemy == enemy)
+        if(_enemy == enemy) //텍스트 애니메이션 이펙트
         {
             GameObject newInstance = DamageTextManager.Instance.Pooler.GetInstanceFromPool();
             TextMeshProUGUI damageText = newInstance.GetComponent<DamageText>().DmgText;
@@ -32,7 +39,6 @@ public class EnemyFX : MonoBehaviour
     {
         Projectile.OnEnemyHit += EnemyHit;
     }
-
     private void OnDisable()
     {
         Projectile.OnEnemyHit -= EnemyHit;

@@ -8,7 +8,9 @@ public class MachineProjectile : Projectile
 
     protected override void Update()
     {
+        
         MoveProjectile();
+        
     }
 
     protected override void MoveProjectile()
@@ -22,18 +24,17 @@ public class MachineProjectile : Projectile
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            if (enemy.EnemyHealth.CurrentHealth > 0)
+            if(enemy.EnemyHealth.CurrentHealth > 0f)
             {
                 OnEnemyHit?.Invoke(enemy, Damage);
                 enemy.EnemyHealth.DealDamage(Damage);
             }
-
             objectPooler.ReturnToPool(gameObject);
         }
     }
 
     private void OnEnable()
     {
-        StartCoroutine(objectPooler.ReturnToPoolDelay(gameObject, 5));
+        StartCoroutine(objectPooler.ReturnToPoolwthDelay(gameObject, 5f));
     }
 }

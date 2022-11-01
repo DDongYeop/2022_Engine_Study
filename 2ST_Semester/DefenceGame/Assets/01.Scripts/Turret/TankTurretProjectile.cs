@@ -8,9 +8,11 @@ public class TankTurretProjectile : TurretProjectile
     {
         if (Time.time > _nextAttackTime)
         {
-            if (_turret.CurrentEnemyTarget != null && _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0)
+            if (_turret.CurrentEnemyTarget != null 
+                && _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0)
             {
-                FIreProjectile(_turret.CurrentEnemyTarget);
+                FireProjectile(_turret.CurrentEnemyTarget);
+                
             }
             _nextAttackTime = Time.time + delayBtwAttacks;
         }
@@ -18,10 +20,9 @@ public class TankTurretProjectile : TurretProjectile
 
     protected override void LoadProjectile()
     {
-
     }
 
-    private void FIreProjectile(Enemy enemy)
+    private void FireProjectile(Enemy enemy)
     {
         GameObject instance = _pooler.GetInstanceFromPool();
         instance.transform.position = projectileSpawnPos.position;
