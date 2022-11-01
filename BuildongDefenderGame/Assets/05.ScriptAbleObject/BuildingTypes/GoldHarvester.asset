@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad506ed0f3e4d24cbccd6f22e52381e, type: 3}
+  m_Name: GoldHarvester
+  m_EditorClassIdentifier: 
+  nameString: Gold Harvester
+  prefab: {fileID: 5825807355779586688, guid: 29584ff83e45b0a4aa6ea6f60cb66b95, type: 3}
+  resourceGeneratorData:
+    timerMax: 2
+    resourceType: {fileID: 11400000, guid: cfe44737b48e75845ba526807b836521, type: 2}
+    resourceDetectionRadius: 7
+    maxResourceAmount: 3
+  sprite: {fileID: 21300000, guid: 8ead931dd91bff8489e75de9c414f17f, type: 3}
+  minConstructionRadius: 7
+  constructionResourceCostArray:
+  - resourceType: {fileID: 11400000, guid: a9b2c144867354f4284d61268ba567e6, type: 2}
+    amount: 50
+  - resourceType: {fileID: 11400000, guid: bc30142752de58841a86344389c45e69, type: 2}
+    amount: 50
