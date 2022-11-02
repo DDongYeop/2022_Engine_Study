@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Properties")]
     public float walkSpeed = 10;
-    public float creepSpeed = 5f;
     public float gravity = 20f;
     public float jumpSpeed = 15f;
     public float wallSlideAmount = 0.1f;
@@ -72,7 +71,7 @@ public class PlayerController : MonoBehaviour
         dashCooldownTime = 1f;
         if (context.started)
         {
-            if ((canAirDash && !_charactorController) || (canAirDash && _charactorController))
+            if (canAirDash)
                 StartCoroutine(Dash());
         }
     }
@@ -83,7 +82,6 @@ public class PlayerController : MonoBehaviour
             OnGround();
         else 
             InAir();
-
 
         _charactorController.Move(_moveDirection * Time.deltaTime);
     }
@@ -111,7 +109,6 @@ public class PlayerController : MonoBehaviour
             _moveDirection.y = jumpSpeed;
             isJumping = true;
             _charactorController.DisableGroundCheck(0.1f);
-
         }
     }
 
@@ -121,21 +118,13 @@ public class PlayerController : MonoBehaviour
         {
             _realeaseJump = false;
             if (_moveDirection.y > 0)
-            {
                 _moveDirection.y *= 0.5f;
-            }
         }
 
-        AirJump();
-        GravityCalculation();
-    }
-
-    private void AirJump()
-    {
         if (_startJump)
-        {
             _startJump = false;
-        }
+
+        GravityCalculation();
     }
 
     private void GravityCalculation()
@@ -163,10 +152,8 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDash()
     {
-        if (!isDashing)
-            return;
-
-        _moveDirection.x = transform.localScale.x * dashSpeed;
+        if (isDashing)
+            _moveDirection.x = transform.localScale.x * dashSpeed;
     }
 
     private IEnumerator Dash()
