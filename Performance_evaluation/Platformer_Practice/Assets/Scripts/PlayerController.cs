@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
     {
         PlayerMove();
         PlayerDash();
-        SpriteFlip();
         PlayerJump();
 
         dashCooldownTime -= Time.deltaTime;
@@ -76,14 +75,6 @@ public class PlayerController : MonoBehaviour
             if ((canAirDash && !_charactorController) || (canAirDash && _charactorController))
                 StartCoroutine(Dash());
         }
-    }
-
-    private void SpriteFlip()
-    {
-        if (_input.x > 0)
-            transform.localScale = Vector3.one;
-        else if (_input.x < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
     }
 
     private void PlayerJump()
