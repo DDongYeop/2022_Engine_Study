@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharactorController2D : MonoBehaviour
 {
-    public float raycastDistance = 0.2f;
     public LayerMask layerMask;
 
     public bool below;
@@ -44,20 +43,19 @@ public class CharactorController2D : MonoBehaviour
 
     private void CheckOtherCollision()
     {
-        RaycastHit2D leftHit = Physics2D.BoxCast(_capsuleCollider.bounds.center, _capsuleCollider.size * 0.7f, 0f, Vector2.left, raycastDistance, layerMask);
-
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 1, layerMask);
         if (leftHit.collider)
             left = true;
         else
             left = false;
 
-        RaycastHit2D rightHit = Physics2D.BoxCast(_capsuleCollider.bounds.center, _capsuleCollider.size * 0.7f, 0f, Vector2.right, raycastDistance, layerMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 1, layerMask);
         if (rightHit.collider)
             right = true;
         else
             right = false;
 
-        RaycastHit2D aboveHit = Physics2D.CapsuleCast(_capsuleCollider.bounds.center, _capsuleCollider.size, CapsuleDirection2D.Vertical, 0f, Vector2.up, raycastDistance, layerMask);
+        RaycastHit2D aboveHit = Physics2D.Raycast(transform.position, Vector2.up, 1, layerMask);
         if (aboveHit.collider)
             above = true;
         else
@@ -65,8 +63,8 @@ public class CharactorController2D : MonoBehaviour
 
         if (!_dissbleGroundCheck)
         {
-            RaycastHit2D hit = Physics2D.CapsuleCast(_capsuleCollider.bounds.center, _capsuleCollider.size, CapsuleDirection2D.Vertical, 0f, Vector2.down, raycastDistance, layerMask);
-            if (hit.collider)
+            RaycastHit2D belowHit = Physics2D.Raycast(transform.position, Vector2.down, 1, layerMask);
+            if (belowHit.collider)
                 below = true;
             else
                 below = false;
