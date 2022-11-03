@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         PlayerMove();
         PlayerDash();
         PlayerJump();
+        SpriteFlip();
 
         dashCooldownTime -= Time.deltaTime;
     }
@@ -150,10 +151,24 @@ public class PlayerController : MonoBehaviour
         _moveDirection.x = _input.x * walkSpeed;
     }
 
+    private void SpriteFlip()
+    {
+        if (_input.x > 0)
+            transform.localScale = Vector3.one;
+        else if (_input.x < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+    }
+
+
     private void PlayerDash()
     {
         if (isDashing)
-            _moveDirection.x = _input.x * dashSpeed;
+        {
+            if (transform.localScale.x  == 1)
+                _moveDirection.x = dashSpeed;
+            else if (transform.localScale.x == -1)
+                _moveDirection.x = -dashSpeed;
+        }
     }
 
     private IEnumerator Dash()

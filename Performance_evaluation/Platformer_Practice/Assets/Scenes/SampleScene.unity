@@ -387,7 +387,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 10
-  creepSpeed: 5
   gravity: 20
   jumpSpeed: 15
   wallSlideAmount: 0.1
@@ -412,11 +411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53f262ada717be4ba33a6bc35cf9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastDistance: 0.2
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  slopAngleLimit: 45
   below: 0
   above: 0
   right: 0
