@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
         if (isDashing)
             return;
 
-        if (canWallSlide && (_charactorController.left || _charactorController.right))
+        if (canWallSlide)
         {
             if (_moveDirection.y <= 0)
                 _moveDirection.y -= gravity * wallSlideAmount * Time.deltaTime;
