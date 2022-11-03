@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
     private void PlayerDash()
     {
         if (isDashing)
-            _moveDirection.x = transform.localScale.x * dashSpeed;
+            _moveDirection.x = _input.x * dashSpeed;
     }
 
     private IEnumerator Dash()
