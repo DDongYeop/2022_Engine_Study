@@ -43,28 +43,28 @@ public class CharactorController2D : MonoBehaviour
 
     private void CheckOtherCollision()
     {
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 1, layerMask);
-        if (leftHit.collider)
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 1.5, layerMask);
+        if (leftHit)
             left = true;
         else
             left = false;
 
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 1, layerMask);
-        if (rightHit.collider)
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 1.5, layerMask);
+        if (rightHit)
             right = true;
         else
             right = false;
 
-        RaycastHit2D aboveHit = Physics2D.Raycast(transform.position, Vector2.up, 1, layerMask);
-        if (aboveHit.collider)
+        RaycastHit2D aboveHit = Physics2D.Raycast(transform.position, Vector2.up, 1.5, layerMask);
+        if (aboveHit)
             above = true;
         else
             above = false;
 
         if (!_dissbleGroundCheck)
         {
-            RaycastHit2D belowHit = Physics2D.Raycast(transform.position, Vector2.down, 1, layerMask);
-            if (belowHit.collider)
+            RaycastHit2D belowHit = Physics2D.Raycast(transform.position, Vector2.down, 1.5, layerMask);
+            if (belowHit)
                 below = true;
             else
                 below = false;
