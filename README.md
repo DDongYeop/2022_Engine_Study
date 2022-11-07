@@ -7,14 +7,8 @@
     >##### [여름방학]
     >##### [2학기]
     >##### 겨울방학
-  + ### 인강
-    >##### [UDEMY]
-    >##### [INFEARN]
 
 
 [1학기]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/1ST_Semester
 [여름방학]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/SummerVacation
 [2학기]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/2ST_Semester
-
-[UDEMY]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/UDEMY
-[INFEARN]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/INFEARN
