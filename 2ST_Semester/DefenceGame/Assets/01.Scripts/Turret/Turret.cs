@@ -10,9 +10,11 @@ public class Turret : MonoBehaviour
     private List<Enemy> _enemies; //공격범위 안에 들어오는 적들을 리스트로 저장
 
     public Enemy CurrentEnemyTarget { get; set; } //리스트 중 제일 첫번째 놈
+    public TurretUpgrade TurretUpgrade { get; set; }
 
     private void Start()
     {
+        TurretUpgrade = GetComponent<TurretUpgrade>();
         _gameStarted = true;
         _enemies = new List<Enemy>();
     }
