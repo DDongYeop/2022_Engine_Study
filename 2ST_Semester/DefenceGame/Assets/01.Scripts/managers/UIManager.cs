@@ -14,6 +14,7 @@ public class UIManager : Singleton<UIManager>
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _upgradeText;
     [SerializeField] private TextMeshProUGUI _sellText;
+    [SerializeField] private TextMeshProUGUI _turretLevelText;
 
     public void CloseTurretShopPanel()
     {
@@ -45,16 +46,39 @@ public class UIManager : Singleton<UIManager>
         _upgradeText.text = _curretNodeSelected.Turret.TurretUpgrade.UpgradeCost.ToString();
         
         UpdateUpgradeText();
+        UpdateTurretLevel();
+        UpdateSellValue();
+
     }
 
     public void UpgradeTurret()
     {
         _curretNodeSelected.Turret.TurretUpgrade.UpgradeTurret();
         UpdateUpgradeText();
+        UpdateTurretLevel();
+        UpdateSellValue();
     }
 
     private void UpdateUpgradeText()
     {
         _upgradeText.text = _curretNodeSelected.Turret.TurretUpgrade.UpgradeCost.ToString();
+    }
+
+    private void UpdateTurretLevel()
+    {
+        _turretLevelText.text = $"Level {_curretNodeSelected.Turret.TurretUpgrade.Level}";
+    }
+
+    private void UpdateSellValue()
+    {
+        int sellAmount = _curretNodeSelected.Turret.TurretUpgrade.GetSellValue();
+        _sellText.text = sellAmount.ToString();
+    }
+
+    public void SellTurret()
+    {
+        _curretNodeSelected.SellTurret();
+        _curretNodeSelected = null;
+        _nodeUIPanel.SetActive(false);
     }
 }

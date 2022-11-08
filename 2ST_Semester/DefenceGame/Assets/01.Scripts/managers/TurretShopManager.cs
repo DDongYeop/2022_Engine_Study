@@ -32,17 +32,24 @@ public class TurretShopManager : MonoBehaviour
     {
         Node.OnNodeSelected += NodeSelected;
         TurretCard.OnPlaceTurret += PlaceTurret;
+        Node.OnTurretSold += TurretSold;
     }
 
     private void OnDisable() 
     {
         Node.OnNodeSelected -= NodeSelected;
         TurretCard.OnPlaceTurret = PlaceTurret;
+        Node.OnTurretSold -= TurretSold;
     }
 
     private void NodeSelected(Node nodeSelected)
     {
         _curretNodeSelecte = nodeSelected;
+    }
+
+    private void TurretSold()
+    {
+        _curretNodeSelecte = null;
     }
 
     private void PlaceTurret(TurretSettingsSO turretLoaded)

@@ -231,6 +231,7 @@ MonoBehaviour:
   upgradeCostIncremental: 20
   damageIncremental: 2
   delayReduce: 0.1
+  _sellPert: 0.5
 --- !u!114 &4549796268890190526
 MonoBehaviour:
   m_ObjectHideFlags: 0

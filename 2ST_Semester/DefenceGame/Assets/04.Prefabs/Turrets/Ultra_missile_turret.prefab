@@ -248,9 +248,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeInitialCost: 10
-  upgradeCostIncremental: 0
-  damageIncremental: 0
-  delayReduce: 0
+  upgradeCostIncremental: 20
+  damageIncremental: 2
+  delayReduce: 0.1
+  _sellPert: 0.5
 --- !u!114 &2753883789912431565
 MonoBehaviour:
   m_ObjectHideFlags: 0
