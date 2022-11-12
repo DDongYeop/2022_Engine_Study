@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 public class ColorHierachy : MonoBehaviour
 {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     private static Dictionary<Object, ColorHierachy> coloredObjects = new Dictionary<Object, ColorHierachy>();
 
     static ColorHierachy()
@@ -27,7 +26,7 @@ public class ColorHierachy : MonoBehaviour
             }
             else
             {
-                coloredObjects.Remove(obj); //ì´ì œ ì—†ìœ¼ë‹ˆ ì œê±°
+                coloredObjects.Remove(obj); //ÀÌÁ¦ ¾øÀ¸´Ï Á¦°Å
             }
         }
 
@@ -49,7 +48,7 @@ public class ColorHierachy : MonoBehaviour
                 fontStyle = FontStyle.Bold
             });
         }
-        //ì„ íƒìƒíƒœì¼ê²½ìš°ì—ëŠ” ìœ ë‹ˆí‹° ê¸°ë³¸ìœ¼ë¡œ ë˜ë„ë¡
+        //¼±ÅÃ»óÅÂÀÏ°æ¿ì¿¡´Â À¯´ÏÆ¼ ±âº»À¸·Î µÇµµ·Ï
     }
 
     public string prefix;
