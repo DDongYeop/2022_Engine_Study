@@ -18,7 +18,7 @@ public class TankController : MonoBehaviour
     public void HandleShoot()
     {
         foreach (var turret in _turrets)
-            turret.SHot();
+            turret.Shoot();
     }
 
     public void HandleMoveBody(Vector2 movementVector)
