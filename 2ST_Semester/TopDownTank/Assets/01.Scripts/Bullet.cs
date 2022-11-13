@@ -41,6 +41,9 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) 
     {
         Debug.Log("Collision name : " + other.name);
+        var damageble = other.GetComponent<Damageable>();
+        if (damageble != null)
+            damageble.OnHit(_damage);
         DisableObject();
     }
 }
