@@ -11,4 +11,4 @@
 
 [1학기]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/1ST_Semester
 [여름방학]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/SummerVacation
-[2학기]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/2ST_Semester
+[2학기]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/2ND_Semester
