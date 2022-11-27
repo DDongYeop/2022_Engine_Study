@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(ObjectPool))]
 public class Turret : MonoBehaviour
@@ -17,6 +18,9 @@ public class Turret : MonoBehaviour
     [SerializeField]
     private int bulletPoolCount = 10;
 
+    public UnityEvent OnShoot, OnCantShoot;
+    public UnityEvent<float> OnReloading;
+
     private void Awake()
     {
         tankColliders = GetComponentsInParent<Collider2D>();
@@ -25,6 +29,7 @@ public class Turret : MonoBehaviour
     private void Start()
     {
         bulletPool.Initialized(turretData.bulletPrefab, bulletPoolCount);
+        OnReloading?.Invoke(currentDelay);
     }
 
     private void Update()
@@ -32,6 +37,8 @@ public class Turret : MonoBehaviour
         if (canShoot == false)
         {
             currentDelay -=Time.deltaTime;
+            OnReloading?.Invoke(currentDelay);
+
             if(currentDelay <= 0)
             {
                 canShoot = true;
@@ -59,6 +66,13 @@ public class Turret : MonoBehaviour
                 }
             }
 
+            OnShoot?.Invoke();
+            OnReloading?.Invoke(currentDelay);
+        }
+
+        else
+        {
+            OnCantShoot?.Invoke();
         }
     }
 }
