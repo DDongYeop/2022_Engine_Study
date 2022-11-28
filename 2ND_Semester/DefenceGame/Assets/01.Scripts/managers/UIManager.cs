@@ -19,9 +19,25 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private TextMeshProUGUI totalCoinText;
     [SerializeField] private TextMeshProUGUI livesText;
 
+    [SerializeField] private TextMeshProUGUI currentWaveText;
+
+    private void Update() 
+    {
+        totalCoinText.text = MoneySystem.Instance.TotalCoins.ToString();
+        livesText.text = LevelManager.Instance.TotalLives.ToString();
+
+        currentWaveText.text = "WAVE " + LevelManager.Instance.CurrentWave; 
+    }
+
     public void CloseTurretShopPanel()
     {
         turretShopPanel.SetActive(false);
+    }
+
+    public void CloseNodePanel()
+    {
+        _currentNodeSelected.CloseAttackRangeSprite();
+        nodeUIPanel.SetActive(false);
     }
 
     private void OnEnable()

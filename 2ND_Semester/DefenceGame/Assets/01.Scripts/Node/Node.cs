@@ -60,4 +60,9 @@ public class Node : MonoBehaviour
 
         }
     }
+
+    public void CloseAttackRangeSprite()
+    {
+        attackRangeSprite.SetActive(false);
+    }
 }

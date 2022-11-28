@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] private int lives = 10;
 
     public int TotalLives {get; set; }
+    public int CurrentWave { get; set; }
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class LevelManager : MonoBehaviour
             TotalLives = 0;
         }
 
+        CurrentWave = 1;
     }
     private void ReduceLives(Enemy enemy)
     {
@@ -25,13 +27,17 @@ public class LevelManager : MonoBehaviour
     private void OnEnable()//게임 오브젝트가 활성화 될때마다
     {
         Enemy.OnEndReached += ReduceLives;
+        spawner.OnWaveComplete += WaveComplete;
     }
 
     private void OnDisable()//게임 오브젝트가 비활성화 될때
     {
         Enemy.OnEndReached -= ReduceLives;
+        spawner.OnWaveComplete -= WaveComplete;
+    }
+
+    private void WaveComplete()
+    {
+        CurrentWave++;
     }
 }
-
-
-
