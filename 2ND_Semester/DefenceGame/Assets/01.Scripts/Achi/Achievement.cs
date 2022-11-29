@@ -10,4 +10,25 @@ public class Achievement : ScriptableObject
     public int ProgressToUnlock; // 0/50 현재 달성 정도
     public int GoalReward; //보상
     public Sprite Sprite; //스프라이트
+
+    private int CurrentProgress;
+
+    public void AddProgress(int amount)
+    {
+        CurrentProgress += amount;
+        CheckUnLockStatus();
+    }
+
+    private void CheckUnLockStatus()
+    {
+        if (CurrentProgress >= ProgressToUnlock)
+        {
+            UnlockAchievement();
+        }
+    }
+
+    private void UnlockAchievement()
+    {
+        AchiManager.OnAchiUnlocked?.Invoke(this);
+    }
 }
