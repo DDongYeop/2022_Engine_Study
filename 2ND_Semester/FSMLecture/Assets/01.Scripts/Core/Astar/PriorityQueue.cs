@@ -80,4 +80,9 @@ public class PriorityQueue<T> where T: IComparable<T>
     {
         return _heap.Count == 0 ? default(T) : _heap[0];
     }
+
+    public void Clear()
+    {
+        _heap.Clear(); //힙 지우기
+    }
 }
