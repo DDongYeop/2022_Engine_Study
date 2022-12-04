@@ -146,7 +146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8783564310986168007, guid: 18e27927ad94e56429cd3a6ef03713e0, type: 3}
       propertyPath: m_Name
-      value: Tank
+      value: EnemyTank
       objectReference: {fileID: 0}
     - target: {fileID: 8783564310986168007, guid: 18e27927ad94e56429cd3a6ef03713e0, type: 3}
       propertyPath: m_Layer
@@ -175,7 +175,7 @@ PrefabInstance:
     - target: {fileID: 8783564311899164143, guid: 18e27927ad94e56429cd3a6ef03713e0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 518e00f012df77043921c3a5023ab613, type: 3}
+      objectReference: {fileID: 21300000, guid: 00ab8bcea4c791a489142a905f7f0122, type: 3}
     m_RemovedComponents:
     - {fileID: 5832491304559397959, guid: 18e27927ad94e56429cd3a6ef03713e0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 18e27927ad94e56429cd3a6ef03713e0, type: 3}
