@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TankMover : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class TankMover : MonoBehaviour
     private Vector2 movementVector;
     private float currentSpeed = 0;
     private float currentForewardDirection = 1;
+
+    public UnityEvent<float> EngineSound = new UnityEvent<float>();
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class TankMover : MonoBehaviour
         {
             currentForewardDirection = -1;
         }
+        EngineSound?.Invoke(this.movementVector.magnitude);
     }
 
     private void CalculateSpeed(Vector2 movementVector)

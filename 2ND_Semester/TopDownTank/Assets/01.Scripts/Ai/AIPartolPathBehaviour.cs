@@ -24,6 +24,9 @@ public class AIPartolPathBehaviour : AIBehaviour
 
     public override void PerformAction(TankController tank, AIDetector detector)
     {
+        if (tank == null || detector == null)
+            return;
+
         if (!isWaiting)
         {
             if (patrolPath.Legth < 2) return;
