@@ -54,7 +54,7 @@ public class NavAgent : MonoBehaviour
 
     }
 
-    private void CalcRoute()
+    private bool CalcRoute()
     {
         _openList.Clear();
         _closeList.Clear();
@@ -71,13 +71,81 @@ public class NavAgent : MonoBehaviour
         while (_openList.Count > 0)
         {
             Node n = _openList.Pop(); //가장 가깝게 갈 수 있는 녀석을 뽑아온다
+            FindOpenList(n);
+            _closeList.Add(n); //n은 이미 썻으니 _closeList에 박아라
+            if (n.pos == _destination) //마지막 방문했던 녀석이 목적지면 그럼 나가자
+            {
+                result = true;
+                break;
+            }
 
+            //안전코드 
+            cnt++;
+            if (cnt >= 100000)
+            {
+                Debug.Log("while루프 너무 돌아서 빠갬");
+                break;
+            }
         }
+
+        if (result) //길 찾음
+        {
+            Node last = _closeList[_closeList.Count - 1];
+            while (last._parnet != null)
+            {
+                Debug.Log(last.pos);
+                last = last._parnet;
+            }
+        }
+
+        return result;
     }
 
-    private void FindOpenList()
+    //너는 노드 N과 연결된 오픈 리스트를 다 찾아서 _openList에 넣어줄거야 
+    private void FindOpenList(Node n)
     {
-        
+        for (int y = -1; y <= 1; y++)
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+                if (x == y) continue; //이건 내 현재자리니깐 무시
+
+                Vector3Int nextPos = n.pos + new Vector3Int(x, y, 0);
+
+                Node temp = _closeList.Find(x => x.pos == nextPos); //이 녀식이 이미 방문했는지
+                if (temp != null) continue;
+
+                //타일에서 진짜 갈 수 있는 곳인지
+                {
+                    float g = (n.pos - nextPos).magnitude + n.G;
+
+                    Node nextOpenNode = new Node 
+                    { 
+                        pos = nextPos, 
+                        _parnet = n,
+                        G = g,
+                        F = g + CalcH(nextPos)
+                    };
+                    //넣기전에 검사 해야함 
+                    Node exist = _openList.Contains(nextOpenNode);
+
+                    if (exist != null)
+                    {
+                        //이건 검증 해봐야함
+                        if (nextOpenNode.G < exist.G)
+                        {
+                            exist.G = nextOpenNode.G;
+                            exist.F = nextOpenNode.F;
+                            exist._parnet = nextOpenNode._parnet;
+                        }
+                    }
+                    else
+                    {
+                        _openList.Push(nextOpenNode);
+                    }
+                }
+            }
+        }
     }
 
     private float CalcH(Vector3Int pos)
