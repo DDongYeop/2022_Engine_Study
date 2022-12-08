@@ -18,10 +18,14 @@ public class NavAgent : MonoBehaviour
 
     [SerializeField] private Tilemap _tilemap;
 
+    private LineRenderer _lineRenderer;
+
     private void Awake() 
     {
         _openList = new PriorityQueue<Node>();
         _closeList = new List<Node>();
+        _routePath = new List<Vector3Int>();
+        _lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void Start() 
@@ -38,10 +42,7 @@ public class NavAgent : MonoBehaviour
             Vector3 mPos = Input.mousePosition;
             mPos.z = 0;
             Vector3 world = Camera.main.ScreenToWorldPoint(mPos);
-            Vector3Int cellPos = _tilemap.WorldToCell(world); //이걸로 월드를 타일 맵 포지션으로 변경 
-
-            Debug.Log(cellPos);
-            //이 cellpos가 진짜 갈 수 있는데인지 체크해야함
+            Vector3Int cellPos = MapManager.Instance.GetTilePos(world); //이걸로 월드를 타일 맵 포지션으로 변경
             
             _destination = cellPos;
             CalcRoute();
@@ -51,7 +52,13 @@ public class NavAgent : MonoBehaviour
 
     private void PrintRoute() //계산한 경로를 디버그로 찍어본다. 
     {
+        _lineRenderer.positionCount = _routePath.Count;
 
+        for (int i = 0; i < _routePath.Count; i++)
+        {
+            Vector3 worldPos = MapManager.Instance.GetWorldPos(_routePath[i]);
+            _lineRenderer.SetPosition(i, worldPos);
+        }
     }
 
     private bool CalcRoute()
@@ -90,12 +97,15 @@ public class NavAgent : MonoBehaviour
 
         if (result) //길 찾음
         {
+            _routePath.Clear();
+
             Node last = _closeList[_closeList.Count - 1];
             while (last._parnet != null)
             {
-                Debug.Log(last.pos);
+                _routePath.Add(last.pos);
                 last = last._parnet;
             }
+            _routePath.Reverse(); //역순리스트를 출발점부터 다시 들어오게 뒤집어준다 
         }
 
         return result;
@@ -116,6 +126,7 @@ public class NavAgent : MonoBehaviour
                 if (temp != null) continue;
 
                 //타일에서 진짜 갈 수 있는 곳인지
+                if (MapManager.Instance.CanMove(nextPos))
                 {
                     float g = (n.pos - nextPos).magnitude + n.G;
 
