@@ -17,7 +17,8 @@ public class SaveSystem : MonoBehaviour
 
     private void Start() 
     {
-        
+        var result = this.LoadData();
+        OnDataLoadedResult?.Invoke(result);
     }
 
     public void ResetData() 
@@ -28,7 +29,7 @@ public class SaveSystem : MonoBehaviour
         LoadedData = null;
     }
 
-    public void SaceData(int sceneIndex, int playerHealth)
+    public void SaveData(int sceneIndex, int playerHealth)
     {
         if (LoadedData == null)
             LoadedData = new LoadData();
