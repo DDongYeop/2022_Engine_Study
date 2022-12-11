@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(LineRenderer))]
 public class NavAgent : MonoBehaviour
 {
     private PriorityQueue<Node> _openList;
@@ -17,10 +18,21 @@ public class NavAgent : MonoBehaviour
     private int _moveIdx = 0; //라우트 패스의 몇번쨰를 진행하고 있는지
     private Vector3 _nextPos; //다음에 이동할 월드 포지션 
 
+    [SerializeField] private bool _isDebug = false;
+
     private Vector3Int _currentPosition; //현재 타일 위치
     private Vector3Int _destination; //목표 타일 위치
-
-    [SerializeField] private Tilemap _tilemap;
+    public Vector3Int Destination
+    {
+        get => _destination;
+        set
+        {
+            SetCurrentPosition(); // 현재 위치에 따라 내 위치 배정
+            _destination = value;
+            CalcRoute(); // 이걸 하고나면 RoutePath가 리셋팅 됨
+            if (_isDebug) PrintRoute(); //디버그 모드 켜져있다면 라우팅 경로 라인렌ㅌ더러로 그림 
+        }
+    }
 
     private LineRenderer _lineRenderer;
 
@@ -34,50 +46,56 @@ public class NavAgent : MonoBehaviour
 
     private void Start() 
     {
-        Vector3Int cellPos = _tilemap.WorldToCell(transform.position);
-        _currentPosition = cellPos;
-        transform.position = _tilemap.GetCellCenterWorld(cellPos);
+        SetCurrentPosition();
+        transform.position = MapManager.Instance.GetWorldPos(_currentPosition);
     }
 
-    private void Update() 
+    private void SetCurrentPosition()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mPos = Input.mousePosition;
-            mPos.z = 0;
-            Vector3 world = Camera.main.ScreenToWorldPoint(mPos);
-            Vector3Int cellPos = MapManager.Instance.GetTilePos(world); //이걸로 월드를 타일 맵 포지션으로 변경
-            
-            _destination = cellPos;
-            
-            if (CalcRoute())
-            {
-                PrintRoute();
-                _moveIdx = 0;
-                _isMove = true;
-                SetNextTarget();
-            }
-        }
-
-        if (_isMove)
-        {
-            Vector3 dir = _nextPos - transform.position;
-            transform.position += dir.normalized * speed * Time.deltaTime;
-            if (dir.magnitude <= 0.1f)
-                SetNextTarget();            
-        }
+        Vector3Int cellPos = MapManager.Instance.GetTilePos(transform.position);
+        _currentPosition = cellPos;
     }
 
-    private void SetNextTarget()
+    // private void Update() 
+    // {
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         Vector3 mPos = Input.mousePosition;
+    //         mPos.z = 0;
+    //         Vector3 world = Camera.main.ScreenToWorldPoint(mPos);
+    //         Vector3Int cellPos = MapManager.Instance.GetTilePos(world); //이걸로 월드를 타일 맵 포지션으로 변경
+            
+    //         _destination = cellPos;
+            
+    //         if (CalcRoute())
+    //         {
+    //             PrintRoute();
+    //             _moveIdx = 0;
+    //             _isMove = true;
+    //             SetNextTarget();
+    //         }
+    //     }
+
+    //     if (_isMove)
+    //     {
+    //         Vector3 dir = _nextPos - transform.position;
+    //         transform.position += dir.normalized * speed * Time.deltaTime;
+    //         if (dir.magnitude <= 0.1f)
+    //             SetNextTarget();            
+    //     }
+    // }
+
+    public Vector3Int SetNextTarget()
     {
         if (_moveIdx >= _routePath.Count)
         {
-            _isMove = false;
-            return;
+            //_isMove = false;
+            return Vector3Int.zero;
         }
-        _currentPosition = _routePath[_moveIdx];
-        _nextPos = MapManager.Instance.GetWorldPos(_currentPosition);
-        _moveIdx++;
+        // _currentPosition = _routePath[_moveIdx];
+        // _nextPos = MapManager.Instance.GetWorldPos(_currentPosition);
+        // _moveIdx++;
+        return _routePath[_moveIdx];
     }
 
     private void PrintRoute() //계산한 경로를 디버그로 찍어본다. 
@@ -91,6 +109,8 @@ public class NavAgent : MonoBehaviour
         //     _lineRenderer.SetPosition(i, worldPos);
         // }
     }
+
+    #region AStar 알고리즘
 
     private bool CalcRoute()
     {
@@ -149,7 +169,7 @@ public class NavAgent : MonoBehaviour
         {
             for (int x = -1; x <= 1; x++)
             {
-                if (x == y) continue; //이건 내 현재자리니깐 무시
+                if (x == 0 && y == 0) continue; //이건 내 현재자리니깐 무시
 
                 Vector3Int nextPos = n.pos + new Vector3Int(x, y, 0);
 
@@ -196,4 +216,6 @@ public class NavAgent : MonoBehaviour
         Vector3Int distance = _destination - pos;
         return distance.magnitude;
     }
+
+    #endregion
 }

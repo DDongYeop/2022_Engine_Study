@@ -21,6 +21,8 @@ public class AIBrain : MonoBehaviour
     private AIStateInfo _stateInfo;
     private AgentMovement _movement;
 
+    public NavAgent Agent;
+
     public Transform target = null;
     private Dictionary<SkillName, EnemyAttackData> _attackDictionary = new Dictionary<SkillName, EnemyAttackData>();
 
@@ -31,6 +33,7 @@ public class AIBrain : MonoBehaviour
     {
         _stateInfo = transform.Find("AI").GetComponent<AIStateInfo>();
         _movement = GetComponent<AgentMovement>();
+        Agent = GetComponent<NavAgent>();
     }
 
     private void Start()
