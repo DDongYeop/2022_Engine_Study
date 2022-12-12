@@ -19,6 +19,9 @@ public class ChaseAction : AIAction
         if (targetPos != _beforeTargetPos)
         {
             //새롭게 경로 계산하여야 하고
+            _brain.Agent.Destination = targetPos; //자동으로 경로 계산된다. 
+            _beforeTargetPos = targetPos;
+            SetNextPos();
         }
 
         if (Vector3.Distance(_nextPos, transform.position) <= 0.2f)
@@ -27,11 +30,19 @@ public class ChaseAction : AIAction
         }
 
         //다음으로 가야할 스폿 포인트를 받아서 _nextPos에 넣은거니까 해당 방향으로 진행 시키면 된다
+        _brain.Move( (_nextPos - transform.position).normalized, _brain.target.position);
 
     }
 
     private void SetNextPos()
     {
-        _nextPos = MapManager.Instance.GetWorldPos(_brain.Agent.GetNextTarget());
+        Vector3Int nextTarget = _brain.Agent.GetNextTarget();
+        if (nextTarget == Vector3Int.zero)
+        {
+            _brain.Move(Vector3.zero, _brain.target.position);
+            _nextPos = transform.position;
+        }
+        else
+            _nextPos = MapManager.Instance.GetWorldPos(_brain.Agent.GetNextTarget());
     }
 }

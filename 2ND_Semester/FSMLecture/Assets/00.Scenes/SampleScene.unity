@@ -13709,6 +13709,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _currentState: {fileID: 972576044}
+  Agent: {fileID: 0}
   target: {fileID: 0}
   viewAngle: 45
   viewRange: 5
@@ -14116,7 +14117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed171e9e75ac8564d81dc4e883dbafcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
+  distance: 8
 --- !u!1 &1391307384
 GameObject:
   m_ObjectHideFlags: 0
@@ -14425,7 +14426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed171e9e75ac8564d81dc4e883dbafcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
+  distance: 8
 --- !u!1 &2133211997
 GameObject:
   m_ObjectHideFlags: 0
