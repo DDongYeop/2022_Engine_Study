@@ -6,13 +6,14 @@ using UnityEngine;
 
 public class Achievement : ScriptableObject
 {
-    public string ID; //µµÀü°úÁ¦ ID
-    public string Title; //µµÀü°úÁ¦ ÀÌ¸§
-    public int ProgressToUnlock; // 0/50 ÇöÀç ´Þ¼ºÁ¤µµ
-    public int GoalReward; //º¸»ó
-    public Sprite Sprite; //½ºÇÁ¶óÀÌÆ®
+    public string ID; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ID
+    public string Title; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+    public int ProgressToUnlock; // 0/50 ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½
+    public int GoalReward; //ï¿½ï¿½ï¿½ï¿½
+    public Sprite Sprite; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
     private int CurrentProgress;
+    public bool IsUnlocked { get; set; }
 
     public void AddProgress(int amount)
     {
@@ -26,17 +27,29 @@ public class Achievement : ScriptableObject
         return $"{CurrentProgress} / {ProgressToUnlock}";
     }
 
+    public string GetProgressCompleted()
+    {
+        return $"{ProgressToUnlock} / {ProgressToUnlock}";
+    }
+
     private void CheckUnlockStatus()
     {
         if(CurrentProgress >= ProgressToUnlock)
         {
-            //µµÀü°úÁ¦ ´Þ¼º
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½
             UnlockAchievement();
         }
     }
 
     private void UnlockAchievement()
     {
+        IsUnlocked = true;
         AchiManager.OnAchiUnlocked?.Invoke(this);
+    }
+
+    private void OnEnable() 
+    {
+        IsUnlocked = false;
+        CurrentProgress = 0;
     }
 }

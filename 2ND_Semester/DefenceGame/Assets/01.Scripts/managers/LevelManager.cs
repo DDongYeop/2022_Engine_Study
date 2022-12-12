@@ -39,6 +39,11 @@ public class LevelManager : Singleton<LevelManager>
     private void WaveComplete()
     {
         CurrentWave++;
+
+        AchiManager.Instance.AddProgress("Wave10", 1);
+        AchiManager.Instance.AddProgress("Wave20", 1);
+        AchiManager.Instance.AddProgress("Wave50", 1);
+        AchiManager.Instance.AddProgress("Wave100", 1);
     }
 }
 
