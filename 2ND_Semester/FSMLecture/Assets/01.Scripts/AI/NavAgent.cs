@@ -30,6 +30,7 @@ public class NavAgent : MonoBehaviour
             SetCurrentPosition(); // 현재 위치에 따라 내 위치 배정
             _destination = value;
             CalcRoute(); // 이걸 하고나면 RoutePath가 리셋팅 됨
+            _moveIdx = 0;
             if (_isDebug) PrintRoute(); //디버그 모드 켜져있다면 라우팅 경로 라인렌ㅌ더러로 그림 
         }
     }
@@ -72,7 +73,7 @@ public class NavAgent : MonoBehaviour
     //             PrintRoute();
     //             _moveIdx = 0;
     //             _isMove = true;
-    //             SetNextTarget();
+    //             GetNextTarget();
     //         }
     //     }
 
@@ -81,11 +82,11 @@ public class NavAgent : MonoBehaviour
     //         Vector3 dir = _nextPos - transform.position;
     //         transform.position += dir.normalized * speed * Time.deltaTime;
     //         if (dir.magnitude <= 0.1f)
-    //             SetNextTarget();            
+    //             GetNextTarget();            
     //     }
     // }
 
-    public Vector3Int SetNextTarget()
+    public Vector3Int GetNextTarget()
     {
         if (_moveIdx >= _routePath.Count)
         {
