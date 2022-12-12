@@ -16,8 +16,8 @@ public class LevelManager : Singleton<LevelManager>
         {
             TotalLives = 0;
         }
-
         CurrentWave = 1;
+
     }
     private void ReduceLives(Enemy enemy)
     {
@@ -41,3 +41,6 @@ public class LevelManager : Singleton<LevelManager>
         CurrentWave++;
     }
 }
+
+
+

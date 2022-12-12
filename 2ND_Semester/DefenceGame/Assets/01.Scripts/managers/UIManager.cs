@@ -10,6 +10,8 @@ public class UIManager : Singleton<UIManager>
     [Header("Panels")]
     [SerializeField] private GameObject turretShopPanel;
     [SerializeField] private GameObject nodeUIPanel;
+    [SerializeField] private GameObject achiPanel;
+    
 
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI upgradeText;
@@ -21,20 +23,24 @@ public class UIManager : Singleton<UIManager>
 
     [SerializeField] private TextMeshProUGUI currentWaveText;
 
-    private void Update() 
+    private void Update()
     {
         totalCoinText.text = MoneySystem.Instance.TotalCoins.ToString();
         livesText.text = LevelManager.Instance.TotalLives.ToString();
 
-        currentWaveText.text = "WAVE " + LevelManager.Instance.CurrentWave; 
+        currentWaveText.text = $"Wave {LevelManager.Instance.CurrentWave}";
     }
 
+    public void OpenAchiPanel(bool status)
+    {
+        achiPanel.SetActive(status);
+    }
     public void CloseTurretShopPanel()
     {
         turretShopPanel.SetActive(false);
     }
 
-    public void CloseNodePanel()
+    public void CloseNodeUIPanel()
     {
         _currentNodeSelected.CloseAttackRangeSprite();
         nodeUIPanel.SetActive(false);

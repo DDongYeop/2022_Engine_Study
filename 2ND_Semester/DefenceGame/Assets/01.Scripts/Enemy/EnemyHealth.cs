@@ -77,10 +77,12 @@ public class EnemyHealth : MonoBehaviour
         //CurrentHealth = initialHealth; //체력 수치 리셋
         //_healthBar.fillAmount = 1; //체력바 이미지 리셋
         //ResetHealth();
+
         AchiManager.Instance.AddProgress(achiID: "Kill20", 1);
         AchiManager.Instance.AddProgress(achiID: "Kill50", 1);
         AchiManager.Instance.AddProgress(achiID: "Kill100", 1);
 
+        
         OnEnemyKilled?.Invoke(_enemy);
 
         //objectPooler.ReturnToPool(gameObject); //오브젝트 풀로 되돌아감 씬에서 삭제

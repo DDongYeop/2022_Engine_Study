@@ -2,27 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Achievenment")]
+[CreateAssetMenu(fileName ="Achievement")]
+
 public class Achievement : ScriptableObject
 {
-    public string ID; //ë„ì „ê³¼ì œ ID
-    public string Title; //ë„ì „ê³¼ì œ ì´ë¦„
-    public int ProgressToUnlock; // 0/50 í˜„ìž¬ ë‹¬ì„± ì •ë„
-    public int GoalReward; //ë³´ìƒ
-    public Sprite Sprite; //ìŠ¤í”„ë¼ì´íŠ¸
+    public string ID; //µµÀü°úÁ¦ ID
+    public string Title; //µµÀü°úÁ¦ ÀÌ¸§
+    public int ProgressToUnlock; // 0/50 ÇöÀç ´Þ¼ºÁ¤µµ
+    public int GoalReward; //º¸»ó
+    public Sprite Sprite; //½ºÇÁ¶óÀÌÆ®
 
     private int CurrentProgress;
 
     public void AddProgress(int amount)
     {
         CurrentProgress += amount;
-        CheckUnLockStatus();
+        AchiManager.OnProgressUpdated?.Invoke(this);
+        CheckUnlockStatus();
     }
 
-    private void CheckUnLockStatus()
+    public string GetProgress()
     {
-        if (CurrentProgress >= ProgressToUnlock)
+        return $"{CurrentProgress} / {ProgressToUnlock}";
+    }
+
+    private void CheckUnlockStatus()
+    {
+        if(CurrentProgress >= ProgressToUnlock)
         {
+            //µµÀü°úÁ¦ ´Þ¼º
             UnlockAchievement();
         }
     }

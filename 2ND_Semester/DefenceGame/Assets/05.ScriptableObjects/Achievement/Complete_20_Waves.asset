@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f28952b92a1b2cb40bf832cde4e6bada, type: 3}
+  m_Script: {fileID: 11500000, guid: 209d21e1fef67404a8a4fed7f605c538, type: 3}
   m_Name: Complete_20_Waves
   m_EditorClassIdentifier: 
   ID: Wave20
   Title: Silver Wave Defender
   ProgressToUnlock: 20
   GoalReward: 40
-  Sprite: {fileID: 694482786, guid: 546aa575ce7032f448ad5dce145fba44, type: 3}
+  Sprite: {fileID: 392853844, guid: 546aa575ce7032f448ad5dce145fba44, type: 3}

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f28952b92a1b2cb40bf832cde4e6bada, type: 3}
-  m_Name: Kill_100_Enemy
+  m_Script: {fileID: 11500000, guid: 209d21e1fef67404a8a4fed7f605c538, type: 3}
+  m_Name: Kill_50_Enemies
   m_EditorClassIdentifier: 
-  ID: Kill100
-  Title: Gold Killer
-  ProgressToUnlock: 100
-  GoalReward: 200
-  Sprite: {fileID: 287806765, guid: 546aa575ce7032f448ad5dce145fba44, type: 3}
+  ID: Kill50
+  Title: Silver Killer
+  ProgressToUnlock: 50
+  GoalReward: 100
+  Sprite: {fileID: -1017014221, guid: 546aa575ce7032f448ad5dce145fba44, type: 3}
