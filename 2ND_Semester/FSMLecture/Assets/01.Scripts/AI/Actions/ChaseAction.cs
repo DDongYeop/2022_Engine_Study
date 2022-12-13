@@ -36,8 +36,7 @@ public class ChaseAction : AIAction
 
     private void SetNextPos()
     {
-        Vector3Int nextTarget = _brain.Agent.GetNextTarget();
-        if (nextTarget == Vector3Int.zero)
+        if (_brain.Agent.CanMovePath == false)
         {
             _brain.Move(Vector3.zero, _brain.target.position);
             _nextPos = transform.position;

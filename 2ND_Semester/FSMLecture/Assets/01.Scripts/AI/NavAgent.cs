@@ -35,6 +35,9 @@ public class NavAgent : MonoBehaviour
         }
     }
 
+    //더 갈 수 있는가?
+    public bool CanMovePath => _routePath.Count > _moveIdx;
+
     private LineRenderer _lineRenderer;
 
     private void Awake() 
