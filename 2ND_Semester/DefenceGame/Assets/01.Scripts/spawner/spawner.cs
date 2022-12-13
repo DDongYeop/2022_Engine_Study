@@ -31,8 +31,10 @@ public class spawner : MonoBehaviour
     [SerializeField]
     private float maxRandomDelay;
 
+    [Header("Poolers")]
+    [SerializeField] private List<objectPooler> enemyWavePooler;
+
     //pooler ¼±¾ð
-    private objectPooler _pooler;
     private waypoint _waypoint;
 
     private float _spawnTimer;
@@ -41,7 +43,6 @@ public class spawner : MonoBehaviour
 
     void Start()
     {
-        _pooler = GetComponent<objectPooler>();
         _waypoint = GetComponent<waypoint>();
 
         _enemiesRemaining = enemyCount; //10
@@ -63,7 +64,7 @@ public class spawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject newInstance = _pooler.GetInstanceFromPool();
+        GameObject newInstance = GetPooler().GetInstanceFromPool();
         //Instantiate(testGO, transform.position, Quaternion.identity);
 
         Enemy enemy = newInstance.GetComponent<Enemy>();
@@ -74,6 +75,21 @@ public class spawner : MonoBehaviour
 
 
         newInstance.active = true;
+    }
+
+    private objectPooler GetPooler()
+    {
+        int CurrentWave = LevelManager.Instance.CurrentWave;
+        if (CurrentWave % 50 <= 10)
+            return enemyWavePooler[0];
+        else if (CurrentWave % 40 <= 10)
+            return enemyWavePooler[1];
+        else if (CurrentWave % 30 <= 10)
+            return enemyWavePooler[2];
+        else if (CurrentWave % 20 <= 10)
+            return enemyWavePooler[3];
+        else
+            return enemyWavePooler[4];
     }
 
     private float GetSpawnDelay()
