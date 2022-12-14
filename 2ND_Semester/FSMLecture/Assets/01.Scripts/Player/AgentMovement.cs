@@ -9,8 +9,7 @@ public class AgentMovement : MonoBehaviour
     protected float _currentVelocity = 0;
     protected Vector2 _movementDirection;
 
-    [SerializeField]
-    private AgentMoveSO _movementSO;
+    public AgentMoveSO _movementSO;
 
     protected void Awake()
     {

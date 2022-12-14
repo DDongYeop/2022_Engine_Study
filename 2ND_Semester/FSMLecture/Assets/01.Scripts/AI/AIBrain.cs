@@ -20,6 +20,7 @@ public class AIBrain : MonoBehaviour
     private AIState _currentState;
     private AIStateInfo _stateInfo;
     private AgentMovement _movement;
+    private AgentRotator _rotater;
 
     public NavAgent Agent;
 
@@ -33,6 +34,10 @@ public class AIBrain : MonoBehaviour
     {
         _stateInfo = transform.Find("AI").GetComponent<AIStateInfo>();
         _movement = GetComponent<AgentMovement>();
+        
+        _rotater = GetComponent<AgentRotator>();
+        _rotater.SetRotateSpeed(_movement._movementSO.rotateSpeed);
+
         Agent = GetComponent<NavAgent>();
     }
 
@@ -101,7 +106,7 @@ public class AIBrain : MonoBehaviour
 
         if ((float)finfo.GetValue(_stateInfo) > 0)
         {
-            return; // ÄðÅ¸ÀÓ Á¸Àç½Ã °ø°Ý X
+            return; // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ X
         }
 
         FieldInfo finfoBool = typeof(AIStateInfo)
@@ -120,5 +125,7 @@ public class AIBrain : MonoBehaviour
     public void Move(Vector2 direction, Vector2 targetPos)
     {
         OnMovementCommand?.Invoke(direction);
+
+        _rotater.SetTarget(targetPos);
     }
 }
