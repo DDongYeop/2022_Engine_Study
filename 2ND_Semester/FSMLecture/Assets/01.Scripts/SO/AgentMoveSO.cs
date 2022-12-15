@@ -8,5 +8,5 @@ public class AgentMoveSO : ScriptableObject
     [Range(0.1f, 10f)]
     public float maxSpeed = 10f;
 
-    [Range(360f, 720f)] public float rotateSpeed = 360f;
+    [Range(0.1f, 5f)] public float rotateSpeed = 5f;
 }
