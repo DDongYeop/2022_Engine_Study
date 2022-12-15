@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
         }
         else
             Destroy(Instance);
+
+        OnResultData?.Invoke(File.Exists(Application.dataPath + "/SaveData/SaveFIle.txt"));
     }
 
     public void ClickStart()
