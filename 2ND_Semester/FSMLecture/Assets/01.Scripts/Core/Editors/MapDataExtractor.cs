@@ -33,7 +33,7 @@ public class MapDataExtractor
             //중간에 0은 존재하지만 존재하지 않음 그러기에 -1
             for (int y = bounds.yMax - 1; y >= bounds.yMin; y--)
             {
-                for (int x = bounds.xMin; x <= bounds.xMin - 1; x++)
+                for (int x = bounds.xMin; x <= bounds.xMax - 1; x++)
                 {
                     Vector3Int tilepos = new Vector3Int(x, y, 0);
                     TileBase tile = collsion.GetTile(tilepos);
