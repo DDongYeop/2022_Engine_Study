@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
@@ -27,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public void ClickStart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        SceneManager.LoadScene(1);
     }
 
     public void ClickLoad()
@@ -39,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex+1);
 
-        while (!operation.isDone) //다 될떄까지 기다려라 
+        while (!operation.isDone)
             yield return null;
 
         _saveSystem = FindObjectOfType<SaveSystem>();

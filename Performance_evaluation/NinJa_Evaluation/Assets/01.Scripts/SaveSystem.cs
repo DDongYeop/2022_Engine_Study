@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
@@ -11,14 +9,13 @@ public class SaveData
 
 public class SaveSystem : MonoBehaviour
 {
-    private SaveData saveData;
     private string savePath;
     private string saveFileName = "/SaveFIle.txt";
+    private SaveData saveData = new SaveData();
     private PlayerController player;
 
     private void Start() 
     {
-        saveData = new SaveData();
         savePath = Application.dataPath + "/SaveData/";
 
         if (!Directory.Exists(savePath))
@@ -33,7 +30,6 @@ public class SaveSystem : MonoBehaviour
         
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(savePath+saveFileName, json);
-        Debug.Log(json);
     }
 
     [ContextMenu ("로드")]
@@ -46,10 +42,6 @@ public class SaveSystem : MonoBehaviour
 
             player = FindObjectOfType<PlayerController>();
             player.transform.position = saveData.PlayerPos;
-        }
-        else
-        {
-            Debug.Log("저장 파일이 없습니다");
         }
     }
 }

@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private float _maxspeed = 5;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
-    [SerializeField] private float _maxspeed = 5;
 
     private void Awake()
     {
