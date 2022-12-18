@@ -37,8 +37,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator LoadRoutine()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex+1); //AsyncOperation 씬 로딩 끝나는거 표시 가능 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex+1);
 
         while (!operation.isDone) //다 될떄까지 기다려라 
             yield return null;

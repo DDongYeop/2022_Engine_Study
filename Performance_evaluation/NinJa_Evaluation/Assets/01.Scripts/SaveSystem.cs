@@ -33,8 +33,6 @@ public class SaveSystem : MonoBehaviour
         
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(savePath+saveFileName, json);
-
-        Debug.Log("저장 완료");
         Debug.Log(json);
     }
 
@@ -48,8 +46,6 @@ public class SaveSystem : MonoBehaviour
 
             player = FindObjectOfType<PlayerController>();
             player.transform.position = saveData.PlayerPos;
-
-            Debug.Log("로드 완료");
         }
         else
         {
