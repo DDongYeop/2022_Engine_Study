@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -11,6 +12,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject turretShopPanel;
     [SerializeField] private GameObject nodeUIPanel;
     [SerializeField] private GameObject achiPanel;
+    [SerializeField] private GameObject gameOverPanel;
     
 
     [Header("Texts")]
@@ -22,6 +24,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private TextMeshProUGUI livesText;
 
     [SerializeField] private TextMeshProUGUI currentWaveText;
+    [SerializeField] private TextMeshProUGUI gameOverText;
 
     private void Update()
     {
@@ -109,5 +112,38 @@ public class UIManager : Singleton<UIManager>
         _currentNodeSelected.SellTurret();
         _currentNodeSelected = null;
         nodeUIPanel.SetActive(false);
+    }
+
+    public void SlowTIme()
+    {
+        if (Time.timeScale == 0.5f)
+            return;
+
+        Time.timeScale -= .5f;
+    }
+
+    public void ResumeIme()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void FastTIme()
+    {
+        if (Time.timeScale >= 100)
+            return;
+
+        Time.timeScale += .5f;
+    }
+
+    public void ShowGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+        gameOverText.text = MoneySystem.Instance.TotalCoins.ToString();
+        Time.timeScale = 1;
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

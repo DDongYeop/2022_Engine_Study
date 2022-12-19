@@ -12,25 +12,26 @@ public class LevelManager : Singleton<LevelManager>
     private void Start()
     {
         TotalLives = lives;
-        if(TotalLives <= 0)
-        {
-            TotalLives = 0;
-        }
         CurrentWave = 1;
 
     }
     private void ReduceLives(Enemy enemy)
     {
         TotalLives--;
+        if(TotalLives <= 0)
+        {
+            TotalLives = 0;
+            UIManager.Instance.ShowGameOverPanel();
+        }
     }
 
-    private void OnEnable()//°ÔÀÓ ¿ÀºêÁ§Æ®°¡ È°¼ºÈ­ µÉ¶§¸¶´Ù
+    private void OnEnable()//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½É¶ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         Enemy.OnEndReached += ReduceLives;
         spawner.OnWaveComplete += WaveComplete;
     }
 
-    private void OnDisable()//°ÔÀÓ ¿ÀºêÁ§Æ®°¡ ºñÈ°¼ºÈ­ µÉ¶§
+    private void OnDisable()//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½É¶ï¿½
     {
         Enemy.OnEndReached -= ReduceLives;
         spawner.OnWaveComplete -= WaveComplete;

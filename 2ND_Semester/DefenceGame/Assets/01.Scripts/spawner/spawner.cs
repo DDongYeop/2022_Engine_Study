@@ -71,7 +71,7 @@ public class spawner : MonoBehaviour
         enemy.waypoint = _waypoint;
 
         enemy.ResetEnemy();
-        enemy.transform.localPosition = transform.position;
+        enemy.transform.localPosition = _waypoint.GetWaypointPosition(0);
 
 
         newInstance.active = true;
