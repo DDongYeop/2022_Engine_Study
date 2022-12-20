@@ -1,14 +1,10 @@
 ## 개요
-  >##### 본 리포지터리는 제가 2022년동안 유니티 관련 공부를 한 것을 모두 모아둔 리포지터리입니다. 
+  >##### 본 리포지터리는 제가 2022년동안 경기게임마이스터고등학교에서 전공과목 공부 한 것을 모두 모아둔 리포지터리입니다. 
 
 ## 목록
-  + ### 학교
-    >##### [1학기]
-    >##### [여름방학]
-    >##### [2학기]
-    >##### 겨울방학
+  >##### [Unity]
+  >##### [CSharp]
 
 
-[1학기]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/1ST_Semester
-[여름방학]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/SummerVacation
-[2학기]: https://github.com/DDongYeop/2022_Unity_Study/tree/main/2ND_Semester
+[Unity]: https://github.com/DDongYeop/2022_GGM_Study/tree/main/Unity
+[CSharp]: https://github.com/DDongYeop/2022_GGM_Study/tree/main/CSharp
