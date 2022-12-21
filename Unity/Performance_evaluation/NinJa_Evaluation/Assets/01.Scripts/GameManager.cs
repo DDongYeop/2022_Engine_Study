@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     private SaveSystem _saveSystem;
-
     public UnityEvent<bool> OnResultData;
 
     private void Awake()
@@ -24,15 +23,8 @@ public class GameManager : MonoBehaviour
         OnResultData?.Invoke(File.Exists(Application.dataPath + "/SaveData/SaveFIle.txt"));
     }
 
-    public void ClickStart()
-    {
-        SceneManager.LoadScene(1);
-    }
-
-    public void ClickLoad()
-    {
-        StartCoroutine(LoadRoutine());
-    }
+    public void ClickStart() => SceneManager.LoadScene(1);
+    public void ClickLoad() => StartCoroutine(LoadRoutine());
 
     private IEnumerator LoadRoutine()
     {

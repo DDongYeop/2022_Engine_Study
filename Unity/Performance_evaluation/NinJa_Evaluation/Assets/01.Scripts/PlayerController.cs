@@ -16,11 +16,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 dir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         _rigidbody.velocity = dir.normalized * _maxspeed;
-        AnimatorSet(dir);
-    }
-
-    private void AnimatorSet(Vector2 dir)
-    {
         _animator.SetFloat("InputX", dir.x);
         _animator.SetFloat("InputY", dir.y);
     }

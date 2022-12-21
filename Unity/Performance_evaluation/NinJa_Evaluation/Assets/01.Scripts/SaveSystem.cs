@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.IO;
 
-[System.Serializable]
 public class SaveData
 {
     public Vector2 PlayerPos;
@@ -17,7 +16,6 @@ public class SaveSystem : MonoBehaviour
     private void Start() 
     {
         savePath = Application.dataPath + "/SaveData/";
-
         if (!Directory.Exists(savePath))
             Directory.CreateDirectory(savePath);
     }
@@ -27,7 +25,6 @@ public class SaveSystem : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
         saveData.PlayerPos = player.transform.position;
-        
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(savePath+saveFileName, json);
     }
@@ -39,7 +36,6 @@ public class SaveSystem : MonoBehaviour
         {
             string json = File.ReadAllText(savePath+saveFileName);
             saveData = JsonUtility.FromJson<SaveData>(json);
-
             player = FindObjectOfType<PlayerController>();
             player.transform.position = saveData.PlayerPos;
         }
