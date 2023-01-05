@@ -66,3 +66,5 @@ public class AdManager : MonoBehaviour
 
 // 구글 Ads Unity 참고 사이트 
 // https://developers.google.com/admob/unity/rewarded-interstitial
+
+// 구글 애널리틱스 << 이건 통계 보여준다. 
