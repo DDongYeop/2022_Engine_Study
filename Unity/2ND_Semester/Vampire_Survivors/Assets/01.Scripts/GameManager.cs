@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     {
         components.Add(new UIComponent());
 
+        components.Add(GetComponent<TileComponent>());
+        components.Add(GetComponent<EnemyConpoment>());
+
         UpdateState(GameState.INIT);
     }
 
