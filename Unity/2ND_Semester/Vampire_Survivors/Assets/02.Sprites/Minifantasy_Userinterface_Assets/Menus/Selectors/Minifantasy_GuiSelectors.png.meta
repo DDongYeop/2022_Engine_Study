@@ -3,7 +3,7 @@ guid: 2820ef75d2c586148b3aeecbe374b138
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1257,8 +1258,8 @@ TextureImporter:
       Minifantasy_GuiSelectors_14: -1181690993
       Minifantasy_GuiSelectors_24: 1767233817
       Minifantasy_GuiSelectors_8: -1127137418
-      Minifantasy_GuiSelectors_2: 1689332342
       Minifantasy_GuiSelectors_12: 1047246743
+      Minifantasy_GuiSelectors_2: 1689332342
       Minifantasy_GuiSelectors_50: -65683197
       Minifantasy_GuiSelectors_48: -7166192
       Minifantasy_GuiSelectors_49: -993236513
