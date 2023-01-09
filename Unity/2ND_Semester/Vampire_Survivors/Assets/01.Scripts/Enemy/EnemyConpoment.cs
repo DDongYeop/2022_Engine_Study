@@ -14,11 +14,37 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
     {
         switch (state)
         {
+            case GameState.INIT:
+                Init();
+                break;
             case GameState.STANDBY:
                 Reset();
                 Generate();
                 break;
         }
+    }
+    
+    private void Init()
+    {
+        GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerMoveEvent);
+    }
+
+    private void PlayerMoveEvent(Vector3 playerPosition)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            var movePosition = UpdatePosition(enemies[i].transform.position, playerPosition);
+
+            enemies[i].transform.position = movePosition;
+        }
+    }
+
+    private Vector3 UpdatePosition(Vector3 enemyPosition, Vector3 playerPosition)
+    {
+        var normal = (playerPosition - enemyPosition).normalized;
+        enemyPosition += normal * Time.deltaTime * 0.16f;
+
+        return enemyPosition;
     }
 
     private void Generate()

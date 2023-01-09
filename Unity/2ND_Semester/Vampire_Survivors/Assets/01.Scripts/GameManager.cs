@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,11 @@ public class GameManager : MonoBehaviour
     private void Start() 
     {
         components.Add(new UIComponent());
+        components.Add(new PlayerComponent());
 
         components.Add(GetComponent<TileComponent>());
         components.Add(GetComponent<EnemyConpoment>());
+
 
         UpdateState(GameState.INIT);
     }
@@ -40,7 +43,7 @@ public class GameManager : MonoBehaviour
             UpdateState(GameState.STANDBY);
     }
 
-    public T GetGame<T>() where T : class, Icomponent
+    public T GetGameComponent<T>() where T : class, Icomponent
     {
         var value = default(T);
 
