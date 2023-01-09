@@ -19,6 +19,7 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
                 break;
             case GameState.STANDBY:
                 Reset();
+                
                 Generate();
                 break;
         }
@@ -51,7 +52,7 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
     {
         for (var i = 0; i < enemyCount; i++)
         {
-            var enemy = Instantiate(enemyPrefab);
+            var enemy = ObjectPool.Instance.GetObject(PoolObjectType.Enemy);
             enemy.transform.position = GetRandomPosition();
             enemies.Add(enemy);
         }
@@ -69,8 +70,10 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
 
     private void Reset() 
     {
+        Debug.Log(enemies.Count);
+
         for (int i = 0; i < enemies.Count; i++)
-            Destroy(enemies[i]);
+            ObjectPool.Instance.ReturnObject(PoolObjectType.Enemy, enemies[i]);
         
         enemies.Clear();
     }

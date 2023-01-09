@@ -16,6 +16,8 @@ public class ObjectPool : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+
+        Init();
     }
 
     private void Init()
@@ -27,7 +29,45 @@ public class ObjectPool : MonoBehaviour
         {
             pool.Add(data.Key, new Queue<GameObject>());
 
-            // Count 생성
+            for (int i = 0; i < data.Value.prefabCount; i++)
+            {
+                var poolObject = CreateNewObject(data.Key);
+
+                pool[data.Key].Enqueue(poolObject);
+            }
         }
+    }
+
+    private GameObject CreateNewObject(PoolObjectType objectType)
+    {
+        var newObj = Instantiate(poolObjectDataMap[objectType].prefab, transform, true);
+        newObj.gameObject.SetActive(false);
+        return newObj;
+    }
+
+    public GameObject GetObject(PoolObjectType type)
+    {
+        if (pool[type].Count > 0)
+        {
+            var obj = pool[type].Dequeue();
+            obj.SetActive(true);
+
+            return obj;
+        }
+        else
+        {
+            Debug.Log(type);
+
+            var newObj = CreateNewObject(type);
+            newObj.SetActive(true);
+
+            return newObj;
+        }
+    }
+
+    public void ReturnObject(PoolObjectType type, GameObject obj)
+    {
+        obj.SetActive(false);
+        pool[type].Enqueue(obj);
     }
 }

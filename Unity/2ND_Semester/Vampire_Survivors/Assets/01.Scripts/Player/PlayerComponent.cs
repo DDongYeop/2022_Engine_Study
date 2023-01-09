@@ -20,7 +20,7 @@ public class PlayerComponent : Icomponent
 
     private void Init()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = ObjectPool.Instance.GetObject(PoolObjectType.Player);
 
         playerMoveStream = Observable.EveryUpdate().Select(steam => player.transform.position);
     }
