@@ -9,11 +9,11 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
 {
     [SerializeField] private GameObject enemyPrefab;
 
-    private List<GameObject> enemies = new List<GameObject>();
+    private List<Enemy> enemies = new ();
 
     private int enemyCount = 10;
 
-    private Subject<List<GameObject>> enemiesStream = new();
+    private Subject<List<Enemy>> enemiesStream = new();
 
     public void UpdateState(GameState state)
     {
@@ -35,16 +35,16 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
     
     private void Init()
     {
-        //GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerMoveEvent);
+        GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerMoveEvent);
     }
 
     private void PlayerMoveEvent(Vector3 playerPosition)
     {
-        for (int i = 0; i < enemies.Count; i++)
+        foreach (var enemy in enemies)
         {
-            var movePosition = UpdatePosition(enemies[i].transform.position, playerPosition);
+            var movePosition = UpdatePosition(enemy.Position, playerPosition);
 
-            enemies[i].transform.position = movePosition;
+            enemy.Position = movePosition;
         }
     }
 
@@ -60,12 +60,26 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
     {
         for (var i = 0; i < enemyCount; i++)
         {
-            var enemy = ObjectPool.Instance.GetObject(PoolObjectType.Enemy);
-            enemy.transform.position = GetRandomPosition();
-            enemies.Add(enemy);
+            enemies.Add(Enemy.EnemyBuilder.Build(PoolObjectType.Enemy));
+
+            enemies[^1].Position = GetRandomPosition();
+
+            enemies[^1].DestroySubscribe(EnemyDestroyEvent);
         }
 
         enemiesStream.OnNext(enemies);
+    }
+
+    private void EnemyDestroyEvent(Enemy target)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i].Equals(target))
+            {
+                enemies.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     private Vector3 GetRandomPosition()
@@ -82,12 +96,14 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
         Debug.Log(enemies.Count);
 
         for (int i = 0; i < enemies.Count; i++)
-            ObjectPool.Instance.ReturnObject(PoolObjectType.Enemy, enemies[i]);
+        {
+            enemies[i].ReturnObject();
+        }
         
         enemies.Clear();
     }
 
-    public void EenemiesSubscribe(Action<List<GameObject>> action)
+    public void EenemiesSubscribe(Action<List<Enemy>> action)
     {
         enemiesStream.Subscribe(action);
     }

@@ -2,6 +2,7 @@ using UniRx;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerComponent : Icomponent
 {
@@ -34,10 +35,23 @@ public class PlayerComponent : Icomponent
         playerMoveStream = Observable.EveryUpdate().Select(steam => player.transform.position);
 
         components.Add(new PlayerWeaponComponent(player));
+        components.Add(new PlayerPhysicsComponent(player));
+        components.Add(new PlayerAnimationComponent(player));
+        components.Add(new PlayerUIComponent(player));
     }
 
     public void PlayerMoveSubscribe(Action<Vector3> action)
     {
         playerMoveStream.Subscribe(action).AddTo(GameManager.Instance); 
+    }
+
+    public T GetPlayerComponent<T>() where T : IPlayerComponent
+    {
+        var value = default(T);
+
+        foreach (var component in components.OfType<T>())
+            value = component;
+
+        return value;
     }
 }
