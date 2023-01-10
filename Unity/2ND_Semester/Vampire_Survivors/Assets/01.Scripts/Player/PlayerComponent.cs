@@ -1,12 +1,15 @@
 using UniRx;
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerComponent : Icomponent
 {
     private GameObject player;
 
     private IObservable<Vector3> playerMoveStream;
+
+    private List<IPlayerComponent> components = new();
 
     public void UpdateState(GameState state)
     {
@@ -15,7 +18,13 @@ public class PlayerComponent : Icomponent
             case GameState.INIT:
                 Init();
                 break;
+            case GameState.STANDBY:
+                player.transform.position = Vector3.zero;
+                break;
         }
+
+        foreach (var component in components)
+            component.UpdateState(state);   
     }
 
     private void Init()
@@ -23,10 +32,12 @@ public class PlayerComponent : Icomponent
         player = ObjectPool.Instance.GetObject(PoolObjectType.Player);
 
         playerMoveStream = Observable.EveryUpdate().Select(steam => player.transform.position);
+
+        components.Add(new PlayerWeaponComponent(player));
     }
 
     public void PlayerMoveSubscribe(Action<Vector3> action)
     {
-        playerMoveStream.Subscribe(action); 
+        playerMoveStream.Subscribe(action).AddTo(GameManager.Instance); 
     }
 }

@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyConpoment : MonoBehaviour, Icomponent
 {
@@ -9,6 +12,8 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
     private List<GameObject> enemies = new List<GameObject>();
 
     private int enemyCount = 10;
+
+    private Subject<List<GameObject>> enemiesStream = new();
 
     public void UpdateState(GameState state)
     {
@@ -19,15 +24,18 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
                 break;
             case GameState.STANDBY:
                 Reset();
-                
+               
+                break;
+            case GameState.RUNNING:
                 Generate();
+
                 break;
         }
     }
     
     private void Init()
     {
-        GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerMoveEvent);
+        //GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerMoveEvent);
     }
 
     private void PlayerMoveEvent(Vector3 playerPosition)
@@ -56,12 +64,13 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
             enemy.transform.position = GetRandomPosition();
             enemies.Add(enemy);
         }
-}
+
+        enemiesStream.OnNext(enemies);
+    }
 
     private Vector3 GetRandomPosition()
     {
-        var angle
-         = Random.Range(0, 361) * Mathf.Rad2Deg;
+        var angle = Random.Range(0, 361) * Mathf.Rad2Deg;
 
         var position = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * 2;
 
@@ -76,5 +85,10 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
             ObjectPool.Instance.ReturnObject(PoolObjectType.Enemy, enemies[i]);
         
         enemies.Clear();
+    }
+
+    public void EenemiesSubscribe(Action<List<GameObject>> action)
+    {
+        enemiesStream.Subscribe(action);
     }
 }
