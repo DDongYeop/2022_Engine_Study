@@ -641,7 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fca1f87746950649b1f2328b5532e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 107457098}
+  tile: {fileID: 107457098}
   tilebase: {fileID: 11400000, guid: cbdf71ca0732b3b47b07b9aa4e0c46d8, type: 2}
 --- !u!114 &1138854800
 MonoBehaviour:

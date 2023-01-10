@@ -5,7 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class TileComponent : MonoBehaviour, Icomponent
 {
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private Tilemap tile;
+
     [SerializeField] private TileBase tilebase;
 
     private int size = 64;
@@ -14,27 +15,38 @@ public class TileComponent : MonoBehaviour, Icomponent
     {
         switch (state)
         {
-            case GameState.STANDBY:
-                Reset();
-                Generate();
+            case GameState.INIT:
+                Init();
                 break;
         }
     }
 
-    private void Generate()
+    private void Init()
     {
-        var tileStartPosition = -new Vector3Int(size / 2, size / 2);
-
-        for (var i = 0; i < size; i++)
-            for (var j = 0; j < size; j++)
-            {
-                var tilePostion = new Vector3Int((int)(tileStartPosition.x + i), (int)(tileStartPosition.y + j));
-                tilemap.SetTile(tilePostion, tilebase);
-            }
+        GameManager.Instance.GetGameComponent<ChunkComponent>().ChunkSubscribe(ChunkEvent);
     }
 
-    private void Reset() 
+    private void ChunkEvent(Chunk chunk)
     {
-        tilemap.ClearAllTiles();
+        var chunkSize = chunk.map.GetLength(0);
+
+        var start = chunk.index * (chunkSize - 1);
+        start += new Vector3Int(chunk.index.x - (int)(chunkSize * 0.5f), chunk.index.y - (int)(chunkSize * 0.5f));
+
+        for (int i = 0; i < chunkSize; i++)
+        {
+            for (int j = 0; j < chunkSize; j++)
+            {
+                var tilePosition = new Vector3Int(start.x + i, start.y + j);
+
+                tile.SetTile(tilePosition, tilebase);
+            }
+        }
+    }
+
+    private void Reset()
+    {
+        tile.ClearAllTiles();
     }
 }
+
