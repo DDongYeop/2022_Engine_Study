@@ -13,11 +13,17 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
 
     private Subject<List<Enemy>> enemiesStream = new();
 
+    private IDisposable spawner;
+
+    private Stage stage;
+
     public void UpdateState(GameState state)
     {
         switch (state)
         {
             case GameState.INIT:
+                GameManager.Instance.GetGameComponent<StageComonent>().Subscribe(SpawnRoutine);
+
                 Init();
                 break;
             case GameState.STANDBY:
@@ -25,12 +31,53 @@ public class EnemyConpoment : MonoBehaviour, Icomponent
                
                 break;
             case GameState.RUNNING:
-                Generate();
-
+                break;
+            case GameState.RESULT:
+                spawner.Dispose();
                 break;
         }
     }
-    
+
+    private void SpawnRoutine(Stage stage)
+    {
+        var spawn = stage.spawns[0];
+
+        stage.spawns.RemoveAt(0);
+
+        spawner = Observable
+            .Timer(TimeSpan.FromSeconds(0), TimeSpan.FromMilliseconds(spawn.frequency))
+            .Select(x => (int)(spawn.frequencyTime - x))
+            .TakeWhile(x => x > 0)
+            .Subscribe(time =>
+            {
+                var count = spawn.minimum - enemies.Count;
+
+                if (count > 0)
+                    Generate(count);
+            }, () =>
+            {
+                if (stage.spawns.Count == 0) return;
+
+                spawner.Dispose();
+
+                SpawnRoutine(stage);
+            });
+    }
+
+    private void Generate(int count)
+    {
+        for (var i = 0; i < count; i++)
+        {
+            enemies.Add(Enemy.EnemyBuilder.Build(PoolObjectType.Enemy));
+
+            enemies[^1].Position = GetRandomPosition();
+
+            enemies[^1].DestroySubscribe(EnemyDestroyEvent);
+        }
+
+        enemiesStream.OnNext(enemies);
+    }
+
     private void Init()
     {
         GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerMoveEvent);
