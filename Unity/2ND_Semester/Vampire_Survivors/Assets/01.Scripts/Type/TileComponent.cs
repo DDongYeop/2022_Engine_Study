@@ -6,8 +6,7 @@ using UnityEngine.Tilemaps;
 public class TileComponent : MonoBehaviour, Icomponent
 {
     [SerializeField] private Tilemap tile;
-
-    [SerializeField] private TileBase tilebase;
+    [SerializeField] private TileBase[] tilebase;
 
     private int size = 64;
 
@@ -39,7 +38,7 @@ public class TileComponent : MonoBehaviour, Icomponent
             {
                 var tilePosition = new Vector3Int(start.x + i, start.y + j);
 
-                tile.SetTile(tilePosition, tilebase);
+                tile.SetTile(tilePosition, tilebase[chunk.map[i, j]]);
             }
         }
     }

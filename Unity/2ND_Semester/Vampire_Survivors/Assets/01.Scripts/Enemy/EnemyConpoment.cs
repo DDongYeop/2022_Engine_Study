@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 
 public class EnemyConpoment : MonoBehaviour, Icomponent
 {
-    [SerializeField] private GameObject enemyPrefab;
-
     private List<Enemy> enemies = new ();
 
     private int enemyCount = 10;

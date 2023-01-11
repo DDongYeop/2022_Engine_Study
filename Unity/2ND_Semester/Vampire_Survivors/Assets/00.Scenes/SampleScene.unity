@@ -642,7 +642,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 107457098}
-  tilebase: {fileID: 11400000, guid: cbdf71ca0732b3b47b07b9aa4e0c46d8, type: 2}
+  tilebase:
+  - {fileID: 11400000, guid: cbdf71ca0732b3b47b07b9aa4e0c46d8, type: 2}
+  - {fileID: 11400000, guid: 6bd0cdb9a37f334459a23042c6eb0620, type: 2}
 --- !u!114 &1138854800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,7 +657,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b89e05ecd149a6408604fa12b1a37a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 3143296314707837991, guid: 6b3631326753d2c44a98ee6bae6f7c1a, type: 3}
 --- !u!1001 &4570328716260981774
 PrefabInstance:
   m_ObjectHideFlags: 0
