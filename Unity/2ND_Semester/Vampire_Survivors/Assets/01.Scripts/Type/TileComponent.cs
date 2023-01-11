@@ -5,8 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class TileComponent : MonoBehaviour, Icomponent
 {
-    [SerializeField] private Tilemap tile;
-    [SerializeField] private TileBase[] tilebase;
+    [SerializeField] private Tilemap[] tiles;
+    [SerializeField] private TileBase[] tilebases;
 
     private int size = 64;
 
@@ -39,7 +39,8 @@ public class TileComponent : MonoBehaviour, Icomponent
             {
                 var tilePosition = new Vector3Int(start.x + i, start.y + j);
 
-                tile.SetTile(tilePosition, null);
+                for (int z = 0; z < tiles.Length; i++)
+                    tiles[z].SetTile(tilePosition, null);
             }
         }
     }
@@ -57,14 +58,16 @@ public class TileComponent : MonoBehaviour, Icomponent
             {
                 var tilePosition = new Vector3Int(start.x + i, start.y + j);
 
-                tile.SetTile(tilePosition, tilebase[chunk.map[i, j]]);
+                tiles[chunk.map[i, j]].SetTile(tilePosition, tilebases[chunk.map[i, j]]);
+
+                tiles[0].SetTile(tilePosition, tilebases[0]);
             }
         }
     }
 
     private void Reset()
     {
-        tile.ClearAllTiles();
+        //tile.ClearAllTiles();
     }
 }
 
