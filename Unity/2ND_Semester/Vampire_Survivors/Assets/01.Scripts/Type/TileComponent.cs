@@ -22,10 +22,29 @@ public class TileComponent : MonoBehaviour, Icomponent
 
     private void Init()
     {
-        GameManager.Instance.GetGameComponent<ChunkComponent>().ChunkSubscribe(ChunkEvent);
+        GameManager.Instance.GetGameComponent<ChunkComponent>().ChunkCreateSubscribe(ChunkGenerateEvent);
+        GameManager.Instance.GetGameComponent<ChunkComponent>().ChunkRemoveSubscribe(ChunkRemoveEvent);
     }
 
-    private void ChunkEvent(Chunk chunk)
+    private void ChunkRemoveEvent(Chunk chunk)
+    {
+        var chunkSize = chunk.map.GetLength(0);
+
+        var start = chunk.index * (chunkSize - 1);
+        start += new Vector3Int(chunk.index.x - (int)(chunkSize * 0.5f), chunk.index.y - (int)(chunkSize * 0.5f));
+
+        for (int i = 0; i < chunkSize; i++)
+        {
+            for (int j = 0; j < chunkSize; j++)
+            {
+                var tilePosition = new Vector3Int(start.x + i, start.y + j);
+
+                tile.SetTile(tilePosition, null);
+            }
+        }
+    }
+
+    private void ChunkGenerateEvent(Chunk chunk)
     {
         var chunkSize = chunk.map.GetLength(0);
 

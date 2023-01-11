@@ -12,7 +12,9 @@ public class ChunkComponent : Icomponent
 
     private const int Seed = 1;
 
-    private Subject<Chunk> chunkStream = new();
+    private Subject<Chunk> chunkCreateStream = new();
+
+    private Subject<Chunk> chunkRemoveStream = new();
 
     private List<Chunk> chunks = new();
 
@@ -41,7 +43,20 @@ public class ChunkComponent : Icomponent
 
         for (int i = 0; i < chunks.Count; i++)
         {
-            chunkStream.OnNext(chunks[i]);
+            var distance = Vector3Int.Distance(index, chunks[i].index);
+
+            if (distance < 2)
+            {
+                chunkCreateStream.OnNext(chunks[i]);
+            }
+            else
+            {
+                chunkRemoveStream.OnNext(chunks[i]);
+
+                chunks.RemoveAt(i);
+
+                i--;
+            }
         }
     }
 
@@ -134,8 +149,13 @@ public class ChunkComponent : Icomponent
         return chunks.Any(chunk => chunk.index.Equals(target.index));
     }
 
-    public void ChunkSubscribe(Action<Chunk> action)
+    public void ChunkCreateSubscribe(Action<Chunk> action)
     {
-        chunkStream.Subscribe(action);
+        chunkCreateStream.Subscribe(action);
+    }
+
+    public void ChunkRemoveSubscribe(Action<Chunk> action)
+    {
+        chunkRemoveStream.Subscribe(action);
     }
 }
