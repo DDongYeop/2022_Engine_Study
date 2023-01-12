@@ -10,7 +10,7 @@ namespace Ui.Screens
 
         public override void Init()
         {
-            tapToResult.onClick.AddListener(() => GameManager.Instance.UpdateState(GameState.RESULT));
+            tapToResult.onClick.AddListener(() => GameManager.Instance.UpdateState(GameState.GAMEOVER));
         }
         
     }

@@ -61,7 +61,7 @@ public class PlayerPhysicsComponent : IPlayerComponent
             DOTween.To(() => normalized, x => velocity = x, Vector3.zero, 1);
 
             if (hp <= 0)
-                GameManager.Instance.UpdateState(GameState.RESULT);
+                GameManager.Instance.UpdateState(GameState.GAMEOVER);
 
         }).AddTo(GameManager.Instance);
     }

@@ -14,22 +14,19 @@ public class StageComponent : IComponent
     {
         switch (state)
         {
-            case GameState.INIT:
-                Init();
-
-                break;
             case GameState.RUNNING:
-                stageStream.OnNext(stage);
-
+                Parsing();
                 break;
         }
     }
     
-    private void Init()
+    private void Parsing()
     {
         var paths = BetterStreamingAssets.GetFiles("/Data", "NormalStage.json", SearchOption.AllDirectories);
 
         stage = JsonUtility.FromJson<Stage>(BetterStreamingAssets.ReadAllText(paths[0]));
+
+        stageStream.OnNext(stage);
     }
 
     public void StageSubscribe(Action<Stage> action)

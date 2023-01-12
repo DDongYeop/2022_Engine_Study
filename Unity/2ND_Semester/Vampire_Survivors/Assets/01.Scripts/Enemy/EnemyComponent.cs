@@ -12,7 +12,7 @@ public class EnemyComponent : MonoBehaviour, IComponent
 
     private IDisposable spawner;
 
-    private Stage stage;
+    private Vector3 spqwnPoint;
 
     public void UpdateState(GameState state)
     {
@@ -30,7 +30,7 @@ public class EnemyComponent : MonoBehaviour, IComponent
             case GameState.RUNNING:
                 
                 break;
-            case GameState.RESULT:
+            case GameState.GAMEOVER or GameState.STAGECOMPWLETE:
                 spawner.Dispose();
                 break;
         }
@@ -59,7 +59,7 @@ public class EnemyComponent : MonoBehaviour, IComponent
             {
                 if (stage.spawns.Count == 0)
                 {
-                    GameManager.Instance.UpdateState(GameState.RESULT);
+                    GameManager.Instance.UpdateState(GameState.STAGECOMPWLETE);
                 }
                 else
                 {
@@ -67,11 +67,13 @@ public class EnemyComponent : MonoBehaviour, IComponent
 
                     SpawnRoutine(stage);
                 }
-            });
+            }).AddTo(GameManager.Instance);
     }
 
     private void PlayerMoveEvent(Vector3 playerPosition)
     {
+        spqwnPoint = playerPosition;
+
         foreach (var enemy in enemies)
         {
             var movePosition = UpdatePosition(enemy.Position, playerPosition);
@@ -92,11 +94,18 @@ public class EnemyComponent : MonoBehaviour, IComponent
     {
         for (var i = 0; i < count; i++)
         {
-            enemies.Add(Enemy.EnemyBuilder.Build(PoolObjectType.Slime));
+            var enemyPosition = GetRandomCircleEdgeVector3();
 
-            enemies[^1].Position = GetRandomCircleEdgeVector3();
+            if (!GameManager.Instance.GetGameComponent<TileComponent>().isCollision(enemyPosition, out var returnPosition))
+            {
+                enemies.Add(Enemy.EnemyBuilder.Build(PoolObjectType.Slime));
 
-            enemies[^1].DestroySubscribe(EnemyDestroyEvent);
+                enemies[^1].Position = GetRandomCircleEdgeVector3();
+
+                enemies[^1].DestroySubscribe(EnemyDestroyEvent);
+            }
+            else
+                i--;
         }
 
         enemiesStream.OnNext(enemies);
@@ -131,6 +140,7 @@ public class EnemyComponent : MonoBehaviour, IComponent
         var angle = Random.Range(0, 361) * Mathf.Rad2Deg;
 
         var result = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
+        result += spqwnPoint;
         
         return result;
     }

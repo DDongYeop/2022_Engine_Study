@@ -3,5 +3,6 @@
     INIT,
     STANDBY, 
     RUNNING, 
-    RESULT,
+    GAMEOVER,
+    STAGECOMPWLETE
 }
