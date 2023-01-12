@@ -1,16 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
 [Serializable]
-public class Spawn 
+public class Spawn
 {
-	public int minimum;
 
-	public float frequency;
+    public int minimum;
 
-	public int frequencyTime;
+    public float frequency;
 
-	public int[] enemies;
+    public int frequencyTime;
+
+    public int[] enemies;
+
 }

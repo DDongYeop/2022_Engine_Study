@@ -1,52 +1,51 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
 
     public GameState State { get; private set; }
+    
+    public static GameManager Instance;
 
-    private readonly List<Icomponent> components = new (); 
-
-    private void Awake() 
+    private readonly List<IComponent> components = new();
+    
+    private void Awake()
     {
         if (Instance == null)
             Instance = this;
+
+        BetterStreamingAssets.Initialize();
     }
 
-    private void Start() 
+    private void Start()
     {
         components.Add(new UIComponent());
         components.Add(new PlayerComponent());
         components.Add(new CameraComponent());
         components.Add(new ChunkComponent());
-        components.Add(new StageComonent());
+        components.Add(new StageComponent());
 
         components.Add(GetComponent<TileComponent>());
-        components.Add(GetComponent<EnemyConpoment>());
-
-
+        components.Add(GetComponent<EnemyComponent>());
+        
         UpdateState(GameState.INIT);
     }
 
     public void UpdateState(GameState state)
     {
-        foreach (var component in components)
-        {
+        foreach (var component in components) 
             component.UpdateState(state);
-        }
 
         State = state;
 
-        if (State == GameState.INIT)
+        if (state == GameState.INIT)
             UpdateState(GameState.STANDBY);
     }
-
-    public T GetGameComponent<T>() where T : class, Icomponent
+    
+    public T GetGameComponent<T>() where T : class, IComponent
     {
         var value = default(T);
 
@@ -57,4 +56,5 @@ public class GameManager : MonoBehaviour
 
         return value;
     }
+    
 }

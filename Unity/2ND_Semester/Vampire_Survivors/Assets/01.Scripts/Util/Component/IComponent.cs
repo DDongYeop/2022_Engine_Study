@@ -1,4 +1,6 @@
-public interface Icomponent
+﻿public interface IComponent
 {
+    
     void UpdateState(GameState state);
+    
 }

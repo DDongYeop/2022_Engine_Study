@@ -1,12 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
-public class ObjectPoolData 
+public class ObjectPoolData
 {
     public GameObject prefab;
-    public PoolObjectType type;
+
+    public PoolObjectType ObjectType;
+
     public int prefabCount;
 }

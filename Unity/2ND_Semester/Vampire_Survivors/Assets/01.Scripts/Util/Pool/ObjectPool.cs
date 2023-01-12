@@ -1,65 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+
     public static ObjectPool Instance;
+    
+    [SerializeField] private ObjectPoolData[] originPoolObjectData;
 
-    [SerializeField] private ObjectPoolData[] objectPoolDatas;
+    private readonly Dictionary<PoolObjectType, ObjectPoolData> _objectPoolDataMap = new();
+    
+    private readonly Dictionary<PoolObjectType, Queue<GameObject>> _pool = new();
 
-    private readonly Dictionary<PoolObjectType, ObjectPoolData> poolObjectDataMap = new();
-
-    private readonly Dictionary<PoolObjectType, Queue<GameObject>> pool = new Dictionary<PoolObjectType, Queue<GameObject>>();
-
-    private void Awake() 
+    protected void Awake()
     {
         if (Instance == null)
             Instance = this;
-
-        Init();
+        
+        Initialize();
     }
 
-    private void Init()
+    private void Initialize()
     {
-        foreach(var data in objectPoolDatas)
-            poolObjectDataMap.Add(data.type, data);
-
-        foreach (var data in poolObjectDataMap)
+        foreach (var originData in originPoolObjectData)
+            _objectPoolDataMap.Add(originData.ObjectType, originData);
+        
+        foreach (var poolObjectData in _objectPoolDataMap)
         {
-            pool.Add(data.Key, new Queue<GameObject>());
+            _pool.Add(poolObjectData.Key, new Queue<GameObject>());
 
-            for (int i = 0; i < data.Value.prefabCount; i++)
+            for (var j = 0; j < poolObjectData.Value.prefabCount; j++)
             {
-                var poolObject = CreateNewObject(data.Key);
+                var poolObject = CreateNewObject(poolObjectData.Key);
 
-                pool[data.Key].Enqueue(poolObject);
+                _pool[poolObjectData.Key].Enqueue(poolObject);
             }
         }
     }
 
-    private GameObject CreateNewObject(PoolObjectType objectType)
+    private GameObject CreateNewObject(PoolObjectType prefab)
     {
-        var newObj = Instantiate(poolObjectDataMap[objectType].prefab, transform, true);
+        var newObj = Instantiate(_objectPoolDataMap[prefab].prefab, transform, true);
         newObj.gameObject.SetActive(false);
         return newObj;
     }
 
     public GameObject GetObject(PoolObjectType type)
     {
-        if (pool[type].Count > 0)
+        if (_pool[type].Count > 0)
         {
-            var obj = pool[type].Dequeue();
-            obj.SetActive(true);
-
+            var obj = _pool[type].Dequeue();
+            obj.transform.SetParent(transform);
+            obj.gameObject.SetActive(true);
             return obj;
         }
         else
         {
-            Debug.Log(type);
-
             var newObj = CreateNewObject(type);
-            newObj.SetActive(true);
+            newObj.gameObject.SetActive(true);
+            newObj.transform.SetParent(transform);
 
             return newObj;
         }
@@ -67,7 +66,10 @@ public class ObjectPool : MonoBehaviour
 
     public void ReturnObject(PoolObjectType type, GameObject obj)
     {
-        obj.SetActive(false);
-        pool[type].Enqueue(obj);
+        obj.gameObject.SetActive(false);
+        obj.transform.SetParent(Instance.transform);
+        
+        _pool[type].Enqueue(obj);
     }
+    
 }

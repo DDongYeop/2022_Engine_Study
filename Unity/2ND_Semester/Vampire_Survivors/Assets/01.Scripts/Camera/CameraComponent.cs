@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraComponent : Icomponent
+public class CameraComponent : IComponent
 {
+
     private Camera camera;
 
     public void UpdateState(GameState state)
@@ -12,6 +11,7 @@ public class CameraComponent : Icomponent
         {
             case GameState.INIT:
                 Init();
+
                 break;
         }
     }
@@ -20,11 +20,15 @@ public class CameraComponent : Icomponent
     {
         camera = Camera.main;
 
-        GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerMoveEvent);
+        GameManager.Instance.GetGameComponent<PlayerComponent>()
+            .PlayerMoveSubscribe(PlayerMoveEvent);
     }
 
     private void PlayerMoveEvent(Vector3 playerPosition)
     {
-        camera.transform.position = playerPosition + (Vector3.back * 10);
+        camera.transform.position = playerPosition + 
+            (Vector3.back * 10);
     }
+
+   
 }

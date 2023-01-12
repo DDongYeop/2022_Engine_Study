@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
 using Random = System.Random;
 
-public class ChunkComponent : Icomponent
+public class ChunkComponent : IComponent
 {
     public const int ChunkSize = 32;
 
@@ -32,7 +31,8 @@ public class ChunkComponent : Icomponent
 
     private void Init()
     {
-        GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerChunkMoveSubscribe(PlayerChunkMoveEvent);
+        GameManager.Instance.GetGameComponent<PlayerComponent>()
+            .PlayerChunkMoveSubsribe(PlayerChunkMoveEvent);
 
         random = new Random(SEED.GetHashCode());
     }

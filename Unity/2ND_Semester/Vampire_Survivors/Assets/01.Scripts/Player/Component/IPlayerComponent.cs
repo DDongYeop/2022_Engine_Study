@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class IPlayerComponent : Icomponent
+public abstract class IPlayerComponent : IComponent
 {
+
     protected GameObject player;
 
     public IPlayerComponent(GameObject player)
@@ -12,4 +11,5 @@ public abstract class IPlayerComponent : Icomponent
     }
 
     public abstract void UpdateState(GameState state);
+  
 }

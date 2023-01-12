@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerWeaponComponent : IPlayerComponent
 {
+
     private IWeapon weapon;
 
     public PlayerWeaponComponent(GameObject player) : base(player)
@@ -17,9 +16,11 @@ public class PlayerWeaponComponent : IPlayerComponent
         {
             case GameState.INIT:
                 Init();
+
                 break;
             case GameState.RESULT:
                 weapon.Reset();
+
                 break;
         }
     }
@@ -28,4 +29,5 @@ public class PlayerWeaponComponent : IPlayerComponent
     {
         weapon = new Gun(player);
     }
+
 }

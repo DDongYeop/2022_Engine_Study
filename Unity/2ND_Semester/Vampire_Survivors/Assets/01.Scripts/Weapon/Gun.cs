@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using System;
@@ -7,6 +6,7 @@ using DG.Tweening;
 
 public class Gun : IWeapon
 {
+
     private List<GameObject> bullets = new ();
 
     private List<Enemy> enemies;
@@ -19,9 +19,9 @@ public class Gun : IWeapon
     {
         this.player = player;
 
-        GameManager.Instance.GetGameComponent<EnemyConpoment>().EenemiesSubscribe(enemies => this.enemies = enemies);
+        GameManager.Instance.GetGameComponent<EnemyComponent>().EnemiesSubscribe(enemies => this.enemies = enemies);
 
-        Init(); 
+        Init();
     }
 
     private void Init()
@@ -60,7 +60,7 @@ public class Gun : IWeapon
 
     public void Reset()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < bullets.Count; i++)
         {
             bullets[i].transform.DOKill();
 

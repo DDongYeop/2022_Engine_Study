@@ -1,23 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UniRx.Triggers;
-using UniRx;
-using UnityEngine;
-using System;
+﻿using System;
 using DG.Tweening;
+using UniRx;
+using UniRx.Triggers;
+using UnityEngine;
 
 public class PlayerPhysicsComponent : IPlayerComponent
 {
+
     private Subject<float> hpStream = new();
 
     private float maxHp = 10;
+
     private float hp = 10;
+
     private float speed = .5f;
 
     private Vector3 velocity;
 
     public PlayerPhysicsComponent(GameObject player) : base(player)
     {
+
     }
 
     public override void UpdateState(GameState state)
@@ -26,9 +28,11 @@ public class PlayerPhysicsComponent : IPlayerComponent
         {
             case GameState.INIT:
                 Init();
+
                 break;
             case GameState.STANDBY:
-                hp = maxHp;
+                hp = 10;
+
                 hpStream.OnNext(hp);
                 break;
         }
@@ -36,7 +40,7 @@ public class PlayerPhysicsComponent : IPlayerComponent
 
     private void Init()
     {
-        GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(PlayerPositionEvent =>
+        GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(playerPosition =>
         {
             var direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             direction *= Time.deltaTime * speed;
@@ -47,10 +51,9 @@ public class PlayerPhysicsComponent : IPlayerComponent
 
         player.OnCollisionEnter2DAsObservable().Subscribe(col =>
         {
-            if (!col.collider.tag.Equals("Enemy"))
-                return;
+            if (!col.collider.tag.Equals("Enemy")) return;
 
-            hp--;
+            hp --;
 
             hpStream.OnNext(hp / maxHp);
 
@@ -58,26 +61,14 @@ public class PlayerPhysicsComponent : IPlayerComponent
             DOTween.To(() => normalized, x => velocity = x, Vector3.zero, 1);
 
             if (hp <= 0)
-            {
                 GameManager.Instance.UpdateState(GameState.RESULT);
-            }
+
         }).AddTo(GameManager.Instance);
     }
 
-    private void PlayerPositionEvent(Vector3 playerPosition)
-    {
-        
+    private void UpdateTranslate(Vector2 direction) { player.transform.Translate(direction); }
 
-        
-    }
 
-    private void UpdateTranslate(Vector2 direction)
-    {
-        player.transform.Translate(direction);
-    }
+    public void HpSubscribe(Action<float> action) { hpStream.Subscribe(action); }
 
-    public void HpSubscribe(Action<float> action)
-    {
-        hpStream.Subscribe(action);
-    }
 }
