@@ -13,6 +13,7 @@ public class UIComponent : IComponent
         screens.Add(GameObject.Find("Running Screen").GetComponent<UIScreen>());
         screens.Add(GameObject.Find("GameOver Screen").GetComponent<UIScreen>());
         screens.Add(GameObject.Find("StageComplete Screen").GetComponent<UIScreen>());
+        screens.Add(GameObject.Find("LevelUp Screen").GetComponent<UIScreen>());
     }
     
     public void UpdateState(GameState state)

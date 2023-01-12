@@ -6,18 +6,13 @@ using UnityEngine;
 
 public class PlayerPhysicsComponent : IPlayerComponent
 {
+    private Subject<PlayerData> playerDataStream = new();
 
-    private Subject<float> hpStream = new();
-
-    private float maxHp = 10;
-
-    private float hp = 10;
-
-    private float speed = .5f;
+    private IObservable<int> levelUpStream;
 
     private Vector3 velocity;
 
-    public PlayerPhysicsComponent(GameObject player) : base(player)
+    public PlayerPhysicsComponent(GameObject player, PlayerData playerData) : base(player, playerData)
     {
 
     }
@@ -31,9 +26,9 @@ public class PlayerPhysicsComponent : IPlayerComponent
 
                 break;
             case GameState.STANDBY:
-                hp = 10;
-
-                hpStream.OnNext(hp);
+                playerData.hp = playerData.maxhp;
+                playerData.level = 0;
+                playerDataStream.OnNext(playerData);
                 break;
         }
     }
@@ -43,24 +38,31 @@ public class PlayerPhysicsComponent : IPlayerComponent
         GameManager.Instance.GetGameComponent<PlayerComponent>().PlayerMoveSubscribe(playerPosition =>
         {
             var direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            direction *= Time.deltaTime * speed;
+            direction *= Time.deltaTime * playerData.speed;
             direction += velocity * Time.deltaTime * 2;
 
             UpdateTranslate(direction);
         });
 
+        GameManager.Instance.GetGameComponent<EnemyComponent>().EnemyDestroySubject(enemy =>
+        {
+            playerData.level += .1f;
+        });
+
+        levelUpStream = Observable.EveryUpdate().Select(stream => (int)playerData.level).DistinctUntilChanged();
+
         player.OnCollisionEnter2DAsObservable().Subscribe(col =>
         {
             if (!col.collider.tag.Equals("Enemy")) return;
 
-            hp --;
+            playerData.hp --;
 
-            hpStream.OnNext(hp / maxHp);
+            playerDataStream.OnNext(playerData);
 
             var normalized = (player.transform.position - col.transform.position).normalized;
             DOTween.To(() => normalized, x => velocity = x, Vector3.zero, 1);
 
-            if (hp <= 0)
+            if (playerData.hp <= 0)
                 GameManager.Instance.UpdateState(GameState.GAMEOVER);
 
         }).AddTo(GameManager.Instance);
@@ -69,6 +71,11 @@ public class PlayerPhysicsComponent : IPlayerComponent
     private void UpdateTranslate(Vector2 direction) { player.transform.Translate(direction); }
 
 
-    public void HpSubscribe(Action<float> action) { hpStream.Subscribe(action); }
+    public void HpSubscribe(Action<PlayerData> action) { playerDataStream.Subscribe(action); }
+
+    public void PlayerLevelUpSubscribe(Action<int> action)
+    {
+        levelUpStream.Subscribe(action);
+    }
 
 }

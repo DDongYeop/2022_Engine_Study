@@ -10,6 +10,8 @@ public class EnemyComponent : MonoBehaviour, IComponent
 
     private Subject<List<Enemy>> enemiesStream = new();
 
+    private Subject<Enemy> enemyDestroyStream = new();
+
     private IDisposable spawner;
 
     private Vector3 spqwnPoint;
@@ -52,8 +54,15 @@ public class EnemyComponent : MonoBehaviour, IComponent
 
                 var count = spawn.minimum - enemies.Count;
 
-                if (count > 0)
-                    Generate(count);
+                if (count <= 0)
+                    return;
+
+                for (var i =0; i < count; i++)
+                {
+                    var type = (PoolObjectType)spawn.enemies[Random.Range(0, spawn.enemies.Length)];
+
+                    Generate(type);
+                }
             }, 
             () =>
             {
@@ -90,15 +99,15 @@ public class EnemyComponent : MonoBehaviour, IComponent
         return enemyPosition;
     }
 
-    private void Generate(int count)
+    private void Generate(PoolObjectType type)
     {
-        for (var i = 0; i < count; i++)
+        for (var i = 0; i < 1; i++)
         {
             var enemyPosition = GetRandomCircleEdgeVector3();
 
             if (!GameManager.Instance.GetGameComponent<TileComponent>().isCollision(enemyPosition, out var returnPosition))
             {
-                enemies.Add(Enemy.EnemyBuilder.Build(PoolObjectType.Slime));
+                enemies.Add(Enemy.EnemyBuilder.Build(type));
 
                 enemies[^1].Position = GetRandomCircleEdgeVector3();
 
@@ -122,6 +131,8 @@ public class EnemyComponent : MonoBehaviour, IComponent
                 return;
             }
         }
+
+        enemyDestroyStream.OnNext(target);
     }
 
 
@@ -148,6 +159,11 @@ public class EnemyComponent : MonoBehaviour, IComponent
     public void EnemiesSubscribe(Action<List<Enemy>> action)
     {
         enemiesStream.Subscribe(action);
+    }
+
+    public void EnemyDestroySubject(Action<Enemy> action)
+    {
+        enemyDestroyStream.Subscribe(action);
     }
     
 }

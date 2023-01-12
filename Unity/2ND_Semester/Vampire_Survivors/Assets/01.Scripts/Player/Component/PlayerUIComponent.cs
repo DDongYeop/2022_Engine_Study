@@ -27,11 +27,11 @@ public class PlayerUiComponent : IPlayerComponent
     {
         GameManager.Instance.GetGameComponent<PlayerComponent>()
             .GetPlayerComponent<PlayerPhysicsComponent>()
-            .HpSubscribe(HpUpdateEvent);
+            .HpSubscribe(PlayerDataEvent);
     }
 
-    private void HpUpdateEvent(float hp)
+    private void PlayerDataEvent(PlayerData playerData)
     {
-        this.hp.fillAmount = hp;
+        hp.fillAmount = playerData.hp / playerData.maxhp;
     }
 }

@@ -5,7 +5,7 @@
       "minimum": 5,
       "frequency": 1000,
       "frequencyTime": 5,
-      "enemies": [ 100 ]
+      "enemies": [ 101 ]
     },
     {
       "minimum": 20,
