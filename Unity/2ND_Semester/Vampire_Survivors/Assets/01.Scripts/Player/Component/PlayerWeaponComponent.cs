@@ -18,7 +18,7 @@ public class PlayerWeaponComponent : IPlayerComponent
                 Init();
 
                 break;
-            case GameState.GAMEOVER or GameState.STAGECOMPWLETE:
+            case GameState.RESULT:
                 weapon.Reset();
 
                 break;

@@ -62,8 +62,13 @@ public class PlayerPhysicsComponent : IPlayerComponent
             var normalized = (player.transform.position - col.transform.position).normalized;
             DOTween.To(() => normalized, x => velocity = x, Vector3.zero, 1);
 
+<<<<<<< HEAD
             if (playerData.hp <= 0)
                 GameManager.Instance.UpdateState(GameState.GAMEOVER);
+=======
+            if (hp <= 0)
+                GameManager.Instance.UpdateState(GameState.RESULT);
+>>>>>>> parent of 02cc3201 (Vampire_Survivors - GameOver, StageClear)
 
         }).AddTo(GameManager.Instance);
     }

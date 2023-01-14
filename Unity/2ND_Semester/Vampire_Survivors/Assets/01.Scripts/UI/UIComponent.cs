@@ -11,9 +11,13 @@ public class UIComponent : IComponent
         screens.Add(GameObject.Find("Init Screen").GetComponent<UIScreen>());
         screens.Add(GameObject.Find("Standby Screen").GetComponent<UIScreen>());
         screens.Add(GameObject.Find("Running Screen").GetComponent<UIScreen>());
+<<<<<<< HEAD
         screens.Add(GameObject.Find("GameOver Screen").GetComponent<UIScreen>());
         screens.Add(GameObject.Find("StageComplete Screen").GetComponent<UIScreen>());
         screens.Add(GameObject.Find("LevelUp Screen").GetComponent<UIScreen>());
+=======
+        screens.Add(GameObject.Find("Result Screen").GetComponent<UIScreen>());
+>>>>>>> parent of 02cc3201 (Vampire_Survivors - GameOver, StageClear)
     }
     
     public void UpdateState(GameState state)

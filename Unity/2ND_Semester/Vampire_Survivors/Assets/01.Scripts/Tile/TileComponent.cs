@@ -62,16 +62,6 @@ public class TileComponent : MonoBehaviour, IComponent
             }
     }
 
-    public bool isCollision(Vector3 position, out Vector3 returnPosition)
-    {
-        var tilePos = tiles[1].WorldToCell(position);
-        var type = tiles[1].GetColliderType(tilePos);
-
-        returnPosition = tiles[1].GetCellCenterWorld(tilePos);
-
-        return type != Tile.ColliderType.None;
-    }
-
     private void Reset()
     {
         //tile.ClearAllTiles();

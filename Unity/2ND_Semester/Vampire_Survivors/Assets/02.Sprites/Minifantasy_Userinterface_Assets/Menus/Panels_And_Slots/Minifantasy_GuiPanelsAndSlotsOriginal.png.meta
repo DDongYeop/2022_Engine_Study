@@ -3,7 +3,7 @@ guid: ddbf5a750f9351f4fb925be0921436b9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -2140,9 +2139,9 @@ TextureImporter:
       Minifantasy_GuiPanelsAndSlotsOriginal_90: 1537805215
       Minifantasy_GuiPanelsAndSlotsOriginal_40: -134667656
       Minifantasy_GuiPanelsAndSlotsOriginal_76: 553239677
+      Minifantasy_GuiPanelsAndSlotsOriginal_66: -1559532837
       Minifantasy_GuiPanelsAndSlotsOriginal_72: 1999184148
       Minifantasy_GuiPanelsAndSlotsOriginal_86: -868721808
-      Minifantasy_GuiPanelsAndSlotsOriginal_66: -1559532837
       Minifantasy_GuiPanelsAndSlotsOriginal_32: -2127287547
       Minifantasy_GuiPanelsAndSlotsOriginal_69: 1691845497
       Minifantasy_GuiPanelsAndSlotsOriginal_49: -21590093
@@ -2181,9 +2180,9 @@ TextureImporter:
       Minifantasy_GuiPanelsAndSlotsOriginal_46: 230828753
       Minifantasy_GuiPanelsAndSlotsOriginal_36: 483304540
       Minifantasy_GuiPanelsAndSlotsOriginal_43: 13733536
+      Minifantasy_GuiPanelsAndSlotsOriginal_6: 476391673
       Minifantasy_GuiPanelsAndSlotsOriginal_12: 1912784538
       Minifantasy_GuiPanelsAndSlotsOriginal_5: 361799579
-      Minifantasy_GuiPanelsAndSlotsOriginal_6: 476391673
       Minifantasy_GuiPanelsAndSlotsOriginal_84: 489213231
       Minifantasy_GuiPanelsAndSlotsOriginal_74: 1373721710
       Minifantasy_GuiPanelsAndSlotsOriginal_20: 1309723871

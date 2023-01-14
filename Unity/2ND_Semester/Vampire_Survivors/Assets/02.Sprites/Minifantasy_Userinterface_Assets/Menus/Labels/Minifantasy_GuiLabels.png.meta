@@ -3,7 +3,7 @@ guid: 0ce1d540d5a5fd440bc0c7ad9505ffcd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -2874,9 +2873,8 @@ TextureImporter:
       Minifantasy_GuiLabels_30: -1095166144
       Minifantasy_GuiLabels_90: 1462756182
       Minifantasy_GuiLabels_64: 2004884824
-      Minifantasy_GuiLabels_78: 2025280919
       Minifantasy_GuiLabels_19: 861597567
-      Minifantasy_GuiLabels_122: -700346779
+      Minifantasy_GuiLabels_78: 2025280919
       Minifantasy_GuiLabels_119: -1098534110
       Minifantasy_GuiLabels_60: -1769425231
       Minifantasy_GuiLabels_54: -1533169954
@@ -2887,14 +2885,15 @@ TextureImporter:
       Minifantasy_GuiLabels_94: 208253775
       Minifantasy_GuiLabels_24: -1697613708
       Minifantasy_GuiLabels_8: -1645053063
+      Minifantasy_GuiLabels_122: -700346779
       Minifantasy_GuiLabels_20: 1192868958
       Minifantasy_GuiLabels_27: -863059727
       Minifantasy_GuiLabels_28: -6622231
       Minifantasy_GuiLabels_95: -1264947765
       Minifantasy_GuiLabels_116: 974271276
       Minifantasy_GuiLabels_14: 1972783708
-      Minifantasy_GuiLabels_102: 618322496
       Minifantasy_GuiLabels_34: 122814338
+      Minifantasy_GuiLabels_102: 618322496
       Minifantasy_GuiLabels_39: 306956469
       Minifantasy_GuiLabels_23: 1469006064
       Minifantasy_GuiLabels_3: 479730719

@@ -14,7 +14,7 @@ public class EnemyComponent : MonoBehaviour, IComponent
 
     private IDisposable spawner;
 
-    private Vector3 spqwnPoint;
+    private Stage stage;
 
     public void UpdateState(GameState state)
     {
@@ -32,7 +32,7 @@ public class EnemyComponent : MonoBehaviour, IComponent
             case GameState.RUNNING:
                 
                 break;
-            case GameState.GAMEOVER or GameState.STAGECOMPWLETE:
+            case GameState.RESULT:
                 spawner.Dispose();
                 break;
         }
@@ -68,7 +68,7 @@ public class EnemyComponent : MonoBehaviour, IComponent
             {
                 if (stage.spawns.Count == 0)
                 {
-                    GameManager.Instance.UpdateState(GameState.STAGECOMPWLETE);
+                    GameManager.Instance.UpdateState(GameState.RESULT);
                 }
                 else
                 {
@@ -76,13 +76,11 @@ public class EnemyComponent : MonoBehaviour, IComponent
 
                     SpawnRoutine(stage);
                 }
-            }).AddTo(GameManager.Instance);
+            });
     }
 
     private void PlayerMoveEvent(Vector3 playerPosition)
     {
-        spqwnPoint = playerPosition;
-
         foreach (var enemy in enemies)
         {
             var movePosition = UpdatePosition(enemy.Position, playerPosition);
@@ -103,18 +101,17 @@ public class EnemyComponent : MonoBehaviour, IComponent
     {
         for (var i = 0; i < 1; i++)
         {
-            var enemyPosition = GetRandomCircleEdgeVector3();
+            enemies.Add(Enemy.EnemyBuilder.Build(PoolObjectType.Slime));
 
+<<<<<<< HEAD
             if (!GameManager.Instance.GetGameComponent<TileComponent>().isCollision(enemyPosition, out var returnPosition))
             {
                 enemies.Add(Enemy.EnemyBuilder.Build(type));
+=======
+            enemies[^1].Position = GetRandomCircleEdgeVector3();
+>>>>>>> parent of 02cc3201 (Vampire_Survivors - GameOver, StageClear)
 
-                enemies[^1].Position = GetRandomCircleEdgeVector3();
-
-                enemies[^1].DestroySubscribe(EnemyDestroyEvent);
-            }
-            else
-                i--;
+            enemies[^1].DestroySubscribe(EnemyDestroyEvent);
         }
 
         enemiesStream.OnNext(enemies);
@@ -151,7 +148,6 @@ public class EnemyComponent : MonoBehaviour, IComponent
         var angle = Random.Range(0, 361) * Mathf.Rad2Deg;
 
         var result = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
-        result += spqwnPoint;
         
         return result;
     }
