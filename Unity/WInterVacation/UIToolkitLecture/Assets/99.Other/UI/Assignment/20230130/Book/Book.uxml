@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/99.Other/UI/Assignment/20230130/Book/Book.uss?fileID=7433441132597879392&amp;guid=f6642d85d385548418098efb0a77628b&amp;type=3#Book" />
+    <ui:VisualElement name="Main" style="flex-basis: 100%; background-color: rgba(0, 0, 0, 255);">
+        <ui:VisualElement name="Text" style="flex-grow: 0.7; flex-direction: row;">
+            <ui:Label text="Home" display-tooltip-when-elided="true" name="Home_Label" style="justify-content: flex-start; align-items: flex-start; width: 25%; flex-grow: 0; font-size: 48px; height: 100%; -unity-text-align: middle-center;" />
+            <ui:Label text="Inventory" display-tooltip-when-elided="true" name="Inventory_Label" style="justify-content: flex-start; align-items: flex-start; width: 25%; flex-grow: 0; font-size: 48px; height: 100%; -unity-text-align: middle-center;" />
+            <ui:Label text="Equip" display-tooltip-when-elided="true" name="Equip_Label" style="justify-content: flex-start; align-items: flex-start; width: 25%; flex-grow: 0; font-size: 48px; height: 100%; -unity-text-align: middle-center;" />
+            <ui:Label text="Friend" display-tooltip-when-elided="true" name="Friend_Label" style="justify-content: flex-start; align-items: flex-start; width: 25%; flex-grow: 0; font-size: 48px; height: 100%; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Page" style="flex-grow: 10; flex-shrink: 0; flex-direction: row;">
+            <ui:VisualElement name="Page_1" class="page">
+                <ui:Label text="Page1" display-tooltip-when-elided="true" name="MainTxt" class="mainTxt" />
+                <ui:Label text="Page1&#10;Details" display-tooltip-when-elided="true" name="DetailTxt" class="detailTxt" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Page_2" class="page">
+                <ui:Label text="Page2" display-tooltip-when-elided="true" name="MainTxt" class="mainTxt" />
+                <ui:Label text="Page2&#10;Details" display-tooltip-when-elided="true" name="DetailTxt" class="detailTxt" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,31 @@
+.page {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 50%;
+    height: 95%;
+    background-color: rgba(173, 173, 173, 255);
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mainTxt {
+    -unity-text-align: upper-center;
+    color: rgba(0, 0, 0, 255);
+    font-size: 85px;
+    -unity-font-style: bold;
+    flex-grow: 1;
+}
+
+.detailTxt {
+    font-size: 30px;
+    color: rgba(0, 0, 0, 255);
+    flex-grow: 10;
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
