@@ -1,0 +1,10 @@
+.card {
+    flex-basis: 250px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
