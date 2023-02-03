@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/99.Other/UI/FlexStudy/FlexStudy.uss?fileID=7433441132597879392&amp;guid=01209f64989ef2b428fd7f2c2129b104&amp;type=3#FlexStudy" />
+    <ui:VisualElement name="VisualElement" style="width: 100%; height: 100%;">
+        <ui:VisualElement name="Box" style="flex-basis: 25%; background-color: rgba(159, 255, 168, 255); flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>
