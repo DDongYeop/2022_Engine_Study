@@ -7,4 +7,15 @@
     margin-right: 15px;
     margin-top: 8px;
     margin-bottom: 8px;
+    opacity: 0;
+    top: -300px;
+    transition-property: top, opacity;
+    transition-duration: 0.5s, 0.3s;
+    transition-delay: 0s, 0.1s;
+    transition-timing-function: ease-in-out-bounce, ease;
+}
+
+.card.on {
+    top: 0;
+    opacity: 1;
 }
