@@ -12,7 +12,7 @@
     transition-property: top, opacity;
     transition-duration: 0.5s, 0.3s;
     transition-delay: 0s, 0.1s;
-    transition-timing-function: ease-in-out-bounce, ease;
+    transition-timing-function: ease-out-bounce, ease;
 }
 
 .card.on {
@@ -20,9 +20,14 @@
     opacity: 1;
     transition-property: top;
     transition-duration: 0.5s;
+    transition-timing-function: ease-out-bounce;
 }
 
-.card.on.off {
+.card.off {
     border-top-width: 300px;
     opacity: 0;
+    transition-property: top;
+    transition-timing-function: ease-in;
+    transition-duration: 0.5s;
+    top: 380px;
 }

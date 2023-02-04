@@ -1,0 +1,42 @@
+.chat {
+    flex-basis: 120px;
+    margin-bottom: 20px;
+    flex-direction: row;
+}
+
+.chat > #ProfileImage {
+    width: 120px;
+    height: 120px;
+    background-color: rgba(255, 255, 255, 255);
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.chat > #Dialog {
+    flex-basis: 60%;
+    flex-grow: 1;
+    margin-left: 25px;
+    background-color: rgba(82, 82, 82, 255);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    justify-content: center;
+    padding-left: 15px;
+}
+
+.chat > #Dialog > #MsgLabel {
+    font-size: 30px;
+}
+
+.chat.right {
+    flex-direction: row-reverse;
+}
+
+.chat.right > #Dialog {
+    margin-right: 15px;
+    margin-left: -15px;
+    background-color: rgba(108, 108, 108, 255);
+}
