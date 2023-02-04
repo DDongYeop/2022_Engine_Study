@@ -18,4 +18,11 @@
 .card.on {
     top: 0;
     opacity: 1;
+    transition-property: top;
+    transition-duration: 0.5s;
+}
+
+.card.on.off {
+    border-top-width: 300px;
+    opacity: 0;
 }
