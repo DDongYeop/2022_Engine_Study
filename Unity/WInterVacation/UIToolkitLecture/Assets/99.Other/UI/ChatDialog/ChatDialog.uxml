@@ -1,21 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="ChatMsg" src="project://database/Assets/99.Other/UI/ChatDialog/ChatMsg.uxml?fileID=9197481963319205126&amp;guid=5982b148bbe17ca49b0aa23a4ddfd564&amp;type=3#ChatMsg" />
     <Style src="project://database/Assets/99.Other/UI/ChatDialog/ChatDialog.uss?fileID=7433441132597879392&amp;guid=b6357c90873b2e34480b586cf2e2d8eb&amp;type=3#ChatDialog" />
     <ui:VisualElement name="Container" style="width: 100%; height: 100%; align-items: center; justify-content: center;">
         <ui:VisualElement name="ChatBox" style="flex-basis: 80%; width: 80%; background-color: rgba(171, 66, 0, 0.72); border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-left: 50px; padding-right: 50px; padding-top: 20px; padding-bottom: 20px;">
             <ui:VisualElement name="ScrollBox" style="flex-basis: 100%; flex-grow: 1;">
                 <ui:ScrollView name="ScrollViewChat" horizontal-scroller-visibility="Hidden" style="flex-basis: 100%;">
-                    <ui:VisualElement name="ChatMsg" class="chat">
-                        <ui:VisualElement name="ProfileImage" style="background-image: url(&apos;project://database/Assets/02.Sprites/Face2.png?fileID=21300000&amp;guid=bd31dac784e9e3e438d7235b365dd45d&amp;type=3#Face2&apos;);" />
-                        <ui:VisualElement name="Dialog">
-                            <ui:Label text="Hello ! This is GGM!" display-tooltip-when-elided="true" name="MsgLabel" />
-                        </ui:VisualElement>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="ChatMsg" class="chat right">
-                        <ui:VisualElement name="ProfileImage" style="background-image: url(&apos;project://database/Assets/02.Sprites/Face1.png?fileID=21300000&amp;guid=644ce61510f44194ab01c89039b78d26&amp;type=3#Face1&apos;);" />
-                        <ui:VisualElement name="Dialog">
-                            <ui:Label text="Yes! I think that&apos;s right!" display-tooltip-when-elided="true" name="MsgLabel" />
-                        </ui:VisualElement>
-                    </ui:VisualElement>
+                    <ui:Instance template="ChatMsg" name="ChatMsg" />
                 </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>

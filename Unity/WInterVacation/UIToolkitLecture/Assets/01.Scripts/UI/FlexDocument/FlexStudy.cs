@@ -24,10 +24,13 @@ public class FlexStudy : MonoBehaviour
                 if (card != null && card.ClassListContains("on"))
                 {
                     card?.RemoveFromClassList("on");
-                    // card.AddToClassList("off");
+                    card.AddToClassList("off");
                 }
-                else 
+                else
+                {
+                    card?.RemoveFromClassList("off");
                     card?.AddToClassList("on");
+                }
 
             });
 

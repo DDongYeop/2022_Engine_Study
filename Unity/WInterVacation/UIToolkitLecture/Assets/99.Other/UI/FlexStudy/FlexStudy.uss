@@ -9,25 +9,22 @@
     margin-bottom: 8px;
     opacity: 0;
     top: -300px;
-    transition-property: top, opacity;
-    transition-duration: 0.5s, 0.3s;
-    transition-delay: 0s, 0.1s;
-    transition-timing-function: ease-out-bounce, ease;
 }
 
 .card.on {
     top: 0;
     opacity: 1;
-    transition-property: top;
-    transition-duration: 0.5s;
-    transition-timing-function: ease-out-bounce;
+    transition-property: top, opacity;
+    transition-duration: 0.5s, 0.3s;
+    transition-timing-function: ease-out-bounce, ease;
+    transition-delay: 0s, 0.1s;
 }
 
 .card.off {
     border-top-width: 300px;
     opacity: 0;
-    transition-property: top;
-    transition-timing-function: ease-in;
-    transition-duration: 0.5s;
-    top: 380px;
+    transition-property: top, opacity;
+    transition-timing-function: ease-in, ease;
+    transition-duration: 0.5s, 0.3s;
+    top: -380px;
 }

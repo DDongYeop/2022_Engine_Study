@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="ChatMsg" class="chat">
+        <ui:VisualElement name="ProfileImage" style="background-image: url(&apos;project://database/Assets/02.Sprites/Face2.png?fileID=21300000&amp;guid=bd31dac784e9e3e438d7235b365dd45d&amp;type=3#Face2&apos;);" />
+        <ui:VisualElement name="Dialog">
+            <ui:Label text="Hello ! This is GGM!" display-tooltip-when-elided="true" name="MsgLabel" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
