@@ -424,3 +424,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75665707bce19b944b4cdaed3d6d277e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chatTemplate: {fileID: 9197481963319205126, guid: 5982b148bbe17ca49b0aa23a4ddfd564, type: 3}
+  _profileSprite: {fileID: 21300000, guid: bd31dac784e9e3e438d7235b365dd45d, type: 3}
