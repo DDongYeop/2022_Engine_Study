@@ -26,6 +26,8 @@ public class ChatDialog : MonoBehaviour
         _showIndex = 0;
         _chatList = _root.Query<VisualElement>(className: "chat").ToList();
         _scrollView = _root.Q<ScrollView>("ScrollViewChat"); // 스크롤 뷰를 가져오고 
+        
+        _scrollView.contentContainer.Clear();
     }
 
     private void Update()

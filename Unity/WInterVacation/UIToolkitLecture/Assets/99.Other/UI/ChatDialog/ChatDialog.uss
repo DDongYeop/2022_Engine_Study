@@ -50,3 +50,16 @@
     transition-duration: 0.6s, 0.6s;
     opacity: 1;
 }
+
+#ScrollViewChat #unity-slider #unity-dragger {
+    background-color: rgba(209, 209, 209, 255);
+    border-left-color: rgba(166, 166, 166, 255);
+    border-right-color: rgba(166, 166, 166, 255);
+    border-top-color: rgba(166, 166, 166, 255);
+    border-bottom-color: rgba(166, 166, 166, 255);
+    width: 8px;
+}
+
+#ScrollViewChat #unity-slider #unity-tracker {
+    width: 8px;
+}

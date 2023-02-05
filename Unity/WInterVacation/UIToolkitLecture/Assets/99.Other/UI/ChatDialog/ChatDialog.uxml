@@ -7,7 +7,6 @@
                 <ui:ScrollView name="ScrollViewChat" horizontal-scroller-visibility="Hidden" style="flex-basis: 100%;">
                     <ui:Instance template="ChatMsg" name="ChatMsg" class="chat" />
                     <ui:Instance template="ChatMsg" name="ChatMsg" class="chat right" />
-                    <ui:Instance template="ChatMsg" name="ChatMsg" class="chat" />
                 </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>
