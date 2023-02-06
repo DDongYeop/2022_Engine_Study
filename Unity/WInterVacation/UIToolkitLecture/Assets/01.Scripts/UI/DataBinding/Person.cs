@@ -25,6 +25,32 @@ namespace DataBinding
                 }
             }
         }
+        
+        public string Info
+        {
+            get => _info;
+            set
+            {
+                if (_info != value)
+                {
+                    _info = value;
+                    OnChanged?.Invoke();
+                }
+            }
+        }
+        
+        public Sprite Sprite
+        {
+            get => _sprite;
+            set
+            {
+                if (_sprite != value)
+                {
+                    _sprite = value;
+                    OnChanged?.Invoke();
+                }
+            }
+        }
 
         public Person(string name, string info, Sprite sprite)
         {

@@ -133,8 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 196000447}
   - component: {fileID: 196000448}
+  - component: {fileID: 196000449}
   m_Layer: 0
-  m_Name: DataDinding
+  m_Name: DataBinding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,6 +172,22 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 3dd7c67fe7deda94fb7287c91f74d5bc, type: 3}
   m_SortingOrder: 0
+--- !u!114 &196000449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196000446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ea8d41e26c553e4882eb5e5a2d8de54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardTemplate: {fileID: 9197481963319205126, guid: a61245015a734a745a8cd1c168e0d7fd, type: 3}
+  _sprites:
+  - {fileID: 21300000, guid: 644ce61510f44194ab01c89039b78d26, type: 3}
+  - {fileID: 21300000, guid: bd31dac784e9e3e438d7235b365dd45d, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
