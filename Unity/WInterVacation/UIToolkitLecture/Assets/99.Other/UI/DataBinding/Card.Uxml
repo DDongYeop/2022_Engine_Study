@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="CardBoarder" class="cardBoarder">
+        <ui:VisualElement name="CardElement" class="card">
+            <ui:VisualElement name="ImageBox">
+                <ui:VisualElement name="Image" style="background-image: url(&apos;project://database/Assets/02.Sprites/Face2.png?fileID=21300000&amp;guid=bd31dac784e9e3e438d7235b365dd45d&amp;type=3#Face2&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="NameBox">
+                <ui:Label text="Lora" name="NameLabel" />
+            </ui:VisualElement>
+            <ui:VisualElement name="InfoBox">
+                <ui:Label text="Software Enginer" display-tooltip-when-elided="true" name="InfoLabel" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
