@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Card" src="project://database/Assets/99.Other/UI/DataBinding/Card.Uxml?fileID=9197481963319205126&amp;guid=a61245015a734a745a8cd1c168e0d7fd&amp;type=3#Card" />
     <Style src="project://database/Assets/99.Other/UI/DataBinding/DataBinding.uss?fileID=7433441132597879392&amp;guid=aeadfc7f11a54664dbae3d24174d7f01&amp;type=3#DataBinding" />
     <Style src="project://database/Assets/99.Other/UI/DataBinding/Card.uss?fileID=7433441132597879392&amp;guid=17bdacbfd1920e84c9402241ebf8bf1f&amp;type=3#Card" />
     <ui:VisualElement name="Container" style="flex-basis: 100%; flex-grow: 1;">
@@ -7,6 +8,8 @@
             <ui:TextField picking-mode="Ignore" value="filler text" text="설명" name="InfoInput" style="flex-grow: 1; flex-shrink: 1;" />
             <ui:Button text="Button" display-tooltip-when-elided="true" class="btn blue" />
         </ui:VisualElement>
-        <ui:VisualElement name="Content" style="flex-grow: 1; background-color: rgb(17, 28, 60); align-items: center; justify-content: center; flex-direction: row;" />
+        <ui:VisualElement name="Content" style="flex-grow: 1; background-color: rgb(17, 28, 60); align-items: center; justify-content: center; flex-direction: row;">
+            <ui:Instance template="Card" name="Card" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

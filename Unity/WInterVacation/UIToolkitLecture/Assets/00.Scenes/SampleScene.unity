@@ -185,9 +185,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardTemplate: {fileID: 9197481963319205126, guid: a61245015a734a745a8cd1c168e0d7fd, type: 3}
-  _sprites:
-  - {fileID: 21300000, guid: 644ce61510f44194ab01c89039b78d26, type: 3}
-  - {fileID: 21300000, guid: bd31dac784e9e3e438d7235b365dd45d, type: 3}
+  _people:
+  - {fileID: 11400000, guid: f58197b06f650a0429e2fad26f9e285e, type: 2}
+  - {fileID: 11400000, guid: 5263b1494f0281c4aaf3690d5c727b6e, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

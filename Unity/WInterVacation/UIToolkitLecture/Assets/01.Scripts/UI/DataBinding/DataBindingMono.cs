@@ -19,7 +19,7 @@ public class DataBindingMono : MonoBehaviour
 
     private Person _currentPerson = null;
 
-    [SerializeField] private List<Sprite> _sprites;
+    [SerializeField] private List<PeopleSO> _people;
 
     private void Awake()
     {
@@ -39,9 +39,9 @@ public class DataBindingMono : MonoBehaviour
         
         //2명의 카드만 추가 
         _content.Clear(); //기존에 만들어진 카드 클리어  
-        _sprites.ForEach(s =>
+        _people.ForEach(so =>
         {
-            Person p = new Person("Gondr", "Info", s);
+            Person p = new Person(so.name, so.info, so.sprite);
             VisualElement cardXML = _cardTemplate.Instantiate().Q("CardBoarder");
             _content.Add(cardXML);
             
@@ -53,7 +53,18 @@ public class DataBindingMono : MonoBehaviour
                 _nameInput.SetValueWithoutNotify(p.Name); // 변경 이벤트를 방생 시키지 않고 값을 변경하는거 
                 _infoInput.SetValueWithoutNotify(p.Info);
             });
+
+            StartCoroutine(DelayCo(.01f, () =>
+            {
+                cardXML.AddToClassList("on");
+            }));
         });
+    }
+
+    private IEnumerator DelayCo(float time, Action Callback)
+    {
+        yield return new WaitForSeconds(time);
+        Callback();
     }
 
     private void OnNameChanged(ChangeEvent<string> evt)
