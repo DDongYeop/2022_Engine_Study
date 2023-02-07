@@ -1,7 +1,7 @@
 #Header TextField {
     font-size: 25px;
     margin-right: 20px;
-    background-color: rgba(0, 0, 0, 255);
+    background-color: rgb(0, 0, 0);
 }
 
 #Header TextField > #unity-text-input {
@@ -9,8 +9,8 @@
     padding-right: 12px;
     padding-top: 8px;
     padding-bottom: 8px;
-    background-color: rgba(0, 0, 0, 255);
-    color: rgba(255, 255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 .btn {
@@ -33,7 +33,7 @@
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 .btn.blue:hover {
@@ -55,4 +55,28 @@
 
 .btn.red:hover {
     background-color: rgb(255, 66, 66);
+}
+
+#SpriteDropdown {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+}
+
+#SpriteDropdown > VisualElement {
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: rgb(0, 0, 0);
+}
+
+#SpriteDropdown > VisualElement > PopupTextElement {
+    background-color: rgb(0, 0, 0);
+}
+
+#SpriteDropdown > VisualElement > VisualElement {
+    width: 20px;
+    height: 20px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
