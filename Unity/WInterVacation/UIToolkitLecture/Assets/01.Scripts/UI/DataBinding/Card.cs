@@ -32,5 +32,17 @@ namespace DataBinding
             _infoLabel.text = _person.Info;
             _profileImage.style.backgroundImage = new StyleBackground(_person.Sprite);
         }
+
+        public void SelectVisuble(bool value)
+        {
+            if (value)
+            {
+                _cardRoot.AddToClassList("select");
+            }
+            else
+            {
+                _cardRoot.RemoveFromClassList("select");
+            }
+        }
     }
 }

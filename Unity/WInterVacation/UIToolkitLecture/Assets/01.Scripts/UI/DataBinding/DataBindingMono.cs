@@ -23,6 +23,7 @@ public class DataBindingMono : MonoBehaviour
     private Person _currentPerson = null;
 
     [SerializeField] private List<PeopleSO> _people;
+    private List<Card> _cardList = new List<Card>();
 
     private void Awake()
     {
@@ -47,6 +48,13 @@ public class DataBindingMono : MonoBehaviour
         _dropDownController = new DropDownController(root, _people);
         
         _content = root.Q<VisualElement>("Content");
+        _content.RegisterCallback<ClickEvent>(evt =>
+        {
+            ClearSelect();
+            _nameInput.SetValueWithoutNotify("");
+            _infoInput.SetValueWithoutNotify("");
+            _currentPerson = null;
+        });
         
         //2명의 카드만 추가 
         _content.Clear(); //기존에 만들어진 카드 클리어  
@@ -80,18 +88,26 @@ public class DataBindingMono : MonoBehaviour
         _content.Add(cardXML);
             
         Card c = new Card(cardXML, p);
+        _cardList.Add(c);
             
         cardXML.RegisterCallback<ClickEvent>(evt =>
         {
             _currentPerson = p;
             _nameInput.SetValueWithoutNotify(p.Name); // 변경 이벤트를 방생 시키지 않고 값을 변경하는거 
             _infoInput.SetValueWithoutNotify(p.Info);
+            ClearSelect();
+            c.SelectVisuble(true);
         });
 
         StartCoroutine(DelayCo(.01f, () =>
         {
             cardXML.AddToClassList("on");
         }));
+    }
+
+    private void ClearSelect()
+    {
+        _cardList.ForEach(c => c.SelectVisuble(false));
     }
 
     private IEnumerator DelayCo(float time, Action Callback)

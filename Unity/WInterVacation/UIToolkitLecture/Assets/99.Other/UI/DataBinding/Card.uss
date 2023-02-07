@@ -77,3 +77,10 @@
     color: rgb(0, 0, 0);
     text-shadow: 2px 2px 0 rgba(173, 173, 173, 0.27);
 }
+
+.cardBoarder.select {
+    border-left-color: rgb(195, 142, 91);
+    border-right-color: rgb(195, 142, 91);
+    border-top-color: rgb(195, 142, 91);
+    border-bottom-color: rgb(195, 142, 91);
+}
