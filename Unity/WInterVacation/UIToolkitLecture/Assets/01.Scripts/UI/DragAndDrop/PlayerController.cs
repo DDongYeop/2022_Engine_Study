@@ -26,9 +26,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float z = Input.GetAxis("Vertical");
 
-        Vector2 movement = new Vector2(x, y) * (Time.deltaTime * _speed);
+        Vector3 movement = new Vector3(x, 0, z) * (Time.deltaTime * _speed);
         
         transform.Translate(movement);
         

@@ -1,18 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class HealthUIDocument : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Transform _playerTrm;
+
+    private VisualElement _root;
+    private VisualElement _healthBar;
+    private VisualElement _bar;
+    private UIDocument _document;
+
+    private Camera _mainCamera;
+
+    private void Awake()
     {
-        
+        _document = GetComponent<UIDocument>();
+        _mainCamera = Camera.main;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        _root = _document.rootVisualElement;
+        _healthBar = _root.Q<VisualElement>("HealthBar");
+        _bar = _healthBar.Q<VisualElement>("Bar"); // 체력바
+    }
+
+    public void OnChangeHealth(float normalHealth)
+    {
+        _bar.style.width = new Length(normalHealth * 100, LengthUnit.Percent);
+    }
+
+    private void LateUpdate()
+    {
+        Vector3 worldPos = _playerTrm.position;
+        Vector2 uiPos =  RuntimePanelUtils.CameraTransformWorldToPanel(_root.panel, worldPos, _mainCamera);
+
+        float deltaY = -100f;
+
+        _healthBar.style.left = uiPos.x - _healthBar.layout.width * 0.5f;
+        _healthBar.style.top = uiPos.y + deltaY;
     }
 }
