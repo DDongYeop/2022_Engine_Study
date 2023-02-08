@@ -92,6 +92,7 @@ public class DataBindingMono : MonoBehaviour
             
         cardXML.RegisterCallback<ClickEvent>(evt =>
         {
+            evt.StopPropagation();
             _currentPerson = p;
             _nameInput.SetValueWithoutNotify(p.Name); // 변경 이벤트를 방생 시키지 않고 값을 변경하는거 
             _infoInput.SetValueWithoutNotify(p.Info);
